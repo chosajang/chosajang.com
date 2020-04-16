@@ -1,6 +1,9 @@
 <template>
     <div>
         <div>BlogView</div>
+        <transition name="page">
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 
