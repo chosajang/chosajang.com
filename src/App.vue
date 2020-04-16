@@ -10,6 +10,7 @@
 
 <script>
 import ToolBar from './components/ToolBar.vue';
+
 export default {
   components: {
     ToolBar
@@ -24,10 +25,10 @@ body {
 }
 
 /* Router Transitions */
-.page-enter-active, .page-leave-active {
+/* .page-enter-active, .page-leave-active {
   transition: opacity .5s;
 }
-.page-enter, .page-leave-to /* .page-leave-active below version 2.1.8 */ {
+.page-enter, .page-leave-to {
   opacity: 0;
-}
+} */
 </style>
