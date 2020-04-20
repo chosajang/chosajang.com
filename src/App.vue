@@ -2,6 +2,7 @@
   <div id="app">
     <!-- url에 다른 뷰컴포넌트 출력 -->
     <!-- <tool-bar></tool-bar> -->
+    <div>{{ this.$route.name }}</div>
     <router-view></router-view>
   </div>
 </template>
