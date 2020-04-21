@@ -2,20 +2,33 @@
   <div id="app">
     <!-- url에 다른 뷰컴포넌트 출력 -->
     <!-- <tool-bar></tool-bar> -->
-    <div>{{ this.$route.name }}</div>
-    <router-view></router-view>
+    <template v-if="viewType === 'admin'">
+      admin
+    </template>
+    <template v-else-if="viewType === 'service'">
+      <service-gnb-bar></service-gnb-bar>
+    </template>
+    <transition name="page" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
-// import ToolBar from './components/ToolBar.vue';
+import ServiceGnbBar from './components/Service.Gnb.vue';
 
 export default {
+  data () {
+    return {
+      viewType: ''
+    };
+  },
   components: {
-    // ToolBar
+    ServiceGnbBar
   },
   created () {
-    console.log('App.vue > created()', this.$route.name);
+    const vm = this;
+    vm.viewType = this.$route.meta.type;
   }
 };
 </script>
@@ -27,10 +40,10 @@ body {
 }
 
 /* Router Transitions */
-/* .page-enter-active, .page-leave-active {
-  transition: opacity .5s;
+.page-enter-active, .page-leave-active {
+  transition: opacity .2s ease;
 }
 .page-enter, .page-leave-to {
   opacity: 0;
-} */
+}
 </style>

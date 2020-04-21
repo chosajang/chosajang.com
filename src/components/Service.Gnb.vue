@@ -1,5 +1,6 @@
 <template>
   <div class="header">
+    <div>Logo</div>
     <router-link to="/blog">Blog</router-link> |
     <router-link to="/profile">Profile</router-link>
   </div>
