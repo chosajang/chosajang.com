@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import BlogView from '../views/service/blog';
+import ProjectView from '../views/service/project';
 import ProfileView from '../views/service/profile';
 import AdminUserView from '../views/admin/user';
 
@@ -22,6 +23,18 @@ const routes = [
       type: 'service'
     },
     component: BlogView,
+    beforeEnter: (to, from, next) => {
+      console.log('to', to);
+      next();
+    }
+  },
+  {
+    path: '/project',
+    name: 'project',
+    meta: {
+      type: 'service'
+    },
+    component: ProjectView,
     beforeEnter: (to, from, next) => {
       console.log('to', to);
       next();

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import ServiceGnbBar from './components/Service.Gnb.vue';
+import ServiceGnbBar from './components/service/Gnb.vue';
 
 export default {
   data () {
