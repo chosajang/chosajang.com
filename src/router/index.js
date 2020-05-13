@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import LoginView from '../views/common/login';
 import BlogView from '../views/service/blog';
 import ProjectView from '../views/service/project';
 import ProfileView from '../views/service/profile';
@@ -15,6 +16,18 @@ const routes = [
       type: 'service'
     },
     redirect: '/blog'
+  },
+  {
+    path: '/login',
+    name: 'login',
+    meta: {
+      type: ''
+    },
+    component: LoginView,
+    beforeEnter: (to, from, next) => {
+      console.log('to', to);
+      next();
+    }
   },
   {
     path: '/blog',
