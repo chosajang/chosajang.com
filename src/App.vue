@@ -1,35 +1,18 @@
 <template>
   <div id="app">
     <!-- url에 다른 뷰컴포넌트 출력 -->
-    <!-- <tool-bar></tool-bar> -->
-    <template v-if="viewType === 'admin'">
-      admin
-    </template>
-    <template v-else-if="viewType === 'service'">
-      <service-gnb-bar></service-gnb-bar>
-    </template>
-    <transition name="page" mode="out-in">
+    <layout>
       <router-view></router-view>
-    </transition>
+    </layout>
   </div>
 </template>
 
 <script>
-import ServiceGnbBar from './components/service/Gnb.vue';
+import Layout from '@/layouts/Layout.vue';
 
 export default {
-  data () {
-    return {
-      viewType: ''
-    };
-  },
-  components: {
-    ServiceGnbBar
-  },
-  created () {
-    const vm = this;
-    vm.viewType = this.$route.meta.type;
-  }
+  name: 'App',
+  components: { Layout }
 };
 </script>
 

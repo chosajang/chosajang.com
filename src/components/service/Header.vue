@@ -10,6 +10,7 @@
       <router-link to="/blog">Blog</router-link>
       <router-link to="/project">Project</router-link>
       <router-link to="/profile">Profile</router-link>
+      <router-link to="/admin/user">Admin.user</router-link>
     </div>
   </div>
 </template>
@@ -35,7 +36,7 @@ export default {
  */
 @media all and (max-width:768px) {
   .header {
-    height: 40px;
+    height: 50px;
     transition: 0.5s;
   }
 
@@ -64,7 +65,7 @@ export default {
  */
 @media all and (min-width:768px) {
   .header {
-    height: 47px;
+    height: 70px;
     transition: 0.5s;
   }
 

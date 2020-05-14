@@ -1,10 +1,13 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import LoginView from '../views/common/login';
+
+import LoginView from '../views/admin/login';
+import AdminUserView from '../views/admin/user';
+import AdminBoardView from '../views/admin/board';
+
 import BlogView from '../views/service/blog';
 import ProjectView from '../views/service/project';
 import ProfileView from '../views/service/profile';
-import AdminUserView from '../views/admin/user';
 
 Vue.use(VueRouter);
 
@@ -12,32 +15,16 @@ const routes = [
   {
     path: '/',
     name: 'default',
-    meta: {
-      type: 'service'
-    },
     redirect: '/blog'
-  },
-  {
-    path: '/login',
-    name: 'login',
-    meta: {
-      type: ''
-    },
-    component: LoginView,
-    beforeEnter: (to, from, next) => {
-      console.log('to', to);
-      next();
-    }
   },
   {
     path: '/blog',
     name: 'blog',
     meta: {
-      type: 'service'
+      layout: 'ServiceLayout'
     },
     component: BlogView,
     beforeEnter: (to, from, next) => {
-      console.log('to', to);
       next();
     }
   },
@@ -45,11 +32,10 @@ const routes = [
     path: '/project',
     name: 'project',
     meta: {
-      type: 'service'
+      layout: 'ServiceLayout'
     },
     component: ProjectView,
     beforeEnter: (to, from, next) => {
-      console.log('to', to);
       next();
     }
   },
@@ -57,11 +43,23 @@ const routes = [
     path: '/profile',
     name: 'profile',
     meta: {
-      type: 'service'
+      layout: 'ServiceLayout'
     },
     component: ProfileView,
     beforeEnter: (to, from, next) => {
-      console.log('to', to);
+      next();
+    }
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    redirect: '/admin/login'
+  },
+  {
+    path: '/admin/login',
+    name: 'login',
+    component: LoginView,
+    beforeEnter: (to, from, next) => {
       next();
     }
   },
@@ -69,9 +67,17 @@ const routes = [
     path: '/admin/user',
     name: 'admin.user',
     meta: {
-      type: 'admin'
+      layout: 'AdminLayout'
     },
     component: AdminUserView
+  },
+  {
+    path: '/admin/board',
+    name: 'admin.board',
+    meta: {
+      layout: 'AdminLayout'
+    },
+    component: AdminBoardView
   },
   { /* 404 error 방지 */
     path: '*',
@@ -81,5 +87,6 @@ const routes = [
 
 export const router = new VueRouter({
   mode: 'history',
+  base: process.env.BASE_URL,
   routes
 });

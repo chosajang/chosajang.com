@@ -1,11 +1,12 @@
 <template>
-    <div>
-        <div>LoginView</div>
-    </div>
+  <div>
+    <slot></slot>
+  </div>
 </template>
 
 <script>
 export default {
+  name: 'BlankLayout'
 };
 </script>
 
