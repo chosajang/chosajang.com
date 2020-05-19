@@ -20,6 +20,7 @@ export default {
 body {
   padding: 0;
   margin: 0;
+  min-width: 360px;
 }
 
 /* Router Transitions */

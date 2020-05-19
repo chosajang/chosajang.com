@@ -2,34 +2,17 @@ import axios from 'axios';
 
 // HTTP Request & Response 관련 기본 설정
 const config = {
-  baseUrl: 'https://api.hnpwa.com/v0/'
+  baseUrl: 'http://api.chosajang.com/'
 };
 
 // API 함수 정리
-function fetchNewsList () {
-  return axios.get(`${config.baseUrl}news/1.json`);
-}
-
-function fetchAskList () {
-  return axios.get(`${config.baseUrl}ask/1.json`);
-}
-
-function fetchJobsList () {
-  return axios.get(`${config.baseUrl}jobs/1.json`);
-}
-
-function fetchUserInfo (username) {
-  return axios.get(`${config.baseUrl}user/${username}.json`);
-}
-
-function fetchItemInfo (id) {
-  return axios.get(`${config.baseUrl}item/${id}.json`);
+function fetchUserInfo (id, password) {
+  const params = new URLSearchParams();
+  params.append('id', id);
+  params.append('password', password);
+  return axios.post(`${config.baseUrl}/user/login`, params);
 }
 
 export {
-  fetchNewsList,
-  fetchAskList,
-  fetchJobsList,
-  fetchUserInfo,
-  fetchItemInfo
+  fetchUserInfo
 };
