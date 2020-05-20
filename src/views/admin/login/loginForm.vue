@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import { fetchUserInfo } from '../../../api';
+
 export default {
   methods: {
     async login () {
@@ -37,7 +39,17 @@ export default {
       }
     },
     loginUser () {
-      console.log('loginUser');
+      const vm = this;
+      const id = 'enjoysoft@naver.com';
+      const pwd = 'cocoa123';
+      fetchUserInfo(id, pwd)
+        .then(response => {
+          vm.listItems = response.data;
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 };
