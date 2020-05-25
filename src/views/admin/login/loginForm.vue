@@ -7,11 +7,17 @@
     <div class="loginForm">
       <div class="form-wrap">
         <div class="title">ID(Email)</div>
-        <div class="form"><input type="text" name="id" placeholder="ID(Email)을 입력하세요"/></div>
+        <div class="form">
+          <input type="text" v-model="loginInfo.id" @keyup="idCheck" :class="input_id" placeholder="ID(Email)을 입력하세요"/>
+          <span class="error-message">{{ id_error_message }}</span>
+        </div>
       </div>
       <div class="form-wrap">
         <div class="title">Password</div>
-        <div class="form"><input type="password" name="password" placeholder="비밀번호를 입력하세요"/></div>
+        <div class="form">
+          <input type="password" v-model="loginInfo.password" @keyup="passwordCheck" :class="input_password" placeholder="비밀번호를 입력하세요"/>
+          <span class="error-message">{{ password_error_message }}</span>
+        </div>
       </div>
       <div class="form-wrap">
         <div class="regist-id-wrap">
@@ -27,9 +33,21 @@
 </template>
 
 <script>
-import { fetchUserInfo } from '../../../api';
+import { fetchUserLogin } from '../../../api';
 
 export default {
+  data () {
+    return {
+      loginInfo: {
+        id: '',
+        password: ''
+      },
+      id_error_message: '',
+      password_error_message: '',
+      input_id: '',
+      input_password: ''
+    };
+  },
   methods: {
     async login () {
       try {
@@ -38,20 +56,79 @@ export default {
         console.log(error);
       }
     },
+    idCheck () {
+      const id = this.loginInfo.id;
+      // eslint-disable-next-line no-useless-escape
+      const regExp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+      if (id.length === 0) {
+        this.input_id = '';
+        this.id_error_message = '아이디(ID)를 입력하세요';
+        return false;
+      } else if (id.length < 7) {
+        // ID는 최소 7자 이상이어야 합니다
+        this.input_id = 'error';
+        this.id_error_message = '아이디(ID)는 7자 이상이어야 합니다';
+        return false;
+      } else if (regExp.test(id) === false) {
+        // 아이디(ID)는 이메일형식으로 입력해야합니다
+        this.input_id = 'error';
+        this.id_error_message = '아이디(ID)는 이메일형식으로 입력해야합니다';
+        return false;
+      } else {
+        this.input_id = 'active';
+        this.id_error_message = '';
+        return true;
+      }
+    },
+    passwordCheck () {
+      const password = this.loginInfo.password;
+      const num = /[0-9]/g;
+      const eng = /[a-z]/ig;
+      const spe = /[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi;
+
+      if (password.length === 0) {
+        this.input_password = '';
+        this.password_error_message = '비밀번호를 입력하세요';
+        return false;
+      } else if (password.length < 8 || password.length > 20) {
+        // 비밀번호 길이는 8~20자 사이여야 합니다
+        this.input_password = 'error';
+        this.password_error_message = '비밀번호 길이는 8~20자 사이입니다';
+        return false;
+      } else if (password.search(/\s/) !== -1) {
+        // 비밀번호는 공백없이 입력해주세요
+        this.input_password = 'error';
+        this.password_error_message = '비밀번호는 공백없이 입력해주세요';
+        return false;
+      } else if (password.search(num) < 0 || password.search(eng) < 0 || password.search(spe) < 0) {
+        // 비밀번호는 영문자, 숫자, 특수문자 조합으로 입력해야합니다
+        this.input_password = 'error';
+        this.password_error_message = '비밀번호는 영문자, 숫자, 특수문자 조합으로 입력해야합니다';
+        return false;
+      } else {
+        this.input_password = 'active';
+        this.password_error_message = '';
+        return true;
+      }
+    },
     loginUser () {
-      const vm = this;
-      const id = 'enjoysoft@naver.com';
-      const pwd = 'cocoa123';
-      fetchUserInfo(id, pwd)
-        .then(response => {
-          vm.listItems = response.data;
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-  }
+      if (this.idCheck() && this.passwordCheck()) {
+        // const vm = this;
+        const id = this.loginInfo.id;
+        const pwd = this.loginInfo.password;
+        fetchUserLogin(id, pwd)
+          .then(response => {
+            // response.data;
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        console.log('paramCheck False');
+      }
+    }//   EOF   loginUser
+  }//   EO    methods:
 };
 </script>
 
@@ -112,7 +189,14 @@ export default {
   width: 340px;
 }
 
-.form-wrap input[type=text], input[type=password] {
+input[type=text]:focus, input[type=password]:focus {
+  outline: none;
+  transition: .3s;
+  color: #45BEAC;
+  border-bottom: 3px solid #45BEAC;
+}
+
+input[type=text], input[type=password] {
   width: 100%;
   padding: 8px 14px;
   margin: 4px 0;
@@ -120,11 +204,28 @@ export default {
   font-weight: bold;
   box-sizing: border-box;
   border: none;
-  border-bottom: 2px solid #2D353C;
+  border-bottom: 3px solid #2D353C;
 }
 
-.form-wrap input::placeholder {
+input[type=text].error, input[type=password].error {
+  color: #FF0000;
+  border-bottom: 3px solid #FF0000;
+}
+
+input[type=text].active, input[type=password].active {
+  color: #45BEAC;
+  border-bottom: 3px solid #45BEAC;
+}
+
+input::placeholder {
   color: #B6B6B6;
+}
+
+.form .error-message {
+  float: left;
+  color: #FF0000;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .regist-id-wrap {
@@ -188,6 +289,11 @@ export default {
 
   .login-button-wrap {
     margin-right: 10px;
+  }
+
+  .form .error-message {
+    margin-left: 10px;
+    font-size: 14px;
   }
 }
 </style>

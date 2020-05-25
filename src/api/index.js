@@ -6,7 +6,7 @@ const config = {
 };
 
 // API 함수 정리
-function fetchUserInfo (id, password) {
+function fetchUserLogin (id, password) {
   const params = new URLSearchParams();
   params.append('id', id);
   params.append('password', password);
@@ -14,5 +14,5 @@ function fetchUserInfo (id, password) {
 }
 
 export {
-  fetchUserInfo
+  fetchUserLogin
 };
