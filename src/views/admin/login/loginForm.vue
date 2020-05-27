@@ -33,7 +33,9 @@
 </template>
 
 <script>
-import { fetchUserLogin } from '../../../api';
+import { fetchUserLogin } from '@/api';
+// import { testFunc } from '@/utils/common.js';
+// console.log(JSON.parse(localStorage.userInfo));
 
 export default {
   data () {
@@ -112,14 +114,21 @@ export default {
       }
     },
     loginUser () {
+      this.$swal('Hello Vue world!!!');
       if (this.idCheck() && this.passwordCheck()) {
         // const vm = this;
         const id = this.loginInfo.id;
         const pwd = this.loginInfo.password;
         fetchUserLogin(id, pwd)
           .then(response => {
-            // response.data;
-            console.log(response.data);
+            const loginResponse = response.data;
+            if (loginResponse.result) {
+              localStorage.userInfo = JSON.stringify(loginResponse);
+              console.log('로그인 성공');
+            } else {
+              // 로그인 정보가 올바르지 않습니다
+              console.log('로그인 실패');
+            }
           })
           .catch(error => {
             console.log(error);
