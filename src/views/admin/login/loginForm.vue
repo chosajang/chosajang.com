@@ -8,24 +8,24 @@
       <div class="form-wrap">
         <div class="title">ID(Email)</div>
         <div class="form">
-          <input type="text" v-model="loginInfo.id" @keyup="idCheck" :class="input_id" placeholder="ID(Email)을 입력하세요"/>
-          <span class="error-message">{{ id_error_message }}</span>
+          <input type="text" :class="objClass.id" v-model="userInfo.id" @keyup="idCheck" placeholder="ID(Email)을 입력하세요"/>
+          <span class="error-message">{{ errorMessage.id }}</span>
         </div>
       </div>
       <div class="form-wrap">
         <div class="title">Password</div>
         <div class="form">
-          <input type="password" v-model="loginInfo.password" @keyup="passwordCheck" :class="input_password" placeholder="비밀번호를 입력하세요"/>
-          <span class="error-message">{{ password_error_message }}</span>
+          <input type="password" :class="objClass.password" v-model="userInfo.password" @keyup="passwordCheck" @keyup.13="loginUser" :disabled="objDisable === true" placeholder="비밀번호를 입력하세요"/>
+          <span class="error-message">{{ errorMessage.password }}</span>
         </div>
       </div>
       <div class="form-wrap">
         <div class="regist-id-wrap">
-          <input type="checkbox" id="regist-id">
+          <input type="checkbox" id="regist-id" v-model="checkRegistId">
           <label for="regist-id">아이디 기억하기</label>
         </div>
         <div class="login-button-wrap">
-          <b-button variant="dark" class="btn-lg" @click="loginUser">Login</b-button>
+          <b-button variant="dark" class="btn-lg" @click="loginUser" :disabled="objDisable === true">Login</b-button>
         </div>
       </div>
     </div>
@@ -34,110 +34,151 @@
 
 <script>
 import { fetchUserLogin } from '@/api';
-// import { testFunc } from '@/utils/common.js';
-// console.log(JSON.parse(localStorage.userInfo));
 
 export default {
+  created () {
+    const userInfo = JSON.parse(localStorage.userInfo);
+    if (userInfo !== null) {
+      this.$router.push({
+        name: 'admin.user'
+      });
+    }
+  },
   data () {
     return {
-      loginInfo: {
+      userInfo: {
         id: '',
         password: ''
       },
-      id_error_message: '',
-      password_error_message: '',
-      input_id: '',
-      input_password: ''
+      errorMessage: {
+        id: '',
+        password: ''
+      },
+      objClass: {
+        id: '',
+        password: ''
+      },
+      checkRegistId: '',
+      objDisable: false
     };
   },
   methods: {
-    async login () {
-      try {
-        console.log('login');
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    // async login () {
+    //   try {
+    //     console.log('login');
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
     idCheck () {
-      const id = this.loginInfo.id;
+      const id = this.userInfo.id;
       // eslint-disable-next-line no-useless-escape
       const regExp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+      let idCheckResult = false;
       if (id.length === 0) {
-        this.input_id = '';
-        this.id_error_message = '아이디(ID)를 입력하세요';
-        return false;
+        this.objClass.id = '';
+        this.errorMessage.id = '아이디(ID)를 입력하세요';
       } else if (id.length < 7) {
         // ID는 최소 7자 이상이어야 합니다
-        this.input_id = 'error';
-        this.id_error_message = '아이디(ID)는 7자 이상이어야 합니다';
-        return false;
+        this.objClass.id = 'error';
+        this.errorMessage.id = '아이디(ID)는 7자 이상이어야 합니다';
       } else if (regExp.test(id) === false) {
         // 아이디(ID)는 이메일형식으로 입력해야합니다
-        this.input_id = 'error';
-        this.id_error_message = '아이디(ID)는 이메일형식으로 입력해야합니다';
-        return false;
+        this.objClass.id = 'error';
+        this.errorMessage.id = '아이디(ID)는 이메일형식으로 입력해야합니다';
       } else {
-        this.input_id = 'active';
-        this.id_error_message = '';
-        return true;
+        this.objClass.id = 'active';
+        this.errorMessage.id = '';
+        idCheckResult = true;
       }
+      return idCheckResult;
     },
     passwordCheck () {
-      const password = this.loginInfo.password;
+      const password = this.userInfo.password;
       const num = /[0-9]/g;
       const eng = /[a-z]/ig;
       const spe = /[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi;
-
+      let passwordCheckResult = false;
       if (password.length === 0) {
-        this.input_password = '';
-        this.password_error_message = '비밀번호를 입력하세요';
-        return false;
+        this.objClass.password = 'error';
+        this.errorMessage.password = '비밀번호를 입력하세요';
       } else if (password.length < 8 || password.length > 20) {
         // 비밀번호 길이는 8~20자 사이여야 합니다
-        this.input_password = 'error';
-        this.password_error_message = '비밀번호 길이는 8~20자 사이입니다';
-        return false;
+        this.objClass.password = 'error';
+        this.errorMessage.password = '비밀번호 길이는 8~20자 사이입니다';
       } else if (password.search(/\s/) !== -1) {
         // 비밀번호는 공백없이 입력해주세요
-        this.input_password = 'error';
-        this.password_error_message = '비밀번호는 공백없이 입력해주세요';
-        return false;
+        this.objClass.password = 'error';
+        this.errorMessage.password = '비밀번호는 공백없이 입력해주세요';
       } else if (password.search(num) < 0 || password.search(eng) < 0 || password.search(spe) < 0) {
         // 비밀번호는 영문자, 숫자, 특수문자 조합으로 입력해야합니다
-        this.input_password = 'error';
-        this.password_error_message = '비밀번호는 영문자, 숫자, 특수문자 조합으로 입력해야합니다';
-        return false;
+        this.objClass.password = 'error';
+        this.errorMessage.password = '비밀번호는 영문자, 숫자, 특수문자 조합으로 입력해야합니다';
       } else {
-        this.input_password = 'active';
-        this.password_error_message = '';
-        return true;
+        this.objClass.password = 'active';
+        this.errorMessage.password = '';
+        passwordCheckResult = true;
       }
+      return passwordCheckResult;
     },
     loginUser () {
-      this.$swal('Hello Vue world!!!');
+      // 아이디&비밀번호 유효성 검사
       if (this.idCheck() && this.passwordCheck()) {
-        // const vm = this;
-        const id = this.loginInfo.id;
-        const pwd = this.loginInfo.password;
-        fetchUserLogin(id, pwd)
+        // 요청폼(패스워드 엔터&로그인 버튼) 비활성화
+        this.objDisable = true;
+        const id = this.userInfo.id;
+        const password = this.userInfo.password;
+        fetchUserLogin(id, password)
           .then(response => {
             const loginResponse = response.data;
             if (loginResponse.result) {
               localStorage.userInfo = JSON.stringify(loginResponse);
-              console.log('로그인 성공');
+              // 아이디 기억하기
+              const registId = this.checkRegistId;
+              if (registId) {
+                localStorage.registId = id;
+              } else {
+                localStorage.removeItem('registId');
+              }
+              // 관리자 메인으로 이동
+              this.$router.push({
+                name: 'admin.user'
+              });
             } else {
-              // 로그인 정보가 올바르지 않습니다
-              console.log('로그인 실패');
+              this.userInfo.password = '';
+              this.objClass.password = 'error';
+              this.errorMessage.password = '비밀번호를 다시 입력하세요';
+              this.$swal({
+                title: '로그인 실패!',
+                text: '아이디 혹은 비밀번호가 올바르지 않습니다',
+                icon: 'error'
+              });
+              // 요청폼(패스워드 엔터&로그인 버튼) 활성화
+              this.objDisable = false;
             }
           })
           .catch(error => {
-            console.log(error);
+            this.$swal({
+              title: '장애 발생!',
+              text: error,
+              icon: 'error'
+            });
+            // 요청폼(패스워드 엔터&로그인 버튼) 활성화
+            this.objDisable = false;
           });
-      } else {
-        console.log('paramCheck False');
       }
-    }//   EOF   loginUser
-  }//   EO    methods:
+    },
+    registId () {
+      if (localStorage.registId !== '') {
+        this.userInfo.id = localStorage.registId;
+        this.checkRegistId = true;
+        this.objClass.id = 'active';
+      }
+    }
+  }, //   EO    methods:
+  beforeMount () {
+    this.registId();
+  }
 };
 </script>
 
