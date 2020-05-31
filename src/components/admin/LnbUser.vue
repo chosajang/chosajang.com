@@ -1,21 +1,25 @@
 <template>
-    <div class="contentWrap">
-        <div class="content">Admin.UserView</div>
-    </div>
+  <div class="lnbWrap">
+    LNB
+  </div>
 </template>
 
 <script>
 export default {
+
 };
 </script>
 
-<style>
+<style scoped>
 /**
  * common
  */
-.content {
-  width: 100vw;
-  padding-left: 200px;
+.lnbWrap {
+  position: fixed;
+  overflow: hidden;
+  width: 200px;
+  height: 100vh;
+  background-color: lightgrey;
 }
 
 /**

@@ -67,7 +67,9 @@ const routes = [
     path: '/admin/user',
     name: 'admin.user',
     meta: {
-      layout: 'AdminLayout'
+      layout: 'AdminLayout',
+      contentStyle: 'LnbContent',
+      lnbName: 'LnbUser'
     },
     component: AdminUserView
   },
