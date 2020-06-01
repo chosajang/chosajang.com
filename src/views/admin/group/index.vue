@@ -1,31 +1,30 @@
 <template>
-  <div class="lnbWrap">
-    LNB
+  <div class="contentWrap">
+      <div class="content">Admin / User / Group</div>
   </div>
 </template>
 
 <script>
 export default {
-
 };
 </script>
 
-<style scoped>
+<style>
 /**
  * common
  */
-.lnbWrap {
-  position: fixed;
-  overflow: hidden;
-  width: 200px;
-  height: 100vh;
-  background-color: lightgrey;
+.content {
+  width: 100vw;
+  padding-left: 200px;
 }
 
 /**
  * Mobile
  */
 @media all and (max-width:768px) {
+  .content {
+    padding-left: 0px;
+  }
 }
 /**
  * Tablet & Desktop

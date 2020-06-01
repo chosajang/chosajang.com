@@ -2,36 +2,26 @@
   <div class="layoutWrap">
       <admin-header></admin-header>
       <div class="contentWrap">
-        <component v-bind:is="lnbName"></component>
+        <lnb></lnb>
         <slot></slot>
       </div>
   </div>
 </template>
 
 <script>
-import { computed } from '@vue/composition-api';
 import AdminHeader from '../components/admin/Header.vue';
-import LnbUser from '../components/admin/LnbUser.vue';
+import Lnb from '../components/admin/Lnb.vue';
 
 export default {
   name: 'AdminLayout',
   components: {
     AdminHeader,
-    LnbUser
-  },
-  setup (props, { root }) {
-    const contentStyle = computed(() => root.$route.meta.contentStyle || 'blank');
-    const lnbName = computed(() => root.$route.meta.lnbName || 'blank');
-    console.log(contentStyle);
-    return {
-      contentStyle,
-      lnbName
-    };
+    Lnb
   }
 };
 </script>
 
-<style>
+<style scope>
 /**
  * common
  */
@@ -39,14 +29,22 @@ export default {
   height: 100vh;
 }
 .contentWrap {
+  width: 100vw;
   display: flex;
+}
+
+.contentWrap > .content {
+  width: 100vw;
+  padding: 20px 20px 0px 220px;
 }
 
 /**
  * Mobile
  */
 @media all and (max-width:768px) {
-
+  .contentWrap > .content {
+    padding-left: 20px;
+  }
 }
 /**
  * Tablet & Desktop

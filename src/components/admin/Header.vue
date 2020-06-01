@@ -1,14 +1,12 @@
 <template>
   <div class="header">
     <div class="mobile-nav">
-      M
+      <i class="fas fa-bars"></i>
     </div>
     <div class="logo">
       <router-link to="/admin">CHOSAJANG <span>ADMIN</span></router-link>
     </div>
     <div class="nav">
-      <router-link to="/admin/user">User</router-link>
-      <router-link to="/admin/board">Board</router-link>
       <router-link to="/blog">Service.blog</router-link>
     </div>
   </div>
@@ -41,7 +39,7 @@ export default {
 @media all and (max-width:768px) {
   .header {
     height: 50px;
-    transition: 0.5s;
+    transition: 0.3s;
   }
 
   .header .nav {
@@ -63,6 +61,11 @@ export default {
   .mobile-nav {
     flex: none;
   }
+
+  .mobile-nav i {
+    font-size: 24px;
+    padding-left: 10px;
+  }
 }
 /**
  * Tablet & Desktop
@@ -70,7 +73,7 @@ export default {
 @media all and (min-width:768px) {
   .header {
     height: 70px;
-    transition: 0.5s;
+    transition: 0.3s;
   }
 
   .logo {

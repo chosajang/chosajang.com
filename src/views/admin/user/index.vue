@@ -1,6 +1,6 @@
 <template>
     <div class="contentWrap">
-        <div class="content">Admin.UserView</div>
+        <div class="content">Admin / User / User </div>
     </div>
 </template>
 
@@ -13,15 +13,12 @@ export default {
 /**
  * common
  */
-.content {
-  width: 100vw;
-  padding-left: 200px;
-}
 
 /**
  * Mobile
  */
 @media all and (max-width:768px) {
+
 }
 /**
  * Tablet & Desktop

@@ -1,6 +1,6 @@
 <template>
   <div class="contentWrap">
-    <div class="content">Admin / User / Board</div>
+    <div class="content">Admin / User / Post</div>
   </div>
 </template>
 

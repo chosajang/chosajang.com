@@ -1,9 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import LoginView from '../views/admin/login';
-import AdminUserView from '../views/admin/user';
 import AdminBoardView from '../views/admin/board';
+import AdminGroupView from '../views/admin/group';
+import AdminLoginView from '../views/admin/login';
+import AdminPostView from '../views/admin/post';
+import AdminUserView from '../views/admin/user';
 
 import BlogView from '../views/service/blog';
 import ProjectView from '../views/service/project';
@@ -58,7 +60,7 @@ const routes = [
   {
     path: '/admin/login',
     name: 'login',
-    component: LoginView,
+    component: AdminLoginView,
     beforeEnter: (to, from, next) => {
       next();
     }
@@ -67,11 +69,17 @@ const routes = [
     path: '/admin/user',
     name: 'admin.user',
     meta: {
-      layout: 'AdminLayout',
-      contentStyle: 'LnbContent',
-      lnbName: 'LnbUser'
+      layout: 'AdminLayout'
     },
     component: AdminUserView
+  },
+  {
+    path: '/admin/group',
+    name: 'admin.group',
+    meta: {
+      layout: 'AdminLayout'
+    },
+    component: AdminGroupView
   },
   {
     path: '/admin/board',
@@ -80,6 +88,14 @@ const routes = [
       layout: 'AdminLayout'
     },
     component: AdminBoardView
+  },
+  {
+    path: '/admin/post',
+    name: 'admin.post',
+    meta: {
+      layout: 'AdminLayout'
+    },
+    component: AdminPostView
   },
   { /* 404 error 방지 */
     path: '*',
