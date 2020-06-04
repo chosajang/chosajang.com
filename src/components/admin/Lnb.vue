@@ -4,9 +4,10 @@
       <li class="title"><span>Management</span></li>
       <router-link to="/admin/user" tag="li" class="item"><i class="fas fa-user-edit"></i>User</router-link>
       <router-link to="/admin/group" tag="li" class="item"><i class="fas fa-users-cog"></i>Group</router-link>
-      <li class="title"><span>Service</span></li>
+      <li class="title"><span>Blog</span></li>
       <router-link to="/admin/board" tag="li" class="item"><i class="fas fa-clipboard-list"></i>Board</router-link>
       <router-link to="/admin/post" tag="li" class="item"><i class="fas fa-pencil-alt"></i>Post</router-link>
+      <li class="title"><span>Project</span></li>
     </ul>
   </div>
 </template>
@@ -32,7 +33,7 @@ export default {
 }
 
 .lnbWrap ul {
-  color: #B6B6B6;
+  color: #FFF;
   list-style: none;
   padding-left: 0px;
 }
@@ -51,7 +52,7 @@ export default {
 .lnbWrap ul li.title span::after {
   content: "";
   flex-grow: 1;
-  background: #B6B6B6;
+  background: #FFF;
   height: 1px;
   font-size: 0px;
   line-height: 0px;
@@ -66,13 +67,13 @@ export default {
 
 .lnbWrap ul li.item:hover, .lnbWrap ul li.router-link-active:hover {
   color: #FFF;
-  background-color: #45BEAC;
+  background-color: #608BCB;
   cursor: pointer;
   transition: .1s;
 }
 
 .lnbWrap ul li.router-link-active {
-  background-color: #505961;
+  background-color: #465461;
   color: #FFF;
   cursor: default;
 }

@@ -18,7 +18,7 @@ export default {
 .page-wrapper {
     width: 100vw;
     height: 100vh;
-    background-color: #2D353C;
+    background-color: #4B8ECE;
     display: flex;
 }
 </style>

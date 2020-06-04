@@ -100,7 +100,7 @@ export default {
   }
 
   .header .nav a {
-    color: #B6B6B6;
+    color: #FFF;
     font-size: 16px;
     text-decoration: none;
     margin: 0px 15px;

@@ -25,7 +25,7 @@
           <label for="regist-id">아이디 기억하기</label>
         </div>
         <div class="login-button-wrap">
-          <b-button variant="dark" class="btn-lg" @click="loginUser" :disabled="objDisable === true">Login</b-button>
+          <b-button variant="primary" class="btn-lg" @click="loginUser" :disabled="objDisable === true">Login</b-button>
         </div>
       </div>
     </div>
@@ -37,8 +37,9 @@ import { fetchUserLogin } from '@/api';
 
 export default {
   created () {
-    const userInfo = JSON.parse(localStorage.userInfo);
-    if (userInfo !== null) {
+    // userInfo 값이 있을 경우, 관리자 메인으로 이동
+    if (localStorage.getItem('userInfo') !== null) {
+      // const userInfo = JSON.parse(localStorage.userInfo);
       this.$router.push({
         name: 'admin.user'
       });
@@ -241,9 +242,9 @@ export default {
 
 input[type=text]:focus, input[type=password]:focus {
   outline: none;
-  transition: .3s;
-  color: #45BEAC;
-  border-bottom: 3px solid #45BEAC;
+  transition: .2s;
+  color: #4B8ECE;
+  border-bottom: 3px solid #4B8ECE;
 }
 
 input[type=text], input[type=password] {
@@ -263,8 +264,8 @@ input[type=text].error, input[type=password].error {
 }
 
 input[type=text].active, input[type=password].active {
-  color: #45BEAC;
-  border-bottom: 3px solid #45BEAC;
+  color: #4B8ECE;
+  border-bottom: 3px solid #4B8ECE;
 }
 
 input::placeholder {
