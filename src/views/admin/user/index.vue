@@ -12,14 +12,40 @@
       </div>
       <div class="itemWrap">
         <div class="title">title</div>
-        <div class="list">list</div>
+        <div class="list">
+          <ul class="item-list">
+            <li v-for="item in listItems" v-bind:key="item.SEQ">
+              {{ item.ID }}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { fetchUserList } from '@/api';
+
 export default {
+  data () {
+    return {
+      listItems: []
+    };
+  },
+  created () {
+    const vm = this;
+    fetchUserList()
+      .then(response => {
+        console.log(response.data);
+        if (response.data.result) {
+          vm.listItems = response.data.data;
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 };
 </script>
 
@@ -27,9 +53,6 @@ export default {
 /**
  * common
  */
-.functionWrap {
-
-}
 
 .itemWrap {
   padding-top: 20px;

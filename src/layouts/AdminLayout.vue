@@ -1,6 +1,8 @@
 <template>
   <div class="layoutWrap">
-      <admin-header></admin-header>
+      <div class="headerWrap">
+        <admin-header></admin-header>
+      </div>
       <div class="contentWrap">
         <lnb></lnb>
         <slot></slot>
@@ -30,6 +32,7 @@ export default {
 }
 .contentWrap {
   width: 100vw;
+  top: 70px;
   display: flex;
 }
 

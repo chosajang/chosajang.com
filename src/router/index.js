@@ -11,7 +11,22 @@ import BlogView from '../views/service/blog';
 import ProjectView from '../views/service/project';
 import ProfileView from '../views/service/profile';
 
+import { isSession } from '../utils/common.js';
+
 Vue.use(VueRouter);
+
+const requireAuth = () => (to, from, next) => {
+  if (isSession() !== false) {
+    return next();
+  } else {
+    // login 재귀호출 방지
+    if (to.name === 'admin.login') {
+      return next();
+    } else {
+      return next('/admin/login');
+    }
+  }
+};
 
 const routes = [
   {
@@ -36,10 +51,7 @@ const routes = [
     meta: {
       layout: 'ServiceLayout'
     },
-    component: ProjectView,
-    beforeEnter: (to, from, next) => {
-      next();
-    }
+    component: ProjectView
   },
   {
     path: '/profile',
@@ -47,10 +59,7 @@ const routes = [
     meta: {
       layout: 'ServiceLayout'
     },
-    component: ProfileView,
-    beforeEnter: (to, from, next) => {
-      next();
-    }
+    component: ProfileView
   },
   {
     path: '/admin',
@@ -59,11 +68,9 @@ const routes = [
   },
   {
     path: '/admin/login',
-    name: 'login',
+    name: 'admin.login',
     component: AdminLoginView,
-    beforeEnter: (to, from, next) => {
-      next();
-    }
+    beforeEnter: requireAuth()
   },
   {
     path: '/admin/user',
@@ -71,7 +78,8 @@ const routes = [
     meta: {
       layout: 'AdminLayout'
     },
-    component: AdminUserView
+    component: AdminUserView,
+    beforeEnter: requireAuth()
   },
   {
     path: '/admin/group',
@@ -79,7 +87,8 @@ const routes = [
     meta: {
       layout: 'AdminLayout'
     },
-    component: AdminGroupView
+    component: AdminGroupView,
+    beforeEnter: requireAuth()
   },
   {
     path: '/admin/board',
@@ -87,7 +96,8 @@ const routes = [
     meta: {
       layout: 'AdminLayout'
     },
-    component: AdminBoardView
+    component: AdminBoardView,
+    beforeEnter: requireAuth()
   },
   {
     path: '/admin/post',
@@ -95,7 +105,8 @@ const routes = [
     meta: {
       layout: 'AdminLayout'
     },
-    component: AdminPostView
+    component: AdminPostView,
+    beforeEnter: requireAuth()
   },
   { /* 404 error 방지 */
     path: '*',

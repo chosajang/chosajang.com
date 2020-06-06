@@ -132,8 +132,9 @@ export default {
         fetchUserLogin(id, password)
           .then(response => {
             const loginResponse = response.data;
+            console.log(loginResponse);
             if (loginResponse.result) {
-              localStorage.userInfo = JSON.stringify(loginResponse);
+              localStorage.userInfo = JSON.stringify(loginResponse.member_info);
               // 아이디 기억하기
               const registId = this.checkRegistId;
               if (registId) {
