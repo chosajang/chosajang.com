@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { isSession } from '../utils/common.js';
+import { getUserInfo } from '../utils/common.js';
 
 // HTTP Request & Response 관련 기본 설정
 const config = {
@@ -15,7 +15,7 @@ function fetchUserLogin (id, password) {
 }
 
 function fetchUserList () {
-  const userInfo = isSession();
+  const userInfo = getUserInfo();
   const params = new URLSearchParams();
   params.append('member_seq', userInfo.SEQ);
   params.append('session_id', userInfo.SESSION_ID);

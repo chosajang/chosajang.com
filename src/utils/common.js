@@ -5,7 +5,7 @@ function testFunc (message) {
   console.log('testFunc', message);
 }
 
-function isSession () {
+function getUserInfo () {
   let userInfo = localStorage.getItem('userInfo');
   if (userInfo !== null) {
     userInfo = JSON.parse(userInfo);
@@ -19,5 +19,5 @@ function isSession () {
 
 export {
   testFunc,
-  isSession
+  getUserInfo
 };

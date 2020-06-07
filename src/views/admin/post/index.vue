@@ -1,7 +1,5 @@
 <template>
-  <div class="contentWrap">
-    <div class="content">Admin / User / Post</div>
-  </div>
+  <div class="content">Admin / User / Post</div>
 </template>
 
 <script>

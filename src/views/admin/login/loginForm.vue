@@ -34,11 +34,12 @@
 
 <script>
 import { fetchUserLogin } from '@/api';
+import { getUserInfo } from '@/utils/common.js';
 
 export default {
   created () {
     // userInfo 값이 있을 경우, 관리자 메인으로 이동
-    if (localStorage.getItem('userInfo') !== null) {
+    if (getUserInfo() !== false) {
       // const userInfo = JSON.parse(localStorage.userInfo);
       this.$router.push({
         name: 'admin.user'

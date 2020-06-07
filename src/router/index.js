@@ -11,12 +11,12 @@ import BlogView from '../views/service/blog';
 import ProjectView from '../views/service/project';
 import ProfileView from '../views/service/profile';
 
-import { isSession } from '../utils/common.js';
+import { getUserInfo } from '../utils/common.js';
 
 Vue.use(VueRouter);
 
 const requireAuth = () => (to, from, next) => {
-  if (isSession() !== false) {
+  if (getUserInfo() !== false) {
     return next();
   } else {
     // login 재귀호출 방지

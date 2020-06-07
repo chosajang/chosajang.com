@@ -27,6 +27,7 @@ export default {
   align-items: center;
   color: #FFF;
   background-color: #2D353C;
+  height: 100%;
 }
 
 .logo > a > span {
@@ -37,11 +38,6 @@ export default {
  * Mobile
  */
 @media all and (max-width:768px) {
-  .header {
-    height: 50px;
-    transition: 0.3s;
-  }
-
   .header .nav {
     display: none;
   }
@@ -71,11 +67,6 @@ export default {
  * Tablet & Desktop
  */
 @media all and (min-width:768px) {
-  .header {
-    height: 70px;
-    transition: 0.3s;
-  }
-
   .logo {
     flex: none;
   }
@@ -86,24 +77,6 @@ export default {
     margin: 0px 20px;
     letter-spacing: 3px;
     text-decoration: none;
-  }
-
-  .nav {
-    margin-right: auto;
-    padding-left: 80px;
-  }
-
-  .header .nav .router-link-exact-active {
-    color: #FFF;
-    font-size: 16px;
-    text-decoration: none;
-  }
-
-  .header .nav a {
-    color: #FFF;
-    font-size: 16px;
-    text-decoration: none;
-    margin: 0px 15px;
   }
 
   .mobile-nav {

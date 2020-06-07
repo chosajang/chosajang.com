@@ -1,24 +1,22 @@
 <template>
-  <div class="contentWrap">
-    <div class="content">
-      <div class="functionWrap">
-        <input type="text" placeholder="ID(Email) or Name"/>
-        <select>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-        </select>
-      </div>
-      <div class="itemWrap">
-        <div class="title">title</div>
-        <div class="list">
-          <ul class="item-list">
-            <li v-for="item in listItems" v-bind:key="item.SEQ">
-              {{ item.ID }}
-            </li>
-          </ul>
-        </div>
+  <div class="content">
+    <div class="functionWrap">
+      <input type="text" placeholder="ID(Email) or Name"/>
+      <select>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+      </select>
+    </div>
+    <div class="itemWrap">
+      <div class="title">title</div>
+      <div class="list">
+        <ul class="item-list">
+          <li v-for="item in listItems" v-bind:key="item.SEQ">
+            {{ item.ID }}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -37,7 +35,7 @@ export default {
     const vm = this;
     fetchUserList()
       .then(response => {
-        console.log(response.data);
+        console.log('fetUserList');
         if (response.data.result) {
           vm.listItems = response.data.data;
         }
@@ -53,6 +51,10 @@ export default {
 /**
  * common
  */
+.functionWrap {
+  padding-top: 20px;
+  width: 100%;
+}
 
 .itemWrap {
   padding-top: 20px;
@@ -84,6 +86,11 @@ input[type=text]:focus {
 input[type=text]:focus::placeholder {
   color: #45BEAC;
   transition: .2s;
+}
+
+.item-list {
+  list-style:none;
+  padding-left:0px;
 }
 
 /**

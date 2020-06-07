@@ -1,5 +1,10 @@
 <template>
-  <div class="lnbWrap">
+  <div class="lnb">
+    <div class="profile">
+      <div class="img"><img src="http://api.chosajang.com/data//upload/2019/0916/165833_416065006029.jpg"></div>
+      <div class="name">조현희</div>
+      <div class="position"></div>
+    </div>
     <ul>
       <li class="title"><span>Management</span></li>
       <router-link to="/admin/user" tag="li" class="item"><i class="fas fa-user-edit"></i>User</router-link>
@@ -13,8 +18,12 @@
 </template>
 
 <script>
-export default {
+// import { mapState } from 'vuex';
 
+export default {
+  // computed: {
+  //   ...mapState(['info'])
+  // }
 };
 </script>
 
@@ -22,63 +31,67 @@ export default {
 /**
  * common
  */
-.lnbWrap {
-  position: fixed;
-  overflow: hidden;
-  left: 0px;
+.lnb {
   width: 200px;
-  height: 100vh;
+  color: #FFF;
   background-color: #2D353C;
-  transition: .2s;
 }
 
-.lnbWrap ul {
-  color: #FFF;
+.lnb .profile {
+  display: inline-flex;
+  width: 100%;
+  background-color: #1A2229;
+}
+.lnb .profile .img img{
+  width: 60px;
+  height: 60px;
+}
+
+.lnb ul {
   list-style: none;
   padding-left: 0px;
 }
 
-.lnbWrap ul li.title {
+.lnb ul li.title {
   font-size: 12px;
   font-weight: bold;
   padding: 10px 10px 10px 15px;
+  color: #A8ACB1;
 }
 
-.lnbWrap ul li.title span {
+.lnb ul li.title span {
   display: flex;
   flex-basis: 100%;
   align-items: center;
 }
-.lnbWrap ul li.title span::after {
+.lnb ul li.title span::after {
   content: "";
   flex-grow: 1;
-  background: #FFF;
+  background: #A8ACB1;
   height: 1px;
   font-size: 0px;
   line-height: 0px;
   margin: 0px 10px;
 }
 
-.lnbWrap ul li.item {
+.lnb ul li.item {
   font-size: 14px;
   padding: 10px 0px 10px 20px;
   transition: .2s;
 }
 
-.lnbWrap ul li.item:hover, .lnbWrap ul li.router-link-active:hover {
-  color: #FFF;
+.lnb ul li.item:hover, .lnb ul li.router-link-active:hover {
   background-color: #608BCB;
   cursor: pointer;
   transition: .1s;
 }
 
-.lnbWrap ul li.router-link-active {
+.lnb ul li.router-link-active {
   background-color: #465461;
-  color: #FFF;
   cursor: default;
 }
 
-.lnbWrap ul li.item i {
+.lnb ul li.item i {
   text-align: center;
   font-size: 16px;
   width: 30px;
@@ -89,10 +102,7 @@ export default {
  * Mobile
  */
 @media all and (max-width:768px) {
-  .lnbWrap {
-    left: -200px;
-    transition: .2s;
-  }
+
 }
 /**
  * Tablet & Desktop

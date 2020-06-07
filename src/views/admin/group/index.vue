@@ -1,7 +1,5 @@
 <template>
-  <div class="contentWrap">
-      <div class="content">Admin / User / Group</div>
-  </div>
+  <div class="content">Admin / User / Group</div>
 </template>
 
 <script>
@@ -14,8 +12,7 @@ export default {
  * common
  */
 .content {
-  width: 100vw;
-  padding-left: 200px;
+
 }
 
 /**
