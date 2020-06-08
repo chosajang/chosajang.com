@@ -2,22 +2,34 @@
   <div class="content">
     <div class="functionWrap">
       <input type="text" placeholder="ID(Email) or Name"/>
-      <select>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-      </select>
     </div>
-    <div class="itemWrap">
-      <div class="title">title</div>
-      <div class="list">
-        <ul class="item-list">
-          <li v-for="item in listItems" v-bind:key="item.SEQ">
-            {{ item.ID }}
-          </li>
-        </ul>
-      </div>
+    <div class="itemWrap table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Image</th>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Title</th>
+            <th scope="col">Grade</th>
+            <th scope="col">Status</th>
+            <th scope="col">Entry Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in listItems" v-bind:key="item.SEQ">
+            <th scope="row">1</th>
+            <td><img :src="imgUrl+item.PROFILE_IMG" onerror="this.src='/img/default.jpg'" /></td>
+            <td>{{ item.ID }}</td>
+            <td>{{ item.NAME }}</td>
+            <td>{{ item.MEMBER_TITLE_NAME }}</td>
+            <td>{{ item.MEMBER_GRADE_NAME }}</td>
+            <td>{{ item.MEMBER_STATUS_NAME }}</td>
+            <td>{{ item.ENTRY_DATE }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -28,14 +40,16 @@ import { fetchUserList } from '@/api';
 export default {
   data () {
     return {
-      listItems: []
+      listItems: [],
+      imgUrl: this.$store.state.config.apiUrl,
+      errorImg: '/assets/default.png'
     };
   },
   created () {
+    console.log(this.$store.state.config.apiUrl);
     const vm = this;
     fetchUserList()
       .then(response => {
-        console.log('fetUserList');
         if (response.data.result) {
           vm.listItems = response.data.data;
         }
@@ -43,6 +57,12 @@ export default {
       .catch(error => {
         console.log(error);
       });
+  },
+  methods: {
+    imgUrlAlt (event) {
+      console.log('imgUrlAlt');
+      this.src = this.errorImg;
+    }
   }
 };
 </script>
@@ -65,6 +85,11 @@ export default {
   font-weight: bold;
 }
 
+.itemWrap > table > tbody img {
+  width: 40px;
+  height: 40px;
+}
+
 input[type=text] {
   width: 220px;
   padding: 8px 14px;
@@ -79,18 +104,13 @@ input[type=text] {
 input[type=text]:focus {
   outline: none;
   transition: .2s;
-  color: #45BEAC;
-  border-bottom: 3px solid #45BEAC;
+  color: #608BCB;
+  border-bottom: 3px solid #608BCB;
 }
 
 input[type=text]:focus::placeholder {
-  color: #45BEAC;
+  color: #608BCB;
   transition: .2s;
-}
-
-.item-list {
-  list-style:none;
-  padding-left:0px;
 }
 
 /**

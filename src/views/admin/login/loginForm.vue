@@ -65,13 +65,6 @@ export default {
     };
   },
   methods: {
-    // async login () {
-    //   try {
-    //     console.log('login');
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
     idCheck () {
       const id = this.userInfo.id;
       // eslint-disable-next-line no-useless-escape

@@ -1,9 +1,11 @@
 <template>
   <div class="lnb">
     <div class="profile">
-      <div class="img"><img src="http://api.chosajang.com/data//upload/2019/0916/165833_416065006029.jpg"></div>
-      <div class="name">조현희</div>
-      <div class="position"></div>
+      <div class="img"><img :src="userInfo.img"/></div>
+      <div class="info">
+        <div class="name">{{ userInfo.name }}</div>
+        <div class="title">{{ userInfo.title }}</div>
+      </div>
     </div>
     <ul>
       <li class="title"><span>Management</span></li>
@@ -18,12 +20,24 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex';
+import { getUserInfo } from '@/utils/common.js';
 
 export default {
-  // computed: {
-  //   ...mapState(['info'])
-  // }
+  data () {
+    return {
+      userInfo: {
+        img: '',
+        name: '',
+        title: ''
+      }
+    };
+  },
+  created () {
+    const userInfo = getUserInfo();
+    this.userInfo.img = this.$store.state.config.apiUrl + userInfo.PROFILE_FILE_INFO.PATH + userInfo.PROFILE_FILE_INFO.PHYSICAL_NAME;
+    this.userInfo.name = userInfo.NAME;
+    this.userInfo.title = userInfo.MEMBER_TITLE_NAME;
+  }
 };
 </script>
 
@@ -40,11 +54,31 @@ export default {
 .lnb .profile {
   display: inline-flex;
   width: 100%;
+  height: 60px;
   background-color: #1A2229;
 }
-.lnb .profile .img img{
+
+.lnb .profile .img img {
   width: 60px;
   height: 60px;
+}
+
+.lnb .profile .info div {
+  width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lnb .profile .info .name {
+  padding: 8px 0 0 10px;
+  font-size: 14px;
+}
+
+.lnb .profile .info .title {
+  padding: 4px 0 0 10px;
+  font-size: 12px;
+  color: #C2C2C2;
 }
 
 .lnb ul {
