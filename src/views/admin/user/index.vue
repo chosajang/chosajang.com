@@ -4,6 +4,7 @@
       <input type="text" placeholder="ID(Email) or Name"/>
     </div>
     <div class="itemWrap table-responsive">
+      <!-- Item List -->
       <table class="table table-hover">
         <thead>
           <tr>
@@ -18,8 +19,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in listItems" v-bind:key="item.SEQ">
-            <th scope="row">1</th>
+          <tr v-for="(item, index) in listItemSlice" v-bind:key="item.SEQ">
+            <th scope="row">{{ (pageNum * 10) + index + 1 }}</th>
             <td><img :src="imgUrl+item.PROFILE_IMG" onerror="this.src='/img/default.jpg'" /></td>
             <td>{{ item.ID }}</td>
             <td>{{ item.NAME }}</td>
@@ -30,6 +31,20 @@
           </tr>
         </tbody>
       </table>
+      <!-- Page Navigation -->
+      <nav aria-label="Page navigation">
+        <paginate
+          :pageCount="pageCount"
+          :clickHandler="pageMove"
+          :containerClass="'pagination justify-content-center'"
+          :prev-class="'page-item'"
+          :prev-link-class="'page-link'"
+          :page-class="'page-item'"
+          :page-link-class="'page-link'"
+          :next-class="'page-item'"
+          :next-link-class="'page-link'">
+        </paginate>
+      </nav>
     </div>
   </div>
 </template>
@@ -41,8 +56,10 @@ export default {
   data () {
     return {
       listItems: [],
+      pageSize: 10,
+      pageNum: 0,
       imgUrl: this.$store.state.config.apiUrl,
-      errorImg: '/assets/default.png'
+      errorImg: '/img/default.png'
     };
   },
   created () {
@@ -58,10 +75,26 @@ export default {
         console.log(error);
       });
   },
+  computed: {
+    pageCount () {
+      const listLeng = this.listItems.length;
+      const listSize = this.pageSize;
+      let page = Math.floor(listLeng / listSize);
+      if (listLeng % listSize > 0) {
+        page += 1;
+      }
+      console.log('pageCount - ', page);
+      return page;
+    },
+    listItemSlice (pageNum) {
+      const start = this.pageNum * this.pageSize;
+      const end = start + this.pageSize;
+      return this.listItems.slice(start, end);
+    }
+  },
   methods: {
-    imgUrlAlt (event) {
-      console.log('imgUrlAlt');
-      this.src = this.errorImg;
+    pageMove (pageNum) {
+      this.pageNum = pageNum - 1;
     }
   }
 };
