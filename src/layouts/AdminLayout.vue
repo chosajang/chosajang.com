@@ -62,6 +62,10 @@ export default {
   transition: .2s;
 }
 
+.contentWrap > .content {
+  width: 100%;
+}
+
 /**
  * Mobile
  */

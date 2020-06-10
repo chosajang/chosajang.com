@@ -28,6 +28,7 @@ export default {
   color: #FFF;
   background-color: #2D353C;
   height: 100%;
+  min-width: 362px;
 }
 
 .logo > a > span {

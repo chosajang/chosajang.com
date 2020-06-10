@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="functionWrap">
-      <input type="text" placeholder="ID(Email) or Name"/>
+      <input type="text" v-model="search" placeholder="ID(Email) or Name"/>
     </div>
     <div class="itemWrap table-responsive">
       <!-- Item List -->
@@ -55,6 +55,7 @@ import { fetchUserList } from '@/api';
 export default {
   data () {
     return {
+      search: '',
       listItems: [],
       pageSize: 10,
       pageNum: 0,
@@ -77,19 +78,33 @@ export default {
   },
   computed: {
     pageCount () {
-      const listLeng = this.listItems.length;
+      const listLeng = this.listFiltered.length;
       const listSize = this.pageSize;
       let page = Math.floor(listLeng / listSize);
       if (listLeng % listSize > 0) {
         page += 1;
       }
-      console.log('pageCount - ', page);
       return page;
     },
+    listFiltered () {
+      const search = (this.search).replace(/ /gi, '');
+      // List Filter
+      let idItems = this.listItems;
+      let nameItems = this.listItems;
+      idItems = idItems.filter(item => {
+        return item.ID.toLowerCase().includes(search.toLowerCase());
+      });
+      nameItems = nameItems.filter(item => {
+        return item.NAME.toLowerCase().includes(search.toLowerCase());
+      });
+      const result = new Set(idItems.concat(nameItems));
+      return [...result];
+    },
     listItemSlice (pageNum) {
+      // Paginated(Item Slice)
       const start = this.pageNum * this.pageSize;
       const end = start + this.pageSize;
-      return this.listItems.slice(start, end);
+      return this.listFiltered.slice(start, end);
     }
   },
   methods: {
