@@ -64,7 +64,6 @@ export default {
     };
   },
   created () {
-    console.log(this.$store.state.config.apiUrl);
     const vm = this;
     fetchUserList()
       .then(response => {
