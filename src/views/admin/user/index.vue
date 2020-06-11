@@ -85,6 +85,9 @@ export default {
       }
       return page;
     },
+    /**
+     * 회원 ID,이름 검색 시 필터 처리
+     */
     listFiltered () {
       const search = (this.search).replace(/ /gi, '');
       // List Filter
@@ -96,10 +99,15 @@ export default {
       nameItems = nameItems.filter(item => {
         return item.NAME.toLowerCase().includes(search.toLowerCase());
       });
-      const result = new Set(idItems.concat(nameItems));
-      return [...result];
+      // Remove Duplicate
+      const itemList = new Set(idItems.concat(nameItems));
+
+      return [...itemList];
     },
-    listItemSlice (pageNum) {
+    /**
+     * 페이지네이션을 위한 배열 슬라이스
+     */
+    listItemSlice () {
       // Paginated(Item Slice)
       const start = this.pageNum * this.pageSize;
       const end = start + this.pageSize;

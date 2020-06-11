@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import AdminBoardView from '../views/admin/board';
-import AdminGroupView from '../views/admin/group';
+import AdminOtherView from '../views/admin/other';
 import AdminLoginView from '../views/admin/login';
 import AdminPostView from '../views/admin/post';
 import AdminUserView from '../views/admin/user';
@@ -82,12 +82,12 @@ const routes = [
     beforeEnter: requireAuth()
   },
   {
-    path: '/admin/group',
-    name: 'admin.group',
+    path: '/admin/other',
+    name: 'admin.other',
     meta: {
       layout: 'AdminLayout'
     },
-    component: AdminGroupView,
+    component: AdminOtherView,
     beforeEnter: requireAuth()
   },
   {
