@@ -1,5 +1,11 @@
 <template>
-  <div class="content">Admin / User / Group</div>
+  <div class="content">
+    <p>Admin / Group</p>
+    <ul>
+      <li>회원 직함(Title) 정보 조회 및 수정</li>
+      <li>회원 등급(Grade) 정보 조회 및 수정</li>
+    </ul>
+  </div>
 </template>
 
 <script>

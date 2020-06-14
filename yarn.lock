@@ -852,6 +852,11 @@
     error-stack-parser "^2.0.0"
     string-width "^2.0.0"
 
+"@sweetalert2/theme-borderless@^3.1.4":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@sweetalert2/theme-borderless/-/theme-borderless-3.1.4.tgz#a4f696b0dd60a11e24e1d0664558314345aa2e2a"
+  integrity sha512-Zw0STGyUDUs5PWjQlQd5y/BtIpYp3j24ds5nH6mOHkAQIGqyPpaINproRgotfsgnHXQMebQcHxse+8nYeibH6g==
+
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -7788,6 +7793,11 @@ sweetalert2@9.x:
   version "9.13.1"
   resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.13.1.tgz#debe573ab1a1d66308c76ded86ec364b9521119e"
   integrity sha512-yyhf9f3FIYNpOLVCbGOdFr13KuXqKWOiHvoFBio7mMtZxTpOsa3XRdVDd0EYCoI+MDuUyYh6TeeG345j8zxT/Q==
+
+sweetalert2@^9.14.4:
+  version "9.14.4"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.14.4.tgz#92496c38eea3b68b28badb549663d2ea96f7476e"
+  integrity sha512-+uqlHoK6BKgB2x9nhHFkNaugCfUnAJqZajtWPFVAP1B7a8PZ4ZUnjWjlFtjuJPWiXNu2s1XdACjnwP+PMXMlrg==
 
 table@^5.2.3:
   version "5.4.6"

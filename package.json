@@ -10,11 +10,13 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@mdi/font": "^3.6.95",
+    "@sweetalert2/theme-borderless": "^3.1.4",
     "@vue/composition-api": "^0.5.0",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.11.0",
     "core-js": "^3.6.4",
+    "sweetalert2": "^9.14.4",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
     "vue-sweetalert2": "^3.0.5",
