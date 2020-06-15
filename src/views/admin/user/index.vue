@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in listItemSlice" v-bind:key="item.SEQ">
+          <tr v-for="(item, index) in listItemSlice" v-bind:key="item.SEQ" @click="showModal = true">
             <th scope="row">{{ (pageNum * 10) + index + 1 }}</th>
             <td><img :src="imgUrl+item.PROFILE_IMG" onerror="this.src='/img/default.jpg'" /></td>
             <td>{{ item.ID }}</td>
@@ -46,11 +46,20 @@
         </paginate>
       </nav>
     </div>
+    <!-- use the modal component, pass in the prop -->
+    <user-info v-if="showModal" @close="showModal = false">
+      <!--
+        you can use custom content here to overwrite
+        default content
+      -->
+      <h3 slot="header">custom header</h3>
+    </user-info>
   </div>
 </template>
 
 <script>
 import { fetchUserList } from '@/api';
+import userInfo from './userInfo.vue';
 
 export default {
   data () {
@@ -60,8 +69,11 @@ export default {
       pageSize: 10,
       pageNum: 0,
       imgUrl: this.$store.state.config.apiUrl,
-      errorImg: '/img/default.png'
+      showModal: false
     };
+  },
+  components: {
+    userInfo
   },
   created () {
     const vm = this;
@@ -117,6 +129,10 @@ export default {
   methods: {
     pageMove (pageNum) {
       this.pageNum = pageNum - 1;
+    },
+    handle_toggle () {
+      console.log('handle_toggle');
+      this.is_show = !this.is_show;
     }
   }
 };
