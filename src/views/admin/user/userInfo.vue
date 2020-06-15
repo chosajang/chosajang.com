@@ -3,26 +3,29 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-
           <div class="modal-header">
             <slot name="header">
-              default header
+              회원 정보
             </slot>
           </div>
 
           <div class="modal-body">
-            <slot name="body">
-              default body
-            </slot>
+            <ul>
+              <li>회원 이미지</li>
+              <li>아이디</li>
+              <li>이름</li>
+              <li>타이틀</li>
+              <li>등급</li>
+              <li>상태</li>
+              <li>가입시기</li>
+            </ul>
           </div>
 
           <div class="modal-footer">
             <slot name="footer">
               default footer
-              <button class="modal-default-button" @click="$emit('close')">
-                OK
-              </button>
             </slot>
+            <p><button class="modal-default-button" @click="$emit('close')">OK</button></p>
           </div>
         </div>
       </div>
@@ -55,7 +58,7 @@ export default {
 }
 
 .modal-container {
-  width: 300px;
+  width: 600px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;

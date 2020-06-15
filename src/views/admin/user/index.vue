@@ -52,7 +52,7 @@
         you can use custom content here to overwrite
         default content
       -->
-      <h3 slot="header">custom header</h3>
+      <h3 slot="header">회원 정보</h3>
     </user-info>
   </div>
 </template>
