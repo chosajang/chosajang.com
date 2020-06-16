@@ -13,7 +13,6 @@
             <th scope="col">ID</th>
             <th scope="col">Name</th>
             <th scope="col">Title</th>
-            <th scope="col">Grade</th>
             <th scope="col">Status</th>
             <th scope="col">Entry Date</th>
           </tr>
@@ -25,7 +24,6 @@
             <td>{{ item.ID }}</td>
             <td>{{ item.NAME }}</td>
             <td>{{ item.MEMBER_TITLE_NAME }}</td>
-            <td>{{ item.MEMBER_GRADE_NAME }}</td>
             <td>{{ item.MEMBER_STATUS_NAME }}</td>
             <td>{{ item.ENTRY_DATE }}</td>
           </tr>
@@ -129,10 +127,6 @@ export default {
   methods: {
     pageMove (pageNum) {
       this.pageNum = pageNum - 1;
-    },
-    handle_toggle () {
-      console.log('handle_toggle');
-      this.is_show = !this.is_show;
     }
   }
 };

@@ -10,7 +10,6 @@
     <ul>
       <li class="title"><span>Management</span></li>
       <router-link to="/admin/user" tag="li" class="item"><i class="fas fa-user-edit"></i>User</router-link>
-      <router-link to="/admin/other" tag="li" class="item"><i class="fas fa-users-cog"></i>Other</router-link>
       <li class="title"><span>Blog</span></li>
       <router-link to="/admin/board" tag="li" class="item"><i class="fas fa-clipboard-list"></i>Board</router-link>
       <router-link to="/admin/post" tag="li" class="item"><i class="fas fa-pencil-alt"></i>Post</router-link>

@@ -15,7 +15,6 @@
               <li>아이디</li>
               <li>이름</li>
               <li>타이틀</li>
-              <li>등급</li>
               <li>상태</li>
               <li>가입시기</li>
             </ul>
@@ -49,7 +48,7 @@ export default {
   height: 100%;
   background-color: rgba(0, 0, 0, .5);
   display: table;
-  transition: opacity .3s ease;
+  transition: opacity .2s ease;
 }
 
 .modal-wrapper {
@@ -58,19 +57,22 @@ export default {
 }
 
 .modal-container {
-  width: 600px;
+  width: 400px;
   margin: 0px auto;
-  padding: 20px 30px;
   background-color: #fff;
-  border-radius: 2px;
+  border-radius: 3px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
 
-.modal-header h3 {
-  margin-top: 0;
-  color: #42b983;
+.modal-header {
+  height: 50px;
+  border-radius: 3px 3px 0 0;
+  background-color: #608BCB;
+  color: #FFF;
+  justify-content: center;
+  align-content: center;
 }
 
 .modal-body {
