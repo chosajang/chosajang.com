@@ -3,14 +3,7 @@
 
 Front/Back-end 두개의 프로젝트를 진행하고 있으며, github.io 도메인 사용을 위한 웹서비스용 저장소를 포함한 총3개의 저장소를 사용합니다.
 
-- Front-end(chosajang.com)
- > 사용기술 : Vue.js + jQuery + Bootstrap + Awesome Font
- 
-- Service(chosajang.github.io)
- > 도메인 사용목적이며, Front-end 빌드 결과물을 서비스할 영역
-
-- Back-end(api.chosajang.com)
- > 사용기술 : php(CodeIgniter3.x)
+> **Front-end 프로젝트** - Vue.js + jQuery + Bootstrap + Awesome Font
 
 
 
