@@ -199,7 +199,7 @@ export default {
 .logo .logo-image {
   width: 60px;
   height: 60px;
-  background-image: url('/img/people.png');
+  background-image: url('/img/default.png');
   background-size: cover;
 }
 
@@ -207,6 +207,7 @@ export default {
   font-size: 30px;
   letter-spacing: 5px;
   text-decoration: none;
+  margin-left: 10px;
 }
 
 .loginForm {

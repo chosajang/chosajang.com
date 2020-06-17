@@ -19,9 +19,9 @@
             </div>
             <div class="form-wrap image-form">
               <div class="imagePreview"></div>
-              <div>
-                <label class="btn btn-primary img-btn">Upload<input type="file" class="uploadFile img" value="Upload Photo" ></label>
-                <input type="button" class="btn btn-danger" value="Delete">
+              <div class="btn-groups">
+                <label class="btn btn-primary btn-image-custom">Upload<input type="file" class="uploadFile img" value="Upload Photo" ></label>
+                <input type="button" class="btn btn-danger btn-delete-custom" value="Delete">
               </div>
             </div>
             <div class="form-wrap">
@@ -49,9 +49,9 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              default footer
+              <input type="button" class="btn btn-primary" value="Save">
+              <input type="button" class="btn btn-secondary" value="Cancel" @click="$emit('close')">
             </slot>
-            <p><button class="modal-default-button" @click="$emit('close')">OK</button></p>
           </div>
         </div>
       </div>
@@ -61,7 +61,9 @@
 
 <script>
 export default {
-
+  created () {
+    console.log('created');
+  }
 };
 </script>
 
@@ -129,20 +131,30 @@ export default {
 .image-form .imagePreview {
   width: 120px;
   height: 120px;
+  border-radius: 5px;
   background-position: center center;
   background:url('/img/default.png');
-  background-color:#fff;
+  background-color:#d5ebff;
   background-size: cover;
   background-repeat:no-repeat;
   display: inline-block;
 }
 
-.image-form .img-btn {
+.image-form .btn-groups {
+  margin-top: 10px;
+}
+
+.image-form .btn-image-custom {
   margin-bottom: 0px;
 }
 
-.image-form .img-btn input{
+.image-form .btn-image-custom input{
   width: 0px;height: 0px;overflow: hidden;
+}
+
+.image-form .btn-delete-custom {
+  height: 41px;
+  margin-left: 10px;
 }
 
 input[type=text]:focus, input[type=password]:focus {
