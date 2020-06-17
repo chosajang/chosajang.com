@@ -5,6 +5,7 @@
 
 - chosajang.com : Vue.js + jQuery + Bootstrap + Awesome Font로 작업중인 Front-end 프로젝트
  > chosajang.github.io : 도메인 사용목적으로 생성한 Front-end 빌드 결과물을 서비스할 영역
+
 - api.chosajang.com : php(CodeIgniter3.x)로 작업중인 Back-end 프로젝트
 
 
