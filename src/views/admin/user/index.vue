@@ -47,10 +47,8 @@
     <!-- use the modal component, pass in the prop -->
     <user-info v-if="showModal" @close="showModal = false">
       <!--
-        you can use custom content here to overwrite
-        default content
+        slot : header, body, footer
       -->
-      <h3 slot="header">회원 정보</h3>
     </user-info>
   </div>
 </template>
