@@ -5,6 +5,11 @@ Front/Back-end 두개의 프로젝트를 진행하고 있으며, github.io 도�
 
 > **Front-end 프로젝트** - Vue.js + jQuery + Bootstrap + Awesome Font
 
+## 기획
+기획은 피그마(Figma)라는 프로토타입툴을 사용하여 제작하고 있습니다.
+ > 기획문서 
+![ex_screenshot](./public/ref/workflow.jpg)
+
 ## 로그인
 
 ![ex_screenshot](./public/ref/login.gif)
