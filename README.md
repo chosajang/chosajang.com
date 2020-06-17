@@ -7,7 +7,8 @@ Front/Back-end 두개의 프로젝트를 진행하고 있으며, github.io 도�
 
 ## 기획
 기획은 피그마(Figma)라는 프로토타입툴을 사용하여 제작하고 있습니다.
- > 기획문서 
+ > [기획문서](https://www.figma.com/proto/GihV1M0MoSvTPNtzB2xVxU/%EC%A1%B0%EC%82%AC%EC%9E%A5%EB%8B%B7%EC%BB%B4?node-id=39%3A0&scaling=min-zoom, "figma link")
+
 ![ex_screenshot](./public/ref/workflow.png)
 
 ## 로그인
