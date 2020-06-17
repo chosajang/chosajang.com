@@ -7,4 +7,4 @@ Front/Back-end 두개의 프로젝트를 진행하고 있으며, github.io 도�
 
 ## 로그인
 
-![ex_screenshot](./ref/login.gif)
+![ex_screenshot](./public/ref/login.gif)
