@@ -5,27 +5,6 @@ Front/Back-end 두개의 프로젝트를 진행하고 있으며, github.io 도�
 
 > **Front-end 프로젝트** - Vue.js + jQuery + Bootstrap + Awesome Font
 
+## 로그인
 
-
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+![ex_screenshot](./ref/login.gif)
