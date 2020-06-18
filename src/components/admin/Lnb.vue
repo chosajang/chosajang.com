@@ -35,7 +35,7 @@ export default {
     const userInfo = getUserInfo();
     this.userInfo.img = this.$store.state.config.apiUrl + userInfo.PROFILE_FILE_INFO.PATH + userInfo.PROFILE_FILE_INFO.PHYSICAL_NAME;
     this.userInfo.name = userInfo.NAME;
-    this.userInfo.title = userInfo.MEMBER_TITLE_NAME;
+    this.userInfo.title = userInfo.TITLE;
   }
 };
 </script>
