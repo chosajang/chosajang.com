@@ -18,9 +18,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in listItemSlice" v-bind:key="item.SEQ" @click="showModal = true">
+          <tr v-for="(item, index) in listItemSlice" v-bind:key="item.SEQ" @click="userInfoPop(item)">
             <th scope="row">{{ (pageNum * 10) + index + 1 }}</th>
-            <td><img :src="imgUrl+item.PROFILE_IMG" onerror="this.src='/img/default.jpg'" /></td>
+            <td><img :src="imgUrl+item.PROFILE_IMG" onerror="this.src='/img/default.png'" /></td>
             <td>{{ item.ID }}</td>
             <td>{{ item.NAME }}</td>
             <td>{{ item.MEMBER_TITLE_NAME }}</td>
@@ -45,10 +45,11 @@
       </nav>
     </div>
     <!-- use the modal component, pass in the prop -->
-    <user-info v-if="showModal" @close="showModal = false">
+    <user-info v-if="showModal" @close="showModal = false" v-bind:userItem="userItem">
       <!--
         slot : header, body, footer
       -->
+      <!-- <div slot="header">{{ userName }}님의 정보</div> -->
     </user-info>
   </div>
 </template>
@@ -65,7 +66,8 @@ export default {
       pageSize: 10,
       pageNum: 0,
       imgUrl: this.$store.state.config.apiUrl,
-      showModal: false
+      showModal: false,
+      userItem: []
     };
   },
   components: {
@@ -125,6 +127,11 @@ export default {
   methods: {
     pageMove (pageNum) {
       this.pageNum = pageNum - 1;
+    },
+    userInfoPop (item) {
+      // props: userItem
+      this.userItem = item;
+      this.showModal = true;
     }
   }
 };

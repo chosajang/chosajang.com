@@ -5,7 +5,7 @@
         <div class="modal-container">
           <div class="modal-header">
             <slot name="header">
-              회원 정보
+              {{ userInfo.NAME }}님의 회원 정보
             </slot>
           </div>
 
@@ -13,7 +13,7 @@
             <div class="form-wrap">
               <div class="title">ID(Email)</div>
               <div class="form">
-                <input type="text" placeholder="ID(Email)"/>
+                <input type="text" placeholder="ID(Email)" :value="userInfo.ID"/>
                 <span class="error-message">errorMessage</span>
               </div>
             </div>
@@ -27,14 +27,14 @@
             <div class="form-wrap">
               <div class="title">Name</div>
               <div class="form">
-                <input type="text" placeholder="이름"/>
+                <input type="text" placeholder="이름" :value="userInfo.NAME" />
                 <span class="error-message">errorMessage</span>
               </div>
             </div>
             <div class="form-wrap">
               <div class="title">Title</div>
               <div class="form">
-                <input type="text" placeholder="칭호"/>
+                <input type="text" placeholder="칭호" :value="userInfo.TITLE" />
                 <span class="error-message">errorMessage</span>
               </div>
             </div>
@@ -61,8 +61,15 @@
 
 <script>
 export default {
+  props: ['userItem'],
+  data () {
+    return {
+      userInfo: this.userItem
+    };
+  },
   created () {
-    console.log('created');
+    console.log('created', this.userInfo);
+    console.log(this.$store.state.config.apiUrl + this.userInfo.PROFILE_IMG);
   }
 };
 </script>
