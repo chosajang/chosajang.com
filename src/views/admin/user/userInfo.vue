@@ -18,10 +18,12 @@
               </div>
             </div>
             <div class="form-wrap image-form">
-              <div class="imagePreview"></div>
+              <div class="imagePreview">
+                <img v-if="imageUrl" :src="imageUrl" />
+              </div>
               <div class="btn-groups">
-                <label class="btn btn-primary btn-image-custom">Upload<input type="file" class="uploadFile img" value="Upload Photo" ></label>
-                <input type="button" class="btn btn-danger btn-delete-custom" value="Delete">
+                <label class="btn btn-primary btn-image-custom">Upload<input type="file" class="uploadFile img" v-if="uploadReady" ref="fileUpload" @change="onChangeImages"></label>
+                <input type="button" class="btn btn-danger btn-delete-custom" value="Delete" @click="imageDelete">
               </div>
             </div>
             <div class="form-wrap">
@@ -41,7 +43,7 @@
             <div class="form-wrap">
               <div class="title">Password</div>
               <div class="form">
-                <input type="password" placeholder="비밀번호를 입력하세요"/>
+                <input type="password" placeholder="비밀번호"/>
                 <span class="error-message">errorMessage</span>
               </div>
             </div>
@@ -49,7 +51,7 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              <input type="button" class="btn btn-primary" value="Save">
+              <input type="button" class="btn btn-primary" value="Save" @click="userSave">
               <input type="button" class="btn btn-secondary" value="Cancel" @click="$emit('close')">
             </slot>
           </div>
@@ -64,11 +66,31 @@ export default {
   props: ['userItem'],
   data () {
     return {
-      userInfo: this.userItem
+      userInfo: this.userItem,
+      uploadReady: true,
+      imageUrl: null
     };
   },
   created () {
     console.log(this.$store.state.config.apiUrl + this.userInfo.PROFILE_IMG);
+  },
+  methods: {
+    onChangeImages (e) {
+      console.log(e);
+      const file = e.target.files[0];
+      this.imageUrl = URL.createObjectURL(file);
+    },
+    imageDelete () {
+      this.imageUrl = null;
+      // this.$refs.fileUpload.value = '';
+      this.uploadReady = false;
+      this.$nextTick(() => {
+        this.uploadReady = true;
+      });
+    },
+    userSave () {
+      console.log('userSave');
+    }
   }
 };
 </script>
@@ -114,7 +136,7 @@ export default {
 .modal-body {
   display: flex;
   flex-direction: column;
-  padding: 20px 30px 30px 30px;
+  padding: 20px 30px 0 30px;
 }
 
 .modal-body .form-wrap {
@@ -139,11 +161,18 @@ export default {
   height: 120px;
   border-radius: 5px;
   background-position: center center;
-  background:url('/img/default.png');
+  /* background:url('/img/default.png'); */
   background-color:#d5ebff;
   background-size: cover;
   background-repeat:no-repeat;
   display: inline-block;
+}
+
+.image-form .imagePreview img {
+  width: 120px;
+  height: 120px;
+  background-color:#d5ebff;
+  border-radius: 5px;
 }
 
 .image-form .btn-groups {

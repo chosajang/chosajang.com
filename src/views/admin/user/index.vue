@@ -139,7 +139,7 @@ export default {
           MODE: 'create'
         };
       } else {
-        item.TITLE_INFO = item.NAME + '님의 회원정보';
+        item.INFO_TITLE = item.NAME + '님의 회원정보';
         item.MODE = 'modify';
       }
       // props: userItem
