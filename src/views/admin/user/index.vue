@@ -43,6 +43,7 @@
           :next-link-class="'page-link'">
         </paginate>
       </nav>
+      <input type="button" class="btn btn-primary" value="회원생성" @click="userInfoPop(null)" />
     </div>
     <!-- use the modal component, pass in the prop -->
     <user-info v-if="showModal" @close="showModal = false" v-bind:userItem="userItem">
@@ -129,6 +130,18 @@ export default {
       this.pageNum = pageNum - 1;
     },
     userInfoPop (item) {
+      if (item === null) {
+        item = {
+          INFO_TITLE: '회원생성',
+          NAME: '',
+          ID: '',
+          TITLE: '',
+          MODE: 'create'
+        };
+      } else {
+        item.TITLE_INFO = item.NAME + '님의 회원정보';
+        item.MODE = 'modify';
+      }
       // props: userItem
       this.userItem = item;
       this.showModal = true;

@@ -5,7 +5,7 @@
         <div class="modal-container">
           <div class="modal-header">
             <slot name="header">
-              {{ userInfo.NAME }}님의 회원 정보
+              {{ userInfo.INFO_TITLE }}
             </slot>
           </div>
 
@@ -68,7 +68,6 @@ export default {
     };
   },
   created () {
-    console.log('created', this.userInfo);
     console.log(this.$store.state.config.apiUrl + this.userInfo.PROFILE_IMG);
   }
 };
