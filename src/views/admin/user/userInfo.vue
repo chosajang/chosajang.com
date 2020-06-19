@@ -19,7 +19,7 @@
             </div>
             <div class="form-wrap image-form">
               <div class="imagePreview">
-                <img v-if="imageUrl" :src="imageUrl" />
+                <img v-if="imagePreview" :src="imagePreview" />
               </div>
               <div class="btn-groups">
                 <label class="btn btn-primary btn-image-custom">Upload<input type="file" class="uploadFile img" v-if="uploadReady" ref="fileUpload" @change="onChangeImages"></label>
@@ -68,7 +68,7 @@ export default {
     return {
       userInfo: this.userItem,
       uploadReady: true,
-      imageUrl: null
+      imagePreview: null
     };
   },
   created () {
@@ -78,11 +78,10 @@ export default {
     onChangeImages (e) {
       console.log(e);
       const file = e.target.files[0];
-      this.imageUrl = URL.createObjectURL(file);
+      this.imagePreview = URL.createObjectURL(file);
     },
     imageDelete () {
-      this.imageUrl = null;
-      // this.$refs.fileUpload.value = '';
+      this.imagePreview = null;
       this.uploadReady = false;
       this.$nextTick(() => {
         this.uploadReady = true;
