@@ -13,7 +13,7 @@
             <div class="form-wrap">
               <div class="title">ID(Email)</div>
               <div class="form">
-                <input type="text" placeholder="ID(Email)" :value="userInfo.ID"/>
+                <input type="text" placeholder="ID(Email)" v-model="userInfo.ID" ref="userId"/>
                 <span class="error-message">errorMessage</span>
               </div>
             </div>
@@ -29,14 +29,14 @@
             <div class="form-wrap">
               <div class="title">Name</div>
               <div class="form">
-                <input type="text" placeholder="이름" :value="userInfo.NAME" />
+                <input type="text" placeholder="이름" v-model="userInfo.NAME" />
                 <span class="error-message">errorMessage</span>
               </div>
             </div>
             <div class="form-wrap">
               <div class="title">Title</div>
               <div class="form">
-                <input type="text" placeholder="칭호" :value="userInfo.TITLE" />
+                <input type="text" placeholder="칭호" v-model="userInfo.TITLE" />
                 <span class="error-message">errorMessage</span>
               </div>
             </div>
@@ -68,11 +68,14 @@ export default {
     return {
       userInfo: this.userItem,
       uploadReady: true,
-      imagePreview: null
+      imagePreview: null,
+      userId: ''
     };
   },
   created () {
     console.log(this.$store.state.config.apiUrl + this.userInfo.PROFILE_IMG);
+  },
+  computed: {
   },
   methods: {
     onChangeImages (e) {
@@ -88,7 +91,14 @@ export default {
       });
     },
     userSave () {
-      console.log('userSave');
+      const userID = this.userInfo.ID;
+      const userName = this.userInfo.NAME;
+      const userTitle = this.userInfo.TITLE;
+      const fileUpload = this.$refs.fileUpload.files[0];
+      console.log('userSave', userID);
+      console.log('userSave', userName);
+      console.log('userSave', userTitle);
+      console.log('userSave', fileUpload);
     }
   }
 };
