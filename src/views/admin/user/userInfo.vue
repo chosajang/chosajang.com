@@ -79,6 +79,7 @@ export default {
   },
   methods: {
     onChangeImages (e) {
+      // TODO : 이미지 파일만(jpg, gif, png) 업로드 될 수 있도록 수정
       console.log(e);
       const file = e.target.files[0];
       this.imagePreview = URL.createObjectURL(file);
@@ -91,6 +92,7 @@ export default {
       });
     },
     userSave () {
+      // TODO : 항목별 유효성 검사 부분 추가
       const userID = this.userInfo.ID;
       const userName = this.userInfo.NAME;
       const userTitle = this.userInfo.TITLE;
