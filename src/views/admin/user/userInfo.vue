@@ -69,19 +69,21 @@ export default {
       userInfo: this.userItem,
       uploadReady: true,
       imagePreview: null,
-      userId: ''
+      userId: '',
+      testFile: ''
     };
   },
   created () {
     console.log(this.$store.state.config.apiUrl + this.userInfo.PROFILE_IMG);
+    this.imagePreview = this.$store.state.config.apiUrl + this.userInfo.PROFILE_IMG;
   },
   computed: {
   },
   methods: {
     onChangeImages (e) {
       // TODO : 이미지 파일만(jpg, gif, png) 업로드 될 수 있도록 수정
-      console.log(e);
       const file = e.target.files[0];
+      this.testFile = file;
       this.imagePreview = URL.createObjectURL(file);
     },
     imageDelete () {
@@ -101,6 +103,7 @@ export default {
       console.log('userSave', userName);
       console.log('userSave', userTitle);
       console.log('userSave', fileUpload);
+      console.log('userSave', this.testFile);
     }
   }
 };
