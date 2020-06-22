@@ -19,7 +19,7 @@
             </div>
             <div class="form-wrap image-form">
               <div class="imagePreview">
-                <img v-if="imagePreview" :src="imagePreview" />
+                <img v-if="imagePreview" :src="imagePreview" @error="imagePreview=null"/>
               </div>
               <div class="btn-groups">
                 <label class="btn btn-primary btn-image-custom">Upload<input type="file" class="uploadFile img" v-if="uploadReady" ref="fileUpload" @change="onChangeImages"></label>
@@ -43,7 +43,7 @@
             <div class="form-wrap">
               <div class="title">Password</div>
               <div class="form">
-                <input type="password" placeholder="비밀번호"/>
+                <input type="password" placeholder="비밀번호" v-model="userInfo.PASSWORD" />
                 <span class="error-message">errorMessage</span>
               </div>
             </div>
@@ -62,6 +62,8 @@
 </template>
 
 <script>
+import { userModify } from '@/api';
+
 export default {
   props: ['userItem'],
   data () {
@@ -70,20 +72,18 @@ export default {
       uploadReady: true,
       imagePreview: null,
       userId: '',
-      testFile: ''
+      profile_file: null
     };
   },
   created () {
-    console.log(this.$store.state.config.apiUrl + this.userInfo.PROFILE_IMG);
+    // 프로필 이미지 출력
     this.imagePreview = this.$store.state.config.apiUrl + this.userInfo.PROFILE_IMG;
-  },
-  computed: {
   },
   methods: {
     onChangeImages (e) {
       // TODO : 이미지 파일만(jpg, gif, png) 업로드 될 수 있도록 수정
       const file = e.target.files[0];
-      this.testFile = file;
+      this.profile_file = file;
       this.imagePreview = URL.createObjectURL(file);
     },
     imageDelete () {
@@ -95,15 +95,27 @@ export default {
     },
     userSave () {
       // TODO : 항목별 유효성 검사 부분 추가
-      const userID = this.userInfo.ID;
-      const userName = this.userInfo.NAME;
-      const userTitle = this.userInfo.TITLE;
-      const fileUpload = this.$refs.fileUpload.files[0];
-      console.log('userSave', userID);
-      console.log('userSave', userName);
-      console.log('userSave', userTitle);
-      console.log('userSave', fileUpload);
-      console.log('userSave', this.testFile);
+      const formData = new FormData();
+      formData.append('req_member_seq', this.userInfo.SEQ);
+      formData.append('id', this.userInfo.ID);
+      formData.append('name', this.userInfo.NAME);
+      formData.append('title', this.userInfo.TITLE);
+      formData.append('profile_file', this.profile_file);
+      formData.append('new_password', this.userInfo.PASSWORD);
+      // for (let key of formData.entries()) {
+      //   console.log(`${key}`);
+      // }
+      userModify(formData)
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          this.$swal({
+            title: '장애 발생!',
+            text: error,
+            icon: 'error'
+          });
+        });
     }
   }
 };

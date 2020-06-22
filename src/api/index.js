@@ -22,7 +22,20 @@ function fetchUserList () {
   return axios.get(`${config.baseUrl}/admin/user/list`, params);
 }
 
+function userModify (formData) {
+  const headerInfo = {
+    headers: {
+      'Content-Type': 'multipart/fomr-data'
+    }
+  };
+  const userInfo = getUserInfo();
+  formData.append('member_seq', userInfo.SEQ);
+  formData.append('session_id', userInfo.SESSION_ID);
+  return axios.post(`${config.baseUrl}/admin/user/modify`, formData, headerInfo);
+}
+
 export {
   fetchUserLogin,
-  fetchUserList
+  fetchUserList,
+  userModify
 };

@@ -13,8 +13,8 @@
             <th scope="col">ID</th>
             <th scope="col">Name</th>
             <th scope="col">Title</th>
+            <th scope="col">BirthDay</th>
             <th scope="col">Status</th>
-            <th scope="col">Entry Date</th>
           </tr>
         </thead>
         <tbody>
@@ -23,9 +23,9 @@
             <td><img :src="imgUrl+item.PROFILE_IMG" onerror="this.src='/img/default.png'" /></td>
             <td>{{ item.ID }}</td>
             <td>{{ item.NAME }}</td>
-            <td>{{ item.MEMBER_TITLE_NAME }}</td>
+            <td>{{ item.TITLE }}</td>
+            <td>{{ item.BIRTHDAY }}</td>
             <td>{{ item.MEMBER_STATUS_NAME }}</td>
-            <td>{{ item.ENTRY_DATE }}</td>
           </tr>
         </tbody>
       </table>
@@ -112,7 +112,6 @@ export default {
       });
       // Remove Duplicate
       const itemList = new Set(idItems.concat(nameItems));
-
       return [...itemList];
     },
     /**
