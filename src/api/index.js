@@ -23,19 +23,32 @@ function fetchUserList () {
 }
 
 function userModify (formData) {
+  const userInfo = getUserInfo();
   const headerInfo = {
     headers: {
       'Content-Type': 'multipart/fomr-data'
     }
   };
-  const userInfo = getUserInfo();
   formData.append('member_seq', userInfo.SEQ);
   formData.append('session_id', userInfo.SESSION_ID);
   return axios.post(`${config.baseUrl}/admin/user/modify`, formData, headerInfo);
 }
 
+function userCreate (formData) {
+  const userInfo = getUserInfo();
+  const headerInfo = {
+    headers: {
+      'Content-Type': 'multipart/fomr-data'
+    }
+  };
+  formData.append('member_seq', userInfo.SEQ);
+  formData.append('session_id', userInfo.SESSION_ID);
+  return axios.post(`${config.baseUrl}/admin/user/create`, formData, headerInfo);
+}
+
 export {
   fetchUserLogin,
   fetchUserList,
-  userModify
+  userModify,
+  userCreate
 };
