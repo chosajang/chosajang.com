@@ -13,8 +13,8 @@
             <div class="form-wrap">
               <div class="title">ID(Email)</div>
               <div class="form">
-                <input type="text" placeholder="ID(Email)" v-model="userInfo.ID" ref="userId"/>
-                <span class="error-message">errorMessage</span>
+                <input type="text" placeholder="ID(Email)" v-model="userInfo.ID" ref="userId" disabled/>
+                <span class="error-message">{{ errorMessage.id }}</span>
               </div>
             </div>
             <div class="form-wrap image-form">
@@ -29,22 +29,21 @@
             <div class="form-wrap">
               <div class="title">Name</div>
               <div class="form">
-                <input type="text" placeholder="이름" v-model="userInfo.NAME" />
-                <span class="error-message">errorMessage</span>
+                <input type="text" placeholder="이름" :class="inputClass.name" v-model="userInfo.NAME" @keyup="validationName" />
+                <span class="error-message">{{ errorMessage.name }}</span>
               </div>
             </div>
             <div class="form-wrap">
               <div class="title">Title</div>
               <div class="form">
                 <input type="text" placeholder="칭호" v-model="userInfo.TITLE" />
-                <span class="error-message">errorMessage</span>
               </div>
             </div>
             <div class="form-wrap">
               <div class="title">Password</div>
               <div class="form">
-                <input type="password" placeholder="비밀번호" v-model="userInfo.PASSWORD" />
-                <span class="error-message">errorMessage</span>
+                <input type="password" placeholder="비밀번호" :class="inputClass.password" v-model="password" @keyup="validationPassword" />
+                <span class="error-message">{{ errorMessage.password }}</span>
               </div>
             </div>
           </div>
@@ -52,7 +51,7 @@
           <div class="modal-footer">
             <slot name="footer">
               <input type="button" class="btn btn-primary" value="Save" @click="userSave">
-              <input type="button" class="btn btn-secondary" value="Cancel" @click="$emit('close')">
+              <input type="button" class="btn btn-secondary" value="Cancel" @click="formReset">
             </slot>
           </div>
         </div>
@@ -62,6 +61,7 @@
 </template>
 
 <script>
+import { validationCheck } from '@/utils/common.js';
 import { userModify } from '@/api';
 
 export default {
@@ -69,13 +69,34 @@ export default {
   data () {
     return {
       userInfo: this.userItem,
+      password: '',
       uploadReady: true,
       imagePreview: null,
       userId: '',
-      profile_file: null
+      profile_file: null,
+      tempInfo: {
+        NAME: '',
+        ID: '',
+        TITLE: ''
+      },
+      errorMessage: {
+        id: '',
+        password: '',
+        name: '',
+        title: ''
+      },
+      inputClass: {
+        id: '',
+        password: '',
+        name: '',
+        title: ''
+      }
     };
   },
   created () {
+    this.tempInfo.NAME = this.userItem.NAME;
+    this.tempInfo.ID = this.userItem.ID;
+    this.tempInfo.TITLE = this.userItem.TITLE;
     // 프로필 이미지 출력
     this.imagePreview = this.$store.state.config.apiUrl + this.userInfo.PROFILE_IMG;
   },
@@ -88,34 +109,87 @@ export default {
     },
     imageDelete () {
       this.imagePreview = null;
+      this.profile_file = null;
       this.uploadReady = false;
       this.$nextTick(() => {
         this.uploadReady = true;
       });
     },
+    validationID () {
+      validationCheck(this.$store.state.VALID.EMAIL, this.userInfo.ID, this);
+    },
+    validationName () {
+      validationCheck(this.$store.state.VALID.TEXT, this.userInfo.NAME, this);
+    },
+    validationPassword () {
+      validationCheck(this.$store.state.VALID.PASSWORD, this.password, this, true);
+    },
     userSave () {
-      // TODO : 항목별 유효성 검사 부분 추가
       const formData = new FormData();
-      formData.append('req_member_seq', this.userInfo.SEQ);
+      let mandatoryCheck = false;
+      if (validationCheck(this.$store.state.VALID.TEXT, this.userInfo.NAME, this)) {
+        formData.append('name', this.userInfo.NAME);
+        mandatoryCheck = true;
+      }
+      if (this.profile_file !== null) {
+        formData.append('profile_file', this.profile_file);
+      }
+      if (this.password.length > 0) {
+        if (validationCheck(this.$store.state.VALID.PASSWORD, this.password, this)) {
+          formData.append('new_password', this.password);
+        } else {
+          mandatoryCheck = false;
+        }
+      }
       formData.append('id', this.userInfo.ID);
-      formData.append('name', this.userInfo.NAME);
+      formData.append('req_member_seq', this.userInfo.SEQ);
       formData.append('title', this.userInfo.TITLE);
-      formData.append('profile_file', this.profile_file);
-      formData.append('new_password', this.userInfo.PASSWORD);
+
+      // eslint-disable-next-line prefer-const
       // for (let key of formData.entries()) {
       //   console.log(`${key}`);
       // }
-      userModify(formData)
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          this.$swal({
-            title: '장애 발생!',
-            text: error,
-            icon: 'error'
+
+      if (mandatoryCheck === true) {
+        this.$emit('close');
+        userModify(formData)
+          .then(response => {
+            if (response.data.result === true) {
+              const userInfo = response.data.data;
+              if (userInfo.PROFILE_FILE_INFO !== null) {
+                this.userInfo.PROFILE_IMG = userInfo.PROFILE_FILE_INFO.PATH + userInfo.PROFILE_FILE_INFO.PHYSICAL_NAME;
+              }
+              // 결과메세지
+              this.$swal({
+                title: '회원정보수정',
+                text: response.data.message,
+                icon: 'success'
+              });
+            } else {
+              // 에러가 난 경우, 기존 입력 정보 삭제 후 원래 정보값을 되돌릴 것
+              this.formReset();
+              this.$swal({
+                title: '장애 발생!',
+                text: response.data.message,
+                icon: 'error'
+              });
+            }
+          })
+          .catch(error => {
+            this.formReset();
+            this.$swal({
+              title: '장애 발생!',
+              text: error,
+              icon: 'error'
+            });
           });
-        });
+      }
+    },
+    formReset () {
+      this.userItem.NAME = this.tempInfo.NAME;
+      this.userItem.ID = this.tempInfo.ID;
+      this.userItem.TITLE = this.tempInfo.TITLE;
+      this.$emit('close');
     }
   }
 };
@@ -162,12 +236,12 @@ export default {
 .modal-body {
   display: flex;
   flex-direction: column;
-  padding: 20px 30px 0 30px;
+  padding: 30px 30px 0 30px;
 }
 
 .modal-body .form-wrap {
   width: 340px;
-  padding-top: 10px;
+  height: 100px;
 }
 
 .form-wrap .title {
@@ -180,6 +254,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 190px !important;
 }
 
 .image-form .imagePreview {
@@ -187,8 +262,7 @@ export default {
   height: 120px;
   border-radius: 5px;
   background-position: center center;
-  /* background:url('/img/default.png'); */
-  background-color:#d5ebff;
+  background-color:#f3f3f3;
   background-size: cover;
   background-repeat:no-repeat;
   display: inline-block;
@@ -197,7 +271,7 @@ export default {
 .image-form .imagePreview img {
   width: 120px;
   height: 120px;
-  background-color:#d5ebff;
+  background-color:#FFF;
   border-radius: 5px;
 }
 
@@ -259,7 +333,7 @@ input::placeholder {
   color: #FF0000;
   font-size: 12px;
   font-weight: bold;
-  visibility: hidden;
+  height: 20px;
 }
 
 .modal-default-button {
