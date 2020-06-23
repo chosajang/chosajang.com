@@ -9,6 +9,11 @@ export default new Vuex.Store({
   state: {
     config: {
       apiUrl: 'http://api.chosajang.com'
+    },
+    VALID: {
+      EMAIL: 'EMAIL',
+      TEXT: 'TEXT',
+      PASSWORD: 'PASSWORD'
     }
   }
   // mutations,
