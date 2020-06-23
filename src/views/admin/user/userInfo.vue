@@ -13,7 +13,7 @@
             <div class="form-wrap">
               <div class="title">ID(Email)</div>
               <div class="form">
-                <input type="text" placeholder="ID(Email)" v-model="userInfo.ID" ref="userId" disabled/>
+                <input type="text" placeholder="ID(Email)" v-model="userInfo.ID" @keyup="validationID" :disabled="idDisabled === true"/>
                 <span class="error-message">{{ errorMessage.id }}</span>
               </div>
             </div>
@@ -62,22 +62,24 @@
 
 <script>
 import { validationCheck } from '@/utils/common.js';
-import { userModify } from '@/api';
+import { userModify, userCreate } from '@/api';
 
 export default {
   props: ['userItem'],
   data () {
     return {
+      infoType: '',
+      idInputObj: false,
       userInfo: this.userItem,
       password: '',
       uploadReady: true,
       imagePreview: null,
-      userId: '',
       profile_file: null,
       tempInfo: {
         NAME: '',
         ID: '',
-        TITLE: ''
+        TITLE: '',
+        PROFILE_IMG: ''
       },
       errorMessage: {
         id: '',
@@ -94,11 +96,17 @@ export default {
     };
   },
   created () {
-    this.tempInfo.NAME = this.userItem.NAME;
-    this.tempInfo.ID = this.userItem.ID;
-    this.tempInfo.TITLE = this.userItem.TITLE;
-    // 프로필 이미지 출력
-    this.imagePreview = this.$store.state.config.apiUrl + this.userInfo.PROFILE_IMG;
+    if (this.userItem.MODE === 'modify') {
+      this.tempInfo.NAME = this.userItem.NAME;
+      this.tempInfo.ID = this.userItem.ID;
+      this.tempInfo.TITLE = this.userItem.TITLE;
+      this.tempInfo.PROFILE_IMG = this.userInfo.PROFILE_IMG;
+      // 프로필 이미지 출력
+      this.imagePreview = this.$store.state.config.apiUrl + this.tempInfo.PROFILE_IMG;
+      this.idDisabled = true;
+    } else {
+      this.idDisabled = false;
+    }
   },
   methods: {
     onChangeImages (e) {
@@ -125,6 +133,63 @@ export default {
       validationCheck(this.$store.state.VALID.PASSWORD, this.password, this, true);
     },
     userSave () {
+      if (this.userItem.MODE === 'create') {
+        this.userCreate();
+      } else {
+        this.userModify();
+      }
+    },
+    userCreate () {
+      const formData = new FormData();
+      let mandatoryCheck = false;
+      if (validationCheck(this.$store.state.VALID.EMAIL, this.userInfo.ID, this) && validationCheck(this.$store.state.VALID.TEXT, this.userInfo.NAME, this) && validationCheck(this.$store.state.VALID.PASSWORD, this.password, this)) {
+        formData.append('id', this.userInfo.ID);
+        formData.append('name', this.userInfo.NAME);
+        formData.append('new_password', this.password);
+        mandatoryCheck = true;
+      }
+      if (this.profile_file !== null) {
+        formData.append('profile_file', this.profile_file);
+      }
+      formData.append('title', this.userInfo.TITLE);
+
+      // eslint-disable-next-line prefer-const
+      // for (let key of formData.entries()) {
+      //   console.log(`${key}`);
+      // }
+      if (mandatoryCheck === true) {
+        this.$emit('close');
+        userCreate(formData)
+          .then(response => {
+            if (response.data.result === true) {
+              // const userInfo = response.data.data;
+              // 결과메세지
+              this.$swal({
+                title: '회원 생성',
+                text: response.data.message,
+                icon: 'success'
+              });
+            } else {
+              // 에러가 난 경우, 기존 입력 정보 삭제 후 원래 정보값을 되돌릴 것
+              this.formReset();
+              this.$swal({
+                title: '장애 발생!',
+                text: response.data.message,
+                icon: 'error'
+              });
+            }
+          })
+          .catch(error => {
+            this.formReset();
+            this.$swal({
+              title: '장애 발생!',
+              text: error,
+              icon: 'error'
+            });
+          });
+      }
+    },
+    userModify () {
       const formData = new FormData();
       let mandatoryCheck = false;
       if (validationCheck(this.$store.state.VALID.TEXT, this.userInfo.NAME, this)) {
@@ -189,6 +254,7 @@ export default {
       this.userItem.NAME = this.tempInfo.NAME;
       this.userItem.ID = this.tempInfo.ID;
       this.userItem.TITLE = this.tempInfo.TITLE;
+      this.userInfo.PROFILE_IMG = this.tempInfo.PROFILE_IMG;
       this.$emit('close');
     }
   }

@@ -13,7 +13,6 @@
             <th scope="col">ID</th>
             <th scope="col">Name</th>
             <th scope="col">Title</th>
-            <th scope="col">BirthDay</th>
             <th scope="col">Status</th>
           </tr>
         </thead>
@@ -24,7 +23,6 @@
             <td>{{ item.ID }}</td>
             <td>{{ item.NAME }}</td>
             <td>{{ item.TITLE }}</td>
-            <td>{{ item.BIRTHDAY }}</td>
             <td>{{ item.MEMBER_STATUS_NAME }}</td>
           </tr>
         </tbody>
