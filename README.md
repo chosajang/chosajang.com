@@ -11,6 +11,6 @@ Front/Back-end 두개의 프로젝트를 진행하고 있으며, github.io 도�
 
 ![ex_screenshot](./public/ref/workflow.png)
 
-## 로그인
+## 로그인 후 관리자 사용까지
 
-![ex_screenshot](./public/ref/login.gif)
+![ex_screenshot](./public/ref/chosajang.com.gif)
