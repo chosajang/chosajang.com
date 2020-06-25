@@ -210,11 +210,6 @@ export default {
       formData.append('req_member_seq', this.userInfo.SEQ);
       formData.append('title', this.userInfo.TITLE);
 
-      // eslint-disable-next-line prefer-const
-      // for (let key of formData.entries()) {
-      //   console.log(`${key}`);
-      // }
-
       if (mandatoryCheck === true) {
         this.$emit('close');
         userModify(formData)
