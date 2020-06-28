@@ -46,9 +46,18 @@ function userCreate (formData) {
   return axios.post(`${config.baseUrl}/admin/user/create`, formData, headerInfo);
 }
 
+function boardList () {
+  const userInfo = getUserInfo();
+  const params = new URLSearchParams();
+  params.append('member_seq', userInfo.SEQ);
+  params.append('session_id', userInfo.SESSION_ID);
+  return axios.get(`${config.baseUrl}/admin/user/create`, params);
+}
+
 export {
   fetchUserLogin,
   fetchUserList,
   userModify,
-  userCreate
+  userCreate,
+  boardList
 };
