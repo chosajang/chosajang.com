@@ -51,7 +51,7 @@ function boardList () {
   const params = new URLSearchParams();
   params.append('member_seq', userInfo.SEQ);
   params.append('session_id', userInfo.SESSION_ID);
-  return axios.get(`${config.baseUrl}/admin/user/create`, params);
+  return axios.get(`${config.baseUrl}/admin/board/list`, params);
 }
 
 export {
