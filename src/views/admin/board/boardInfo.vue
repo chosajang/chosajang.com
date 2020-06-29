@@ -20,7 +20,7 @@
             <div class="form-wrap">
               <div class="title">첨부파일사용</div>
               <div class="form">
-                <select class='form-control'>
+                <select class="form-control" v-model="boardInfo.ATTACHED_FILE_YN">
                   <option value="Y">사용(Y)</option>
                   <option value="N">미사용(N)</option>
                 </select>
@@ -29,7 +29,7 @@
             <div class="form-wrap">
               <div class="title">댓글사용</div>
               <div class="form">
-                <select class='form-control'>
+                <select class="form-control" v-model="boardInfo.COMMENT_YN">
                   <option value="Y">사용(Y)</option>
                   <option value="N">미사용(N)</option>
                 </select>
@@ -51,7 +51,7 @@
 
 <script>
 import { validationCheck } from '@/utils/common.js';
-// import { boardModify, boardCreate } from '@/api';
+import { boardUpdate } from '@/api';
 
 export default {
   props: ['boardItem'],
@@ -61,33 +61,24 @@ export default {
       idInputObj: false,
       boardInfo: this.boardItem,
       tempInfo: {
-        NAME: ''
+        NAME: '',
+        ATTACHED_FILE_YN: '',
+        COMMENT_YN: ''
       },
       errorMessage: {
-        id: '',
-        password: '',
-        name: '',
-        title: ''
+        name: ''
       },
       inputClass: {
-        id: '',
-        password: '',
-        name: '',
-        title: ''
+        name: ''
       }
     };
   },
   created () {
     if (this.boardItem.MODE === 'modify') {
+      // 수정 취소 시, 롤백 자료
       this.tempInfo.NAME = this.boardItem.NAME;
-      this.tempInfo.ID = this.boardItem.ID;
-      this.tempInfo.TITLE = this.boardItem.TITLE;
-      this.tempInfo.PROFILE_IMG = this.boardInfo.PROFILE_IMG;
-      // 프로필 이미지 출력
-      this.imagePreview = this.$store.state.config.apiUrl + this.tempInfo.PROFILE_IMG;
-      this.idDisabled = true;
-    } else {
-      this.idDisabled = false;
+      this.tempInfo.ATTACHED_FILE_YN = this.boardItem.ATTACHED_FILE_YN;
+      this.tempInfo.COMMENT_YN = this.boardItem.COMMENT_YN;
     }
   },
   methods: {
@@ -158,40 +149,50 @@ export default {
         formData.append('name', this.boardInfo.NAME);
         mandatoryCheck = true;
       }
+      formData.append('board_seq', this.boardInfo.SEQ);
+      formData.append('attached_file_yn', this.boardInfo.ATTACHED_FILE_YN);
+      formData.append('comment_yn', this.boardInfo.COMMENT_YN);
+
+      // eslint-disable-next-line prefer-const
+      // for (let key of formData.entries()) {
+      //   console.log(`${key}`);
+      // }
 
       if (mandatoryCheck === true) {
         this.$emit('close');
-        // boardModify(formData)
-        //   .then(response => {
-        //     if (response.data.result === true) {
-        //       // 결과메세지
-        //       this.$swal({
-        //         title: '회원정보수정',
-        //         text: response.data.message,
-        //         icon: 'success'
-        //       });
-        //     } else {
-        //       // 에러가 난 경우, 기존 입력 정보 삭제 후 원래 정보값을 되돌릴 것
-        //       this.formReset();
-        //       this.$swal({
-        //         title: '장애 발생!',
-        //         text: response.data.message,
-        //         icon: 'error'
-        //       });
-        //     }
-        //   })
-        //   .catch(error => {
-        //     this.formReset();
-        //     this.$swal({
-        //       title: '장애 발생!',
-        //       text: error,
-        //       icon: 'error'
-        //     });
-        //   });
+        boardUpdate(formData)
+          .then(response => {
+            if (response.data.result === true) {
+              // 결과메세지
+              this.$swal({
+                title: '게시판 정보 수정',
+                text: response.data.message,
+                icon: 'success'
+              });
+            } else {
+              // 에러가 난 경우, 기존 입력 정보 삭제 후 원래 정보값을 되돌릴 것
+              this.formReset();
+              this.$swal({
+                title: '장애 발생!',
+                text: response.data.message,
+                icon: 'error'
+              });
+            }
+          })
+          .catch(error => {
+            this.formReset();
+            this.$swal({
+              title: '장애 발생!',
+              text: error,
+              icon: 'error'
+            });
+          });
       }
     },
     formReset () {
       this.boardItem.NAME = this.tempInfo.NAME;
+      this.boardItem.ATTACHED_FILE_YN = this.tempInfo.ATTACHED_FILE_YN;
+      this.boardItem.COMMENT_YN = this.tempInfo.COMMENT_YN;
       this.$emit('close');
     }
   }
