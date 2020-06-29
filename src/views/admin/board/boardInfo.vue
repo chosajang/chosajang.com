@@ -21,6 +21,7 @@
               <div class="title">첨부파일사용</div>
               <div class="form">
                 <select class="form-control" v-model="boardInfo.ATTACHED_FILE_YN">
+                  <option disabled value="">첨부파일사용 선택</option>
                   <option value="Y">사용(Y)</option>
                   <option value="N">미사용(N)</option>
                 </select>
@@ -30,13 +31,13 @@
               <div class="title">댓글사용</div>
               <div class="form">
                 <select class="form-control" v-model="boardInfo.COMMENT_YN">
+                  <option disabled value="">댓글사용 선택</option>
                   <option value="Y">사용(Y)</option>
                   <option value="N">미사용(N)</option>
                 </select>
               </div>
             </div>
           </div>
-
           <div class="modal-footer">
             <slot name="footer">
               <input type="button" class="btn btn-primary" value="Save" @click="boardSave">
@@ -51,14 +52,13 @@
 
 <script>
 import { validationCheck } from '@/utils/common.js';
-import { boardUpdate } from '@/api';
+import { boardCreate, boardUpdate } from '@/api';
 
 export default {
-  props: ['boardItem'],
+  props: ['boardItem', 'itemList'],
   data () {
     return {
       infoType: '',
-      idInputObj: false,
       boardInfo: this.boardItem,
       tempInfo: {
         NAME: '',
@@ -69,7 +69,9 @@ export default {
         name: ''
       },
       inputClass: {
-        name: ''
+        name: '',
+        attached_file_yn: '',
+        comment_yn: ''
       }
     };
   },
@@ -86,6 +88,7 @@ export default {
       validationCheck(this.$store.state.VALID.TEXT, this.boardInfo.NAME, this);
     },
     boardSave () {
+      console.log(this.itemList);
       if (this.boardItem.MODE === 'create') {
         this.boardCreate();
       } else {
@@ -95,16 +98,12 @@ export default {
     boardCreate () {
       const formData = new FormData();
       let mandatoryCheck = false;
-      if (validationCheck(this.$store.state.VALID.EMAIL, this.boardInfo.ID, this) && validationCheck(this.$store.state.VALID.TEXT, this.boardInfo.NAME, this) && validationCheck(this.$store.state.VALID.PASSWORD, this.password, this)) {
-        formData.append('id', this.boardInfo.ID);
+      if (validationCheck(this.$store.state.VALID.TEXT, this.boardInfo.NAME, this)) {
         formData.append('name', this.boardInfo.NAME);
-        formData.append('new_password', this.password);
         mandatoryCheck = true;
       }
-      if (this.profile_file !== null) {
-        formData.append('profile_file', this.profile_file);
-      }
-      formData.append('title', this.boardInfo.TITLE);
+      formData.append('attached_file_yn', this.boardInfo.ATTACHED_FILE_YN);
+      formData.append('comment_yn', this.boardInfo.COMMENT_YN);
 
       // eslint-disable-next-line prefer-const
       // for (let key of formData.entries()) {
@@ -112,34 +111,34 @@ export default {
       // }
       if (mandatoryCheck === true) {
         this.$emit('close');
-        // boardCreate(formData)
-        //   .then(response => {
-        //     if (response.data.result === true) {
-        //       // const boardInfo = response.data.data;
-        //       // 결과메세지
-        //       this.$swal({
-        //         title: '회원 생성',
-        //         text: response.data.message,
-        //         icon: 'success'
-        //       });
-        //     } else {
-        //       // 에러가 난 경우, 기존 입력 정보 삭제 후 원래 정보값을 되돌릴 것
-        //       this.formReset();
-        //       this.$swal({
-        //         title: '장애 발생!',
-        //         text: response.data.message,
-        //         icon: 'error'
-        //       });
-        //     }
-        //   })
-        //   .catch(error => {
-        //     this.formReset();
-        //     this.$swal({
-        //       title: '장애 발생!',
-        //       text: error,
-        //       icon: 'error'
-        //     });
-        //   });
+        boardCreate(formData)
+          .then(response => {
+            if (response.data.result === true) {
+              // 게시판 생성 정보 목록에 추가
+              this.itemList.unshift(response.data.data);
+              this.$swal({
+                title: '게시판 생성',
+                text: response.data.message,
+                icon: 'success'
+              });
+            } else {
+              // 에러가 난 경우, 기존 입력 정보 삭제 후 원래 정보값을 되돌릴 것
+              this.formReset();
+              this.$swal({
+                title: '장애 발생!',
+                text: response.data.message,
+                icon: 'error'
+              });
+            }
+          })
+          .catch(error => {
+            this.formReset();
+            this.$swal({
+              title: '장애 발생!',
+              text: error,
+              icon: 'error'
+            });
+          });
       }
     },
     boardModify () {
@@ -314,7 +313,6 @@ input[type=text], input[type=password] {
   border-bottom: 3px solid #2D353C;
 }
 
-
 input[type=password] {
   letter-spacing: 3px;
 }
@@ -340,6 +338,14 @@ select:focus {
 select {
   font-size: 16px;
   font-weight: bold;
+}
+
+select.active {
+  color: #4B8ECE;
+}
+
+select.error {
+  color: #FF0000;
 }
 
 .form .error-message {
