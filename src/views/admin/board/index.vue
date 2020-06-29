@@ -9,18 +9,16 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">첨부파일</th>
-            <th scope="col">첨부문서</th>
-            <th scope="col">댓글유무</th>
+            <th scope="col">게시판 이름</th>
+            <th scope="col">첨부파일사용</th>
+            <th scope="col">댓글사용</th>
             <th scope="col">수정일</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in itemListSlice" v-bind:key="item.SEQ">
+          <tr v-for="(item, index) in itemListSlice" v-bind:key="item.SEQ" @click="boardInfoPop(item)">
             <th scope="row">{{ (pageNum * 10) + index + 1 }}</th>
             <td>{{ item.NAME }}</td>
-            <td>{{ item.ATTACHED_DOCUMENT_YN }}</td>
             <td>{{ item.ATTACHED_FILE_YN }}</td>
             <td>{{ item.COMMENT_YN }}</td>
             <td>{{ item.MOD_DATE }}</td>
@@ -44,19 +42,23 @@
       <input type="button" class="btn btn-primary" value="게시판 생성" />
     </div>
     <!-- use the modal component, pass in the prop -->
-    <user-info v-if="showModal" @close="showModal = false" v-bind:boardItem="boardItem">
+    <board-info v-if="showModal" @close="showModal = false" v-bind:boardItem="boardItem">
       <!--
         slot : header, body, footer
       -->
       <!-- <div slot="header">{{ userName }}님의 정보</div> -->
-    </user-info>
+    </board-info>
   </div>
 </template>
 
 <script>
 import { boardList } from '@/api';
+import boardInfo from './boardInfo';
 
 export default {
+  components: {
+    boardInfo
+  },
   data () {
     return {
       search: '',
@@ -112,6 +114,22 @@ export default {
   methods: {
     pageMove (pageNum) {
       this.pageNum = pageNum - 1;
+    },
+    boardInfoPop (item) {
+      if (item === null) {
+        item = {
+          NAME: '',
+          ID: '',
+          TITLE: '',
+          MODE: 'create'
+        };
+      } else {
+        item.INFO_TITLE = '[' + item.NAME + '] 정보';
+        item.MODE = 'modify';
+      }
+      // props: boardItem
+      this.boardItem = item;
+      this.showModal = true;
     }
   }
 };
@@ -135,9 +153,8 @@ export default {
   font-weight: bold;
 }
 
-.itemWrap > table > tbody img {
-  width: 40px;
-  height: 40px;
+.itemWrap > table > thead tr, tbody tr{
+  text-align: center;
 }
 
 input[type=text] {
