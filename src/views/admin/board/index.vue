@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="functionWrap">
-      <input type="text" v-model="search" placeholder="Name"/>
+      <input type="text" v-model="search" placeholder="Board Name"/>
     </div>
     <div class="itemWrap table-responsive">
       <!-- Item List -->

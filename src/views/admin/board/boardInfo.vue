@@ -88,7 +88,6 @@ export default {
       validationCheck(this.$store.state.VALID.TEXT, this.boardInfo.NAME, this);
     },
     boardSave () {
-      console.log(this.itemList);
       if (this.boardItem.MODE === 'create') {
         this.boardCreate();
       } else {
