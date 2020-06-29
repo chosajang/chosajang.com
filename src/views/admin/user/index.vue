@@ -9,11 +9,11 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Image</th>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Title</th>
-            <th scope="col">Status</th>
+            <th scope="col">이미지</th>
+            <th scope="col">아이디</th>
+            <th scope="col">이름</th>
+            <th scope="col">호칭</th>
+            <th scope="col">회원상태</th>
           </tr>
         </thead>
         <tbody>
