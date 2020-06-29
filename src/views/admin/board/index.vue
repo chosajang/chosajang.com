@@ -12,7 +12,6 @@
             <th scope="col">게시판 이름</th>
             <th scope="col">첨부파일사용</th>
             <th scope="col">댓글사용</th>
-            <th scope="col">수정일</th>
           </tr>
         </thead>
         <tbody>
@@ -21,7 +20,6 @@
             <td>{{ item.NAME }}</td>
             <td>{{ item.ATTACHED_FILE_YN }}</td>
             <td>{{ item.COMMENT_YN }}</td>
-            <td>{{ item.MOD_DATE }}</td>
           </tr>
         </tbody>
       </table>
@@ -39,10 +37,10 @@
           :next-link-class="'page-link'">
         </paginate>
       </nav>
-      <input type="button" class="btn btn-primary" value="게시판 생성" />
+      <input type="button" class="btn btn-primary" value="게시판 생성" @click="boardInfoPop(null)" />
     </div>
     <!-- use the modal component, pass in the prop -->
-    <board-info v-if="showModal" @close="showModal = false" v-bind:boardItem="boardItem">
+    <board-info v-if="showModal" @close="showModal = false" v-bind:boardItem="boardItem" v-bind:itemList="itemList">
       <!--
         slot : header, body, footer
       -->
@@ -118,9 +116,10 @@ export default {
     boardInfoPop (item) {
       if (item === null) {
         item = {
+          INFO_TITLE: '게시판 생성',
           NAME: '',
-          ID: '',
-          TITLE: '',
+          ATTACHED_FILE_YN: 'Y',
+          COMMENT_YN: 'Y',
           MODE: 'create'
         };
       } else {
