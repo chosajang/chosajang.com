@@ -36,7 +36,7 @@
             <div class="form-wrap">
               <div class="title">Title</div>
               <div class="form">
-                <input type="text" placeholder="칭호" v-model="userInfo.TITLE" />
+                <input type="text" placeholder="호칭" v-model="userInfo.TITLE" />
               </div>
             </div>
             <div class="form-wrap">
@@ -68,8 +68,6 @@ export default {
   props: ['userItem'],
   data () {
     return {
-      infoType: '',
-      idInputObj: false,
       userInfo: this.userItem,
       password: '',
       uploadReady: true,

@@ -13,7 +13,6 @@
             <th scope="col">아이디</th>
             <th scope="col">이름</th>
             <th scope="col">호칭</th>
-            <th scope="col">회원상태</th>
           </tr>
         </thead>
         <tbody>
@@ -23,7 +22,6 @@
             <td>{{ item.ID }}</td>
             <td>{{ item.NAME }}</td>
             <td>{{ item.TITLE }}</td>
-            <td>{{ item.MEMBER_STATUS_NAME }}</td>
           </tr>
         </tbody>
       </table>
