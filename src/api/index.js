@@ -54,10 +54,18 @@ function boardList () {
   return axios.get(`${config.baseUrl}/admin/board/list`, params);
 }
 
+function boardUpdate (formData) {
+  const userInfo = getUserInfo();
+  formData.append('member_seq', userInfo.SEQ);
+  formData.append('session_id', userInfo.SESSION_ID);
+  return axios.post(`${config.baseUrl}/admin/board/modify`, formData);
+}
+
 export {
   fetchUserLogin,
   fetchUserList,
   userModify,
   userCreate,
-  boardList
+  boardList,
+  boardUpdate
 };
