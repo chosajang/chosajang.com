@@ -104,10 +104,6 @@ export default {
       formData.append('attached_file_yn', this.boardInfo.ATTACHED_FILE_YN);
       formData.append('comment_yn', this.boardInfo.COMMENT_YN);
 
-      // eslint-disable-next-line prefer-const
-      // for (let key of formData.entries()) {
-      //   console.log(`${key}`);
-      // }
       if (mandatoryCheck === true) {
         this.$emit('close');
         boardCreate(formData)
