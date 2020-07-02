@@ -12,7 +12,7 @@
       <router-link to="/admin/user" tag="li" class="item"><i class="fas fa-user-edit"></i>User</router-link>
       <li class="title"><span>Blog</span></li>
       <router-link to="/admin/board" tag="li" class="item"><i class="fas fa-clipboard-list"></i>Board</router-link>
-      <router-link to="/admin/post" tag="li" class="item"><i class="fas fa-pencil-alt"></i>Post</router-link>
+      <router-link to="/admin/article/list" tag="li" class="item"><i class="fas fa-pencil-alt"></i>Article</router-link>
       <li class="title"><span>Project</span></li>
     </ul>
   </div>

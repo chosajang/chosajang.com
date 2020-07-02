@@ -3,7 +3,8 @@ import VueRouter from 'vue-router';
 
 import AdminBoardView from '../views/admin/board';
 import AdminLoginView from '../views/admin/login';
-import AdminPostView from '../views/admin/post';
+import AdminArticleListView from '../views/admin/article/list';
+import AdminArticleView from '../views/admin/article';
 import AdminUserView from '../views/admin/user';
 
 import BlogView from '../views/service/blog';
@@ -90,12 +91,21 @@ const routes = [
     beforeEnter: requireAuth()
   },
   {
-    path: '/admin/post',
-    name: 'admin.post',
+    path: '/admin/article/list',
+    name: 'admin.article.list',
     meta: {
       layout: 'AdminLayout'
     },
-    component: AdminPostView,
+    component: AdminArticleListView,
+    beforeEnter: requireAuth()
+  },
+  {
+    path: '/admin/article',
+    name: 'admin.article',
+    meta: {
+      layout: 'AdminLayout'
+    },
+    component: AdminArticleView,
     beforeEnter: requireAuth()
   },
   { /* 404 error 방지 */
