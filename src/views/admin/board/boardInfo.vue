@@ -40,6 +40,7 @@
           </div>
           <div class="modal-footer">
             <slot name="footer">
+              <input type="button" class="btn btn-danger" value="Delete">
               <input type="button" class="btn btn-primary" value="Save" @click="boardSave">
               <input type="button" class="btn btn-secondary" value="Cancel" @click="formReset">
             </slot>
