@@ -16,10 +16,12 @@ function fetchUserLogin (id, password) {
 
 function fetchUserList () {
   const userInfo = getUserInfo();
-  const params = new URLSearchParams();
-  params.append('member_seq', userInfo.SEQ);
-  params.append('session_id', userInfo.SESSION_ID);
-  return axios.get(`${config.baseUrl}/admin/user/list`, params);
+  return axios.get(`${config.baseUrl}/admin/user/list`, {
+    params: {
+      member_seq: userInfo.SEQ,
+      session_id: userInfo.SESSION_ID
+    }
+  });
 }
 
 function userModify (formData) {
@@ -48,10 +50,12 @@ function userCreate (formData) {
 
 function boardList () {
   const userInfo = getUserInfo();
-  const params = new URLSearchParams();
-  params.append('member_seq', userInfo.SEQ);
-  params.append('session_id', userInfo.SESSION_ID);
-  return axios.get(`${config.baseUrl}/admin/board/list`, params);
+  return axios.get(`${config.baseUrl}/admin/board/list`, {
+    params: {
+      member_seq: userInfo.SEQ,
+      session_id: userInfo.SESSION_ID
+    }
+  });
 }
 
 function boardCreate (formData) {
@@ -68,6 +72,16 @@ function boardUpdate (formData) {
   return axios.post(`${config.baseUrl}/admin/board/update`, formData);
 }
 
+function ArticleList () {
+  const userInfo = getUserInfo();
+  return axios.get(`${config.baseUrl}/admin/article/list`, {
+    params: {
+      member_seq: userInfo.SEQ,
+      session_id: userInfo.SESSION_ID
+    }
+  });
+}
+
 export {
   fetchUserLogin,
   fetchUserList,
@@ -75,5 +89,6 @@ export {
   userCreate,
   boardList,
   boardCreate,
-  boardUpdate
+  boardUpdate,
+  ArticleList
 };
