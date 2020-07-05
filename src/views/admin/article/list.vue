@@ -2,7 +2,11 @@
   <div class="content">
     <div class="functionWrap">
       <!-- SelectBox -->
-      <input type="text" v-model="search" placeholder="Board Name"/>
+      <select class="form-control" v-model="selectBoard" aria-placeholder="게시판 선택">
+        <option v-for="board in boardList" v-bind:key="board.SEQ">
+          {{ board.NAME }}
+        </option>
+      </select>
     </div>
     <div class="itemWrap table-responsive">
       <!-- Item List -->
@@ -16,11 +20,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in itemListSlice" v-bind:key="item.SEQ" @click="boardInfoPop(item)">
+          <tr v-for="(item, index) in itemListSlice" v-bind:key="item.ARTICLE_SEQ">
             <th scope="row">{{ (pageNum * 10) + index + 1 }}</th>
+            <td>{{ item.TITLE }}</td>
             <td>{{ item.NAME }}</td>
-            <td>{{ item.ATTACHED_FILE_YN }}</td>
-            <td>{{ item.COMMENT_YN }}</td>
+            <td>{{ item.ADD_DATE }}</td>
           </tr>
         </tbody>
       </table>
@@ -38,13 +42,102 @@
           :next-link-class="'page-link'">
         </paginate>
       </nav>
-      <input type="button" class="btn btn-primary" value="게시판 생성" @click="boardInfoPop(null)" />
+      <input type="button" class="btn btn-primary" value="글쓰기" />
     </div>
   </div>
 </template>
 
 <script>
+import { boardList, ArticleList } from '@/api';
+
 export default {
+  components: {
+  },
+  data () {
+    return {
+      boardList: '',
+      selectBoard: '',
+      articleList: '',
+      itemList: [],
+      pageSize: 10,
+      pageNum: 0
+    };
+  },
+  created () {
+    const vm = this;
+    boardList()
+      .then(response => {
+        if (response.data.result) {
+          vm.boardList = response.data.board_list;
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    ArticleList()
+      .then(response => {
+        if (response.data.result) {
+          vm.articleList = response.data.article_list;
+          console.log(vm.articleList);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },
+  computed: {
+    pageCount () {
+      const listLeng = this.listFiltered.length;
+      const listSize = this.pageSize;
+      let page = Math.floor(listLeng / listSize);
+      if (listLeng % listSize > 0) {
+        page += 1;
+      }
+      return page;
+    },
+    /**
+     * 회원 ID,이름 검색 시 필터 처리
+     */
+    listFiltered () {
+      // const search = (this.search).replace(/ /gi, '');
+      // List Filter
+      // return this.articleList.filter(item => {
+      //   return item.NAME.toLowerCase().includes(search.toLowerCase());
+      // });
+      return this.articleList;
+    },
+    /**
+     * 페이지네이션을 위한 배열 슬라이스
+     */
+    itemListSlice () {
+      // Paginated(Item Slice)
+      const start = this.pageNum * this.pageSize;
+      const end = start + this.pageSize;
+      return this.listFiltered.slice(start, end);
+    }
+  },
+  methods: {
+    pageMove (pageNum) {
+      this.pageNum = pageNum - 1;
+    },
+    boardInfoPop (item) {
+      if (item === null) {
+        item = {
+          INFO_TITLE: '게시판 생성',
+          NAME: '',
+          ATTACHED_FILE_YN: 'Y',
+          COMMENT_YN: 'Y',
+          MODE: 'create'
+        };
+      } else {
+        item.INFO_TITLE = '[' + item.NAME + '] 정보';
+        item.MODE = 'modify';
+      }
+      // props: boardItem
+      this.boardItem = item;
+      this.showModal = true;
+    }
+  }
 };
 </script>
 
@@ -91,6 +184,20 @@ input[type=text]:focus {
 input[type=text]:focus::placeholder {
   color: #608BCB;
   transition: .2s;
+}
+
+select:focus {
+  color: #4B8ECE;
+}
+
+select {
+  font-size: 16px;
+  font-weight: bold;
+  width: 220px;
+}
+
+select.active {
+  color: #4B8ECE;
 }
 
 /**
