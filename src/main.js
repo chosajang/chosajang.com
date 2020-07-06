@@ -6,7 +6,6 @@ import Bootstrap from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-// import '@sweetalert2/theme-borderless/borderless.scss';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Paginate from 'vuejs-paginate';
 import store from './store/index.js';
