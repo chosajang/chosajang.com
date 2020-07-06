@@ -3,7 +3,8 @@
     <div class="functionWrap">
       <!-- SelectBox -->
       <select class="form-control" v-model="selectBoard" aria-placeholder="게시판 선택">
-        <option v-for="board in boardList" v-bind:key="board.SEQ">
+        <option selected value="">All</option>
+        <option v-for="board in boardList" v-bind:key="board.SEQ" :value="board.SEQ">
           {{ board.NAME }}
         </option>
       </select>
@@ -20,7 +21,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in itemListSlice" v-bind:key="item.ARTICLE_SEQ">
+          <tr v-for="(item, index) in itemListSlice" v-bind:key="item.ARTICLE_SEQ" @click="postEdit(item.ARTICLE_SEQ)">
             <th scope="row">{{ (pageNum * 10) + index + 1 }}</th>
             <td>{{ item.TITLE }}</td>
             <td>{{ item.NAME }}</td>
@@ -48,7 +49,7 @@
 </template>
 
 <script>
-import { boardList, ArticleList } from '@/api';
+import { boardList, articleList } from '@/api';
 
 export default {
   components: {
@@ -57,7 +58,6 @@ export default {
     return {
       boardList: '',
       selectBoard: '',
-      articleList: '',
       itemList: [],
       pageSize: 10,
       pageNum: 0
@@ -74,11 +74,10 @@ export default {
       .catch(error => {
         console.log(error);
       });
-    ArticleList()
+    articleList()
       .then(response => {
         if (response.data.result) {
-          vm.articleList = response.data.article_list;
-          console.log(vm.articleList);
+          vm.itemList = response.data.article_list;
         }
       })
       .catch(error => {
@@ -99,12 +98,11 @@ export default {
      * 회원 ID,이름 검색 시 필터 처리
      */
     listFiltered () {
-      // const search = (this.search).replace(/ /gi, '');
+      const boardSeq = this.selectBoard;
       // List Filter
-      // return this.articleList.filter(item => {
-      //   return item.NAME.toLowerCase().includes(search.toLowerCase());
-      // });
-      return this.articleList;
+      return this.itemList.filter(item => {
+        return item.BOARD_SEQ.includes(boardSeq);
+      });
     },
     /**
      * 페이지네이션을 위한 배열 슬라이스
@@ -120,33 +118,19 @@ export default {
     pageMove (pageNum) {
       this.pageNum = pageNum - 1;
     },
-    boardInfoPop (item) {
-      if (item === null) {
-        item = {
-          INFO_TITLE: '게시판 생성',
-          NAME: '',
-          ATTACHED_FILE_YN: 'Y',
-          COMMENT_YN: 'Y',
-          MODE: 'create'
-        };
-      } else {
-        item.INFO_TITLE = '[' + item.NAME + '] 정보';
-        item.MODE = 'modify';
-      }
-      // props: boardItem
-      this.boardItem = item;
-      this.showModal = true;
+    postEdit (postSeq) {
+      this.$router.push({ path: '/admin/posts/' + postSeq });
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
 /**
  * common
  */
 .functionWrap {
-  padding-top: 20px;
+  padding-top: 30px;
   width: 100%;
 }
 
@@ -193,7 +177,7 @@ select:focus {
 select {
   font-size: 16px;
   font-weight: bold;
-  width: 220px;
+  width: 220px !important;
 }
 
 select.active {
