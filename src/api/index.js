@@ -72,7 +72,7 @@ function boardUpdate (formData) {
   return axios.post(`${config.baseUrl}/admin/board/update`, formData);
 }
 
-function ArticleList () {
+function articleList () {
   const userInfo = getUserInfo();
   return axios.get(`${config.baseUrl}/admin/article/list`, {
     params: {
@@ -90,5 +90,5 @@ export {
   boardList,
   boardCreate,
   boardUpdate,
-  ArticleList
+  articleList
 };
