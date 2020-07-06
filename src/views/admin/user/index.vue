@@ -145,7 +145,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /**
  * common
  */
@@ -163,7 +163,7 @@ export default {
   font-weight: bold;
 }
 
-.itemWrap > table > tbody img {
+.itemWrap > .table img {
   width: 40px;
   height: 40px;
 }
