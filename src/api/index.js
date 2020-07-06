@@ -82,6 +82,17 @@ function articleList () {
   });
 }
 
+function postInfo (postSeq) {
+  const userInfo = getUserInfo();
+  return axios.get(`${config.baseUrl}/admin/article/read`, {
+    params: {
+      member_seq: userInfo.SEQ,
+      session_id: userInfo.SESSION_ID,
+      article_seq: postSeq
+    }
+  });
+}
+
 export {
   fetchUserLogin,
   fetchUserList,
@@ -90,5 +101,6 @@ export {
   boardList,
   boardCreate,
   boardUpdate,
-  articleList
+  articleList,
+  postInfo
 };
