@@ -6,9 +6,11 @@
     <editor
       ref="toastuiEditor"
       :initialValue="postInfo.CONTENT"
+      :options="editorOptions"
       height="500px"
       initialEditType="wysiwyg"
     />
+    {{ postInfo.CONTENT }}
     <input type="button" class="btn btn-primary" value="Save" @click="createAction" />
   </div>
 </template>
@@ -16,6 +18,7 @@
 <script>
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/i18n/ko-kr';
 import { Editor } from '@toast-ui/vue-editor';
 
 import { postInfo } from '@/api';
@@ -27,16 +30,23 @@ export default {
   data () {
     return {
       content: null,
-      postInfo: ''
+      postInfo: {
+        TITLE: '',
+        CONTENT: ''
+      },
+      editorOptions: {
+        language: 'ko'
+      }
     };
   },
-  created () {
+  mounted () {
     const vm = this;
     const postSeq = this.$route.params.seq;
     postInfo(postSeq)
       .then(response => {
         if (response.data.result) {
           vm.postInfo = response.data.article;
+          this.$refs.toastuiEditor.setHtml('HIHIHI');
         }
       })
       .catch(error => {
@@ -45,7 +55,10 @@ export default {
   },
   methods: {
     createAction () {
-      this.content = this.$refs.toastuiEditor.invoke('getMarkdown'); // content를 저장하는 액션 처리
+      // content를 저장하는 액션 처리
+      // this.$refs.toastuiEditor.invoke('setHtml');
+      const content = this.$refs.toastuiEditor.invoke('getHtml');
+      console.log(content);
     }
   }
 };
