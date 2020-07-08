@@ -93,6 +93,13 @@ function postInfo (postSeq) {
   });
 }
 
+function postUpdate (formData) {
+  const userInfo = getUserInfo();
+  formData.append('member_seq', userInfo.SEQ);
+  formData.append('session_id', userInfo.SESSION_ID);
+  return axios.post(`${config.baseUrl}/admin/article/modify`, formData);
+}
+
 export {
   fetchUserLogin,
   fetchUserList,
@@ -102,5 +109,6 @@ export {
   boardCreate,
   boardUpdate,
   articleList,
-  postInfo
+  postInfo,
+  postUpdate
 };
