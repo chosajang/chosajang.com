@@ -1,17 +1,20 @@
 <template>
   <div class="content">
     <div class="functionWrap">
-      <input type="text" v-model="postInfo.TITLE" placeholder="Title"/>
+      <input type="text" v-model="postInfo.TITLE" :class="postTitle" placeholder="Title" @keyup="titleCheck"/>
     </div>
     <editor
       ref="toastuiEditor"
+      v-if="editorRender"
       :initialValue="postInfo.CONTENT"
       :options="editorOptions"
       height="500px"
       initialEditType="wysiwyg"
     />
-    {{ postInfo.CONTENT }}
-    <input type="button" class="btn btn-primary" value="Save" @click="createAction" />
+    <div class="buttonWrap">
+      <input type="button" class="btn btn-primary" value="Save" @click="postSave" />
+      <input type="button" class="btn btn-secondary" value="Cancel" @click="postEditCancel" />
+    </div>
   </div>
 </template>
 
@@ -20,8 +23,7 @@ import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { Editor } from '@toast-ui/vue-editor';
-
-import { postInfo } from '@/api';
+import { postInfo, postUpdate } from '@/api';
 
 export default {
   components: {
@@ -29,24 +31,34 @@ export default {
   },
   data () {
     return {
-      content: null,
+      editorRender: false,
+      postTitle: '',
       postInfo: {
-        TITLE: '',
-        CONTENT: ''
+        TITLE: 'Default Title',
+        CONTENT: 'Default Content'
       },
       editorOptions: {
         language: 'ko'
       }
     };
   },
-  mounted () {
+  created () {
     const vm = this;
     const postSeq = this.$route.params.seq;
     postInfo(postSeq)
       .then(response => {
         if (response.data.result) {
           vm.postInfo = response.data.article;
-          this.$refs.toastuiEditor.setHtml('HIHIHI');
+          // Toast UI Editor Render
+          vm.editorRender = true;
+        } else {
+          this.$swal({
+            title: '게시물 내용조회 실패',
+            text: '삭제된 게시물이거나, 내용조회를 할 수 없습니다',
+            icon: 'warning'
+          }).then((result) => {
+            this.$router.push({ path: '/admin/posts' });
+          });
         }
       })
       .catch(error => {
@@ -54,11 +66,85 @@ export default {
       });
   },
   methods: {
-    createAction () {
-      // content를 저장하는 액션 처리
-      // this.$refs.toastuiEditor.invoke('setHtml');
-      const content = this.$refs.toastuiEditor.invoke('getHtml');
-      console.log(content);
+    titleCheck () {
+      const title = this.postInfo.TITLE;
+      if (title.length === 0) {
+        this.postTitle = 'error';
+        return false;
+      } else {
+        this.postTitle = 'active';
+        return true;
+      }
+    },
+    postSave () {
+      // 제목 빈값일 때 에러처리
+      if (this.titleCheck()) {
+        const title = this.postInfo.TITLE;
+        const content = this.$refs.toastuiEditor.invoke('getHtml');
+        const postSeq = this.$route.params.seq;
+        const formData = new FormData();
+
+        formData.append('article_seq', postSeq);
+        formData.append('title', title);
+        formData.append('content', content);
+
+        this.$swal({
+          title: '저장',
+          text: '게시물 내용을 저장하시겠습니까?',
+          icon: 'warning',
+          showCancelButton: true
+        }).then((result) => {
+          if (result.value) {
+            postUpdate(formData)
+              .then(response => {
+                if (response.data.result === true) {
+                  // 결과메세지
+                  this.$swal({
+                    title: '게시판 정보 수정',
+                    text: response.data.message,
+                    icon: 'success'
+                  }).then((result) => {
+                    this.$router.push({ path: '/admin/posts' });
+                  });
+                } else {
+                  this.$swal({
+                    title: '장애 발생!',
+                    text: response.data.message,
+                    icon: 'error'
+                  });
+                }
+              })
+              .catch(error => {
+                this.formReset();
+                this.$swal({
+                  title: '장애 발생!',
+                  text: error,
+                  icon: 'error'
+                });
+              });
+          }
+        });
+      } else {
+        this.$swal({
+          title: '',
+          text: '게시물 제목을 입력하세요',
+          icon: 'warning'
+        });
+      }
+    },
+    postEditCancel () {
+      this.$swal({
+        title: '편집 취소',
+        text: '게시물 편집을 취소하시겠습니까?',
+        confirmButtonText: 'Yes, Cancel it!',
+        icon: 'warning',
+        showCancelButton: true
+      }).then((result) => {
+        if (result.value) {
+          // 게시판 목록으로 리턴
+          this.$router.push({ path: '/admin/posts' });
+        }
+      });
     }
   }
 };
@@ -69,21 +155,17 @@ export default {
  * common
  */
 .functionWrap {
-  padding-top: 20px;
+  padding: 20px 0px 10px 0px;
   width: 100%;
 }
 
-.itemWrap {
+.buttonWrap {
+  text-align: right;
   padding-top: 20px;
 }
 
-.itemWrap > .title {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.itemWrap > table > thead tr, tbody tr{
-  text-align: center;
+.buttonWrap .btn {
+  margin: .25rem;
 }
 
 input[type=text] {
@@ -107,6 +189,16 @@ input[type=text]:focus {
 input[type=text]:focus::placeholder {
   color: #608BCB;
   transition: .2s;
+}
+
+input[type=text].error, input[type=password].error {
+  color: #FF0000;
+  border-bottom: 3px solid #FF0000;
+}
+
+input[type=text].active, input[type=password].active {
+  color: #4B8ECE;
+  border-bottom: 3px solid #4B8ECE;
 }
 
 /**
