@@ -21,7 +21,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in itemListSlice" v-bind:key="item.ARTICLE_SEQ" @click="postEdit(item.ARTICLE_SEQ)">
+          <tr v-for="(item, index) in itemListSlice" v-bind:key="item.ARTICLE_SEQ" @click="postRead(item.ARTICLE_SEQ)">
             <th scope="row">{{ (pageNum * 10) + index + 1 }}</th>
             <td>{{ item.TITLE }}</td>
             <td>{{ item.NAME }}</td>
@@ -43,13 +43,13 @@
           :next-link-class="'page-link'">
         </paginate>
       </nav>
-      <input type="button" class="btn btn-primary" value="글쓰기" />
+      <input type="button" class="btn btn-primary" value="글쓰기" @click="postWrite" />
     </div>
   </div>
 </template>
 
 <script>
-import { boardList, articleList } from '@/api';
+import { boardList, postList } from '@/api';
 
 export default {
   components: {
@@ -74,7 +74,7 @@ export default {
       .catch(error => {
         console.log(error);
       });
-    articleList()
+    postList()
       .then(response => {
         if (response.data.result) {
           vm.itemList = response.data.article_list;
@@ -118,8 +118,11 @@ export default {
     pageMove (pageNum) {
       this.pageNum = pageNum - 1;
     },
-    postEdit (postSeq) {
-      this.$router.push({ path: '/admin/posts/' + postSeq });
+    postRead (postSeq) {
+      this.$router.push({ path: '/admin/posts/' + postSeq + '/read' });
+    },
+    postWrite () {
+      this.$router.push({ path: '/admin/posts/write' });
     }
   }
 };
