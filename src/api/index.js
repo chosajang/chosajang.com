@@ -100,6 +100,18 @@ function postUpdate (formData) {
   return axios.post(`${config.baseUrl}/admin/article/modify`, formData);
 }
 
+function postContentFileUpload (formData) {
+  const userInfo = getUserInfo();
+  const headerInfo = {
+    headers: {
+      'Content-Type': 'multipart/fomr-data'
+    }
+  };
+  formData.append('member_seq', userInfo.SEQ);
+  formData.append('session_id', userInfo.SESSION_ID);
+  return axios.post(`${config.baseUrl}/admin/article/file_upload`, formData, headerInfo);
+}
+
 export {
   fetchUserLogin,
   fetchUserList,
@@ -110,5 +122,6 @@ export {
   boardUpdate,
   articleList,
   postInfo,
-  postUpdate
+  postUpdate,
+  postContentFileUpload
 };
