@@ -23,7 +23,7 @@ import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { Editor } from '@toast-ui/vue-editor';
-import { postInfo, postUpdate } from '@/api';
+import { postInfo, postUpdate, postContentFileUpload } from '@/api';
 
 export default {
   components: {
@@ -38,7 +38,28 @@ export default {
         CONTENT: 'Default Content'
       },
       editorOptions: {
-        language: 'ko'
+        language: 'ko',
+        hooks: {
+          addImageBlobHook: function (blob, callback) {
+            const formData = new FormData();
+            formData.append('file', blob);
+            // 파일 업로드 API
+            postContentFileUpload(formData)
+              .then(response => {
+                if (response.data.result) {
+                  const fileInfo = response.data.data[0];
+                  const uploadedImageURL = 'http://api.chosajang.com/' + fileInfo.PATH + fileInfo.PHYSICAL_NAME;
+                  callback(uploadedImageURL, fileInfo.LOGICAL_NAME);
+                } else {
+                  console.log('[' + response.data.error_code + ']' + response.data.message);
+                }
+              })
+              .catch(error => {
+                console.log(error);
+              });
+            return false;
+          }
+        }
       }
     };
   },
@@ -145,6 +166,11 @@ export default {
           this.$router.push({ path: '/admin/posts' });
         }
       });
+    },
+    uploadImage (blob) {
+      console.log('uploadImage!!!');
+      // return uploadedImageURL;
+      return 'http://api.chosajang.com/data//upload/2020/0626/030340_328942009073';
     }
   }
 };
