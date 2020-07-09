@@ -72,7 +72,7 @@ function boardUpdate (formData) {
   return axios.post(`${config.baseUrl}/admin/board/update`, formData);
 }
 
-function articleList () {
+function postList () {
   const userInfo = getUserInfo();
   return axios.get(`${config.baseUrl}/admin/article/list`, {
     params: {
@@ -82,7 +82,7 @@ function articleList () {
   });
 }
 
-function postInfo (postSeq) {
+function postRead (postSeq) {
   const userInfo = getUserInfo();
   return axios.get(`${config.baseUrl}/admin/article/read`, {
     params: {
@@ -91,6 +91,13 @@ function postInfo (postSeq) {
       article_seq: postSeq
     }
   });
+}
+
+function postWrite (formData) {
+  const userInfo = getUserInfo();
+  formData.append('member_seq', userInfo.SEQ);
+  formData.append('session_id', userInfo.SESSION_ID);
+  return axios.post(`${config.baseUrl}/admin/article/write`, formData);
 }
 
 function postUpdate (formData) {
@@ -112,6 +119,13 @@ function postContentFileUpload (formData) {
   return axios.post(`${config.baseUrl}/admin/article/file_upload`, formData, headerInfo);
 }
 
+function postDelete (formData) {
+  const userInfo = getUserInfo();
+  formData.append('member_seq', userInfo.SEQ);
+  formData.append('session_id', userInfo.SESSION_ID);
+  return axios.post(`${config.baseUrl}/admin/article/delete`, formData);
+}
+
 export {
   fetchUserLogin,
   fetchUserList,
@@ -120,8 +134,10 @@ export {
   boardList,
   boardCreate,
   boardUpdate,
-  articleList,
-  postInfo,
+  postList,
+  postRead,
+  postWrite,
   postUpdate,
-  postContentFileUpload
+  postContentFileUpload,
+  postDelete
 };
