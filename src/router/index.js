@@ -4,7 +4,9 @@ import VueRouter from 'vue-router';
 import AdminBoardView from '../views/admin/board';
 import AdminLoginView from '../views/admin/login';
 import AdminPostListView from '../views/admin/post/list';
-import AdminPostView from '../views/admin/post';
+import AdminPostWriteView from '../views/admin/post/write';
+import AdminPostReadView from '../views/admin/post/read';
+import AdminPostEditView from '../views/admin/post/edit';
 import AdminUserView from '../views/admin/user';
 
 import BlogView from '../views/service/blog';
@@ -92,7 +94,7 @@ const routes = [
   },
   {
     path: '/admin/posts',
-    name: 'admin.post.list',
+    name: 'admin.posts',
     meta: {
       layout: 'AdminLayout'
     },
@@ -100,13 +102,33 @@ const routes = [
     beforeEnter: requireAuth()
   },
   {
-    path: '/admin/posts/:seq',
-    name: 'admin.article',
+    path: '/admin/posts/:seq/read',
+    name: 'admin.posts.read',
     props: true,
     meta: {
       layout: 'AdminLayout'
     },
-    component: AdminPostView,
+    component: AdminPostReadView,
+    beforeEnter: requireAuth()
+  },
+  {
+    path: '/admin/posts/:seq/edit',
+    name: 'admin.posts.edit',
+    props: true,
+    meta: {
+      layout: 'AdminLayout'
+    },
+    component: AdminPostEditView,
+    beforeEnter: requireAuth()
+  },
+  {
+    path: '/admin/posts/write',
+    name: 'admin.posts.write',
+    props: true,
+    meta: {
+      layout: 'AdminLayout'
+    },
+    component: AdminPostWriteView,
     beforeEnter: requireAuth()
   },
   { /* 404 error 방지 */
