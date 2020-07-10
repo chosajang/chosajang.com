@@ -116,7 +116,7 @@ export default {
       if (this.validationCheck()) {
         const board = this.post.board;
         const title = this.post.title;
-        const content = this.$refs.toastuiEditor.invoke('getHtml');
+        const content = this.$refs.toastuiEditor.invoke('getMarkdown');
 
         const formData = new FormData();
         formData.append('board_seq', board);
