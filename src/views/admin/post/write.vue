@@ -12,8 +12,8 @@
     <editor
       ref="toastuiEditor"
       :options="editorOptions"
-      height="500px"
-      initialEditType="wysiwyg"
+      height="70%"
+      initialEditType="markdown"
     />
     <div class="buttonWrap">
       <input type="button" class="btn btn-primary" value="Save" @click="postSave" />

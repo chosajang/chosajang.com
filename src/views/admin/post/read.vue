@@ -4,9 +4,11 @@
       <h1>{{ postInfo.TITLE }}</h1>
     </div>
     <div class="postInfoWrap">
-      {{ postInfo.ADD_DATE }}
+      <i class="far fa-calendar-alt"></i>
+      {{$moment(postInfo.ADD_DATE).format('YYYY.MM.DD')}}
     </div>
     <viewer
+      class="toast-viewer"
       v-if="editorRender"
       :initialValue="postInfo.CONTENT"
     />
@@ -76,10 +78,19 @@ export default {
  * common
  */
 .titleWrap {
-  padding: 30px 0px 10px 0px;
+  padding: 30px 0 10px 0;
   margin-bottom: 20px;
   width: 100%;
   border-bottom: 1px solid #EEE;
+}
+
+.postInfoWrap {
+  margin: 20px 0 20px 0;
+  color:#1A2229;
+}
+
+.postInfoWrap i {
+  margin-right: 6px;
 }
 
 .buttonWrap {
@@ -126,6 +137,14 @@ input[type=text].error, input[type=password].error {
 input[type=text].active, input[type=password].active {
   color: #4B8ECE;
   border-bottom: 3px solid #4B8ECE;
+}
+
+.toast-viewer {
+  font-size: 16px !important;
+}
+
+.tui-editor-contents {
+  font-size: 16px !important;
 }
 
 /**

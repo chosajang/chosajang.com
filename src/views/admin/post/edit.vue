@@ -8,8 +8,9 @@
       v-if="editorRender"
       :initialValue="postInfo.CONTENT"
       :options="editorOptions"
-      height="500px"
-      initialEditType="wysiwyg"
+      height="70%"
+      initialEditType="markdown"
+      @change="onEditorChange"
     />
     <div class="buttonWrap">
       <input type="button" class="btn btn-danger" value="Delete" @click="postDelete" />
@@ -72,14 +73,8 @@ export default {
       .then(response => {
         if (response.data.result) {
           vm.postInfo = response.data.article;
-          let content = vm.postInfo.CONTENT;
-          console.log('#1', content);
-          // content = content.replace(/\sdata-tomark-pass\s(\/?)&gt;/g, '$1&gt;');
-          content = content.replace(/<code>(.*?)<(\/?)code>/gi, '');
-          // /<head>(.*?)<(\/?)head>/gi,""
-          console.log('#2', content);
-          content = content.replace(/\s data-te-codeblock\s(\/?)&gt;/g, '$1&gt;');
-          console.log('#3', content);
+          const regex = /data-tomark-pass=""|data-te-codeblock=""/g;
+          vm.postInfo.CONTENT = vm.postInfo.CONTENT.replace(regex, '');
           // Toast UI Editor Render
           vm.editorRender = true;
         } else {
@@ -111,13 +106,17 @@ export default {
       // 제목 빈값일 때 에러처리
       if (this.titleCheck()) {
         const title = this.postInfo.TITLE;
-        const content = this.$refs.toastuiEditor.invoke('getHtml');
+        let content = this.$refs.toastuiEditor.invoke('getMarkdown');
         const postSeq = this.$route.params.seq;
         const formData = new FormData();
 
         formData.append('article_seq', postSeq);
         formData.append('title', title);
         formData.append('content', content);
+        console.log('postSave #1', content);
+        const regex = /data-tomark-pass=""|data-te-codeblock=""/g;
+        content = content.replace(regex, '');
+        console.log('postSave #2', content);
 
         this.$swal({
           title: '저장',
@@ -212,6 +211,9 @@ export default {
             });
         }
       });
+    },
+    onEditorChange () {
+      console.log('onEditorChange');
     }
   }
 };

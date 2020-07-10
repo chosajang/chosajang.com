@@ -15,6 +15,7 @@
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">게시판</th>
             <th scope="col">게시물 이름</th>
             <th scope="col">작성자</th>
             <th scope="col">등록일</th>
@@ -23,6 +24,7 @@
         <tbody>
           <tr v-for="(item, index) in itemListSlice" v-bind:key="item.ARTICLE_SEQ" @click="postRead(item.ARTICLE_SEQ)">
             <th scope="row">{{ (pageNum * 10) + index + 1 }}</th>
+            <td>{{ item.BOARD_NAME }}</td>
             <td>{{ item.TITLE }}</td>
             <td>{{ item.NAME }}</td>
             <td>{{ item.ADD_DATE }}</td>
