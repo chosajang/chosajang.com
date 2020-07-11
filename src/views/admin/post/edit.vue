@@ -14,7 +14,7 @@
     />
     <div class="buttonWrap">
       <input type="button" class="btn btn-danger" value="Delete" @click="postDelete" />
-      <input type="button" class="btn btn-primary" value="Save" @click="postSave" />
+      <input type="button" class="btn btn-primary" value="Save" @click="postEdit" />
       <input type="button" class="btn btn-secondary" value="Cancel" @click="postEditCancel" />
     </div>
   </div>
@@ -73,8 +73,9 @@ export default {
       .then(response => {
         if (response.data.result) {
           vm.postInfo = response.data.article;
-          const regex = /data-tomark-pass=""|data-te-codeblock=""/g;
-          vm.postInfo.CONTENT = vm.postInfo.CONTENT.replace(regex, '');
+          // data-tomark-pass, codeblock 삭제
+          // const regex = /data-tomark-pass=""|data-te-codeblock=""/g;
+          // vm.postInfo.CONTENT = vm.postInfo.CONTENT.replace(regex, '');
           // Toast UI Editor Render
           vm.editorRender = true;
         } else {
@@ -102,22 +103,19 @@ export default {
         return true;
       }
     },
-    postSave () {
+    postEdit () {
       // 제목 빈값일 때 에러처리
       if (this.titleCheck()) {
         const title = this.postInfo.TITLE;
-        let content = this.$refs.toastuiEditor.invoke('getMarkdown');
+        const content = this.$refs.toastuiEditor.invoke('getMarkdown');
         const postSeq = this.$route.params.seq;
         const formData = new FormData();
 
         formData.append('article_seq', postSeq);
         formData.append('title', title);
         formData.append('content', content);
-        console.log('postSave #1', content);
-        const regex = /data-tomark-pass=""|data-te-codeblock=""/g;
-        content = content.replace(regex, '');
-        console.log('postSave #2', content);
-
+        // const regex = /data-tomark-pass=""|data-te-codeblock=""/g;
+        // content = content.replace(regex, '');
         this.$swal({
           title: '저장',
           text: '게시물 내용을 저장하시겠습니까?',
@@ -134,7 +132,7 @@ export default {
                     text: response.data.message,
                     icon: 'success'
                   }).then((result) => {
-                    this.$router.push({ path: '/admin/posts/' + postSeq + '/read' });
+                    this.$router.push({ path: '/admin/posts/' + postSeq });
                   });
                 } else {
                   this.$swal({
@@ -172,7 +170,8 @@ export default {
       }).then((result) => {
         if (result.value) {
           // 게시판 목록으로 리턴
-          this.$router.push({ path: '/admin/posts' });
+          const postSeq = this.$route.params.seq;
+          this.$router.push({ path: '/admin/posts/' + postSeq });
         }
       });
     },
