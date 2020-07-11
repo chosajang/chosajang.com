@@ -1,20 +1,21 @@
 <template>
-  <div class="content">
-    <div class="titleWrap">
-      <h1>{{ postInfo.TITLE }}</h1>
-    </div>
-    <div class="postInfoWrap">
-      <i class="far fa-calendar-alt"></i>
-      {{$moment(postInfo.ADD_DATE).format('YYYY.MM.DD')}}
-    </div>
-    <viewer
-      class="toast-viewer"
-      v-if="editorRender"
-      :initialValue="postInfo.CONTENT"
-    />
-    <div class="buttonWrap">
-      <input type="button" class="btn btn-primary" value="Edit" @click="postEdit" />
-      <input type="button" class="btn btn-secondary" value="List" @click="postList" />
+  <div class="postWrap">
+    <div class="post">
+      <div class="title">
+        <h1>{{ postInfo.TITLE }}</h1>
+      </div>
+      <div class="postInfo">
+        <i class="far fa-calendar-alt"></i>
+        {{$moment(postInfo.ADD_DATE).format('YYYY.MM.DD')}}
+      </div>
+      <viewer
+        v-if="editorRender"
+        :initialValue="postInfo.CONTENT"
+      />
+      <div class="function">
+        <input type="button" class="btn btn-primary" value="Edit" @click="postEdit" />
+        <input type="button" class="btn btn-secondary" value="List" @click="postList" />
+      </div>
     </div>
   </div>
 </template>
@@ -77,32 +78,45 @@ export default {
 /**
  * common
  */
-.titleWrap {
+.postWrap {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
+  width: 100%;
+}
+
+.postWrap > .post {
+  max-width: 900px;
+  margin-bottom: 60px;
+}
+
+.title {
   padding: 30px 0 10px 0;
   margin-bottom: 20px;
-  width: 100%;
   border-bottom: 1px solid #EEE;
 }
 
-.postInfoWrap {
+.postInfo {
   margin: 20px 0 20px 0;
   color:#1A2229;
 }
 
-.postInfoWrap i {
+.postInfo i {
   margin-right: 6px;
 }
 
-.buttonWrap {
+.function {
   text-align: right;
   padding-top: 20px;
+  border-top: 1px solid #EEE;
 }
 
-.buttonWrap .btn {
+.function .btn {
   margin: .25rem;
 }
 
-.buttonWrap .btn-danger {
+.function .btn-danger {
   float: left;
 }
 
@@ -137,14 +151,6 @@ input[type=text].error, input[type=password].error {
 input[type=text].active, input[type=password].active {
   color: #4B8ECE;
   border-bottom: 3px solid #4B8ECE;
-}
-
-.toast-viewer {
-  font-size: 16px !important;
-}
-
-.tui-editor-contents {
-  font-size: 16px !important;
 }
 
 /**
