@@ -121,7 +121,7 @@ export default {
       this.pageNum = pageNum - 1;
     },
     postRead (postSeq) {
-      this.$router.push({ path: '/admin/posts/' + postSeq + '/read' });
+      this.$router.push({ path: '/admin/posts/' + postSeq });
     },
     postWrite () {
       this.$router.push({ path: '/admin/posts/write' });
@@ -150,6 +150,7 @@ export default {
 
 .itemWrap > table > thead tr, tbody tr{
   text-align: center;
+  cursor: pointer;
 }
 
 input[type=text] {
