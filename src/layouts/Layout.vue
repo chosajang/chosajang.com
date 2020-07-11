@@ -90,7 +90,6 @@ export default {
   max-width: 100% !important;
   display: block !important;
   margin: 20px auto !important;
-  cursor: zoom-in !important;
 }
 
 .tui-editor-contents code {
