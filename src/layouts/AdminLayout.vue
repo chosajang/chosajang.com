@@ -55,6 +55,7 @@ export default {
 
 .contentWrap {
   display: flex;
+  flex-wrap: wrap;
   margin: 70px 0 0 200px;
   padding: 0 20px;
   width: 100%;
