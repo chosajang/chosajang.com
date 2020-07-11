@@ -5,7 +5,7 @@ import AdminBoardView from '../views/admin/board';
 import AdminLoginView from '../views/admin/login';
 import AdminPostListView from '../views/admin/post/list';
 import AdminPostWriteView from '../views/admin/post/write';
-import AdminPostReadView from '../views/admin/post/read';
+import AdminPostReadView from '../views/admin/post';
 import AdminPostEditView from '../views/admin/post/edit';
 import AdminUserView from '../views/admin/user';
 
@@ -102,7 +102,17 @@ const routes = [
     beforeEnter: requireAuth()
   },
   {
-    path: '/admin/posts/:seq/read',
+    path: '/admin/posts/write',
+    name: 'admin.posts.write',
+    props: true,
+    meta: {
+      layout: 'AdminLayout'
+    },
+    component: AdminPostWriteView,
+    beforeEnter: requireAuth()
+  },
+  {
+    path: '/admin/posts/:seq',
     name: 'admin.posts.read',
     props: true,
     meta: {
@@ -119,16 +129,6 @@ const routes = [
       layout: 'AdminLayout'
     },
     component: AdminPostEditView,
-    beforeEnter: requireAuth()
-  },
-  {
-    path: '/admin/posts/write',
-    name: 'admin.posts.write',
-    props: true,
-    meta: {
-      layout: 'AdminLayout'
-    },
-    component: AdminPostWriteView,
     beforeEnter: requireAuth()
   },
   { /* 404 error 방지 */
