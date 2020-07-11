@@ -17,6 +17,8 @@ export default {
 </script>
 
 <style>
+@import url('http://fonts.googleapis.com/earlyaccess/notosanskr.css');
+
 body {
   padding: 0;
   margin: 0;
@@ -29,5 +31,10 @@ body {
 }
 .page-enter, .page-leave-to {
   opacity: 0;
+}
+
+::selection {
+  background-color: #608BCB;
+  color: #FFF;
 }
 </style>
