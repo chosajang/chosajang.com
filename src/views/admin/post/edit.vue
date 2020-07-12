@@ -3,15 +3,16 @@
     <div class="functionWrap">
       <input type="text" v-model="postInfo.TITLE" :class="postTitle" placeholder="Title" @keyup="titleCheck"/>
     </div>
-    <editor
-      ref="toastuiEditor"
-      v-if="editorRender"
-      :initialValue="postInfo.CONTENT"
-      :options="editorOptions"
-      height="70%"
-      initialEditType="markdown"
-      @change="onEditorChange"
-    />
+    <div class="editorWrap">
+      <editor
+        ref="toastuiEditor"
+        v-if="editorRender"
+        :initialValue="postInfo.CONTENT"
+        :options="editorOptions"
+        height="100%"
+        initialEditType="markdown"
+      />
+    </div>
     <div class="buttonWrap">
       <input type="button" class="btn btn-danger" value="Delete" @click="postDelete" />
       <input type="button" class="btn btn-primary" value="Save" @click="postEdit" />
@@ -210,9 +211,6 @@ export default {
             });
         }
       });
-    },
-    onEditorChange () {
-      console.log('onEditorChange');
     }
   }
 };
@@ -225,6 +223,11 @@ export default {
 .functionWrap {
   padding: 20px 0px 10px 0px;
   width: 100%;
+}
+
+.editorWrap {
+  min-height: 700px;
+  height: 80%;
 }
 
 .buttonWrap {
