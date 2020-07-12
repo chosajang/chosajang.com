@@ -40,7 +40,7 @@
           </div>
           <div class="modal-footer">
             <slot name="footer">
-              <input type="button" class="btn btn-danger" value="Delete">
+              <input type="button" class="btn btn-danger flexbox-start" value="Delete" @click="boardDelete" v-if="deleteBtnRender">
               <input type="button" class="btn btn-primary" value="Save" @click="boardSave">
               <input type="button" class="btn btn-secondary" value="Cancel" @click="formReset">
             </slot>
@@ -53,7 +53,7 @@
 
 <script>
 import { validationCheck } from '@/utils/common.js';
-import { boardCreate, boardUpdate } from '@/api';
+import { boardCreate, boardUpdate, boardDelete } from '@/api';
 
 export default {
   props: ['boardItem', 'itemList'],
@@ -61,6 +61,7 @@ export default {
     return {
       infoType: '',
       boardInfo: this.boardItem,
+      deleteBtnRender: false,
       tempInfo: {
         NAME: '',
         ATTACHED_FILE_YN: '',
@@ -82,6 +83,7 @@ export default {
       this.tempInfo.NAME = this.boardItem.NAME;
       this.tempInfo.ATTACHED_FILE_YN = this.boardItem.ATTACHED_FILE_YN;
       this.tempInfo.COMMENT_YN = this.boardItem.COMMENT_YN;
+      this.deleteBtnRender = true;
     }
   },
   methods: {
@@ -189,6 +191,47 @@ export default {
       this.boardItem.ATTACHED_FILE_YN = this.tempInfo.ATTACHED_FILE_YN;
       this.boardItem.COMMENT_YN = this.tempInfo.COMMENT_YN;
       this.$emit('close');
+    },
+    boardDelete () {
+      this.$emit('close');
+      this.$swal({
+        title: '삭제',
+        text: `[${this.boardInfo.NAME}] 게시판을 삭제하시겠습니까?`,
+        confirmButtonText: 'Yes, Delete it!',
+        confirmButtonColor: '#d33',
+        icon: 'error',
+        showCancelButton: true
+      }).then((result) => {
+        if (result.value) {
+          const formData = new FormData();
+          formData.append('board_seq', this.boardInfo.SEQ);
+          boardDelete(formData)
+            .then(response => {
+              if (response.data.result === true) {
+                // 결과메세지
+                this.$swal({
+                  title: '삭제',
+                  text: response.data.message,
+                  icon: 'success'
+                });
+              } else {
+                this.$swal({
+                  title: '장애 발생!',
+                  text: response.data.message,
+                  icon: 'error'
+                });
+              }
+            })
+            .catch(error => {
+              this.formReset();
+              this.$swal({
+                title: '장애 발생!',
+                text: error,
+                icon: 'error'
+              });
+            });
+        }
+      });
     }
   }
 };
@@ -243,6 +286,10 @@ export default {
   height: 100px;
 }
 
+.modal-footer {
+  justify-content: flex-end;
+}
+
 .form-wrap .title {
   font-size: 14px;
   font-weight: bold;
@@ -289,6 +336,10 @@ export default {
 .image-form .btn-delete-custom {
   height: 41px;
   margin-left: 10px;
+}
+
+.flexbox-start{
+  margin-right: auto;
 }
 
 input[type=text]:focus, input[type=password]:focus {
@@ -350,10 +401,6 @@ select.error {
   font-size: 12px;
   font-weight: bold;
   height: 20px;
-}
-
-.modal-default-button {
-  float: right;
 }
 
 /*
