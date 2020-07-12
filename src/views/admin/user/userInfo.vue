@@ -62,7 +62,7 @@
 
 <script>
 import { validationCheck } from '@/utils/common.js';
-import { userModify, userCreate } from '@/api';
+import { userUpdate, userCreate } from '@/api';
 
 export default {
   props: ['userItem'],
@@ -134,7 +134,7 @@ export default {
       if (this.userItem.MODE === 'create') {
         this.userCreate();
       } else {
-        this.userModify();
+        this.userUpdate();
       }
     },
     userCreate () {
@@ -187,7 +187,7 @@ export default {
           });
       }
     },
-    userModify () {
+    userUpdate () {
       const formData = new FormData();
       let mandatoryCheck = false;
       if (validationCheck(this.$store.state.VALID.TEXT, this.userInfo.NAME, this)) {
@@ -210,7 +210,7 @@ export default {
 
       if (mandatoryCheck === true) {
         this.$emit('close');
-        userModify(formData)
+        userUpdate(formData)
           .then(response => {
             if (response.data.result === true) {
               const userInfo = response.data.data;
