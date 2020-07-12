@@ -7,7 +7,7 @@
       <router-link to="/">CHOSAJANG</router-link>
     </div>
     <div class="nav">
-      <router-link to="/blog">Blog</router-link>
+      <router-link to="/posts">Blog</router-link>
       <router-link to="/project">Project</router-link>
       <router-link to="/profile">Profile</router-link>
       <router-link to="/admin/user">Admin.user</router-link>
@@ -29,8 +29,9 @@ export default {
   display: flex;
   align-items: center;
   color: #FFF;
-  background-color: #2D353C;
+  background-color: #608BCB;
 }
+
 /**
  * Mobile
  */
@@ -93,7 +94,7 @@ export default {
   }
 
   .header .nav a {
-    color: #B6B6B6;
+    color: #FFF;
     font-size: 16px;
     text-decoration: none;
     margin: 0px 15px;
