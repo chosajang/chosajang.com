@@ -24,7 +24,7 @@ function fetchUserList () {
   });
 }
 
-function userModify (formData) {
+function userUpdate (formData) {
   const userInfo = getUserInfo();
   const headerInfo = {
     headers: {
@@ -33,7 +33,7 @@ function userModify (formData) {
   };
   formData.append('member_seq', userInfo.SEQ);
   formData.append('session_id', userInfo.SESSION_ID);
-  return axios.post(`${config.baseUrl}/admin/user/modify`, formData, headerInfo);
+  return axios.post(`${config.baseUrl}/admin/user/update`, formData, headerInfo);
 }
 
 function userCreate (formData) {
@@ -70,6 +70,13 @@ function boardUpdate (formData) {
   formData.append('member_seq', userInfo.SEQ);
   formData.append('session_id', userInfo.SESSION_ID);
   return axios.post(`${config.baseUrl}/admin/board/update`, formData);
+}
+
+function boardDelete (formData) {
+  const userInfo = getUserInfo();
+  formData.append('member_seq', userInfo.SEQ);
+  formData.append('session_id', userInfo.SESSION_ID);
+  return axios.post(`${config.baseUrl}/admin/board/delete`, formData);
 }
 
 function postList () {
@@ -126,18 +133,24 @@ function postDelete (formData) {
   return axios.post(`${config.baseUrl}/admin/article/delete`, formData);
 }
 
+function servicePostList () {
+  return axios.get(`${config.baseUrl}/posts/list`);
+}
+
 export {
   fetchUserLogin,
   fetchUserList,
-  userModify,
+  userUpdate,
   userCreate,
   boardList,
   boardCreate,
   boardUpdate,
+  boardDelete,
   postList,
   postRead,
   postWrite,
   postUpdate,
   postContentFileUpload,
-  postDelete
+  postDelete,
+  servicePostList
 };
