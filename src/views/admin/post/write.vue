@@ -9,12 +9,14 @@
       </select>
       <input type="text" v-model="post.title" :class="postTitle" placeholder="Post Title" @keyup="titleCheck"/>
     </div>
-    <editor
-      ref="toastuiEditor"
-      :options="editorOptions"
-      height="70%"
-      initialEditType="markdown"
-    />
+    <div class="editorWrap">
+      <editor
+        ref="toastuiEditor"
+        :options="editorOptions"
+        height="100%"
+        initialEditType="markdown"
+      />
+    </div>
     <div class="buttonWrap">
       <input type="button" class="btn btn-primary" value="Save" @click="postSave" />
       <input type="button" class="btn btn-secondary" value="Cancel" @click="postEditCancel" />
@@ -184,6 +186,11 @@ export default {
 .functionWrap {
   padding: 20px 0px 10px 0px;
   width: 100%;
+}
+
+.editorWrap {
+  min-height: 700px;
+  height: 80%;
 }
 
 .buttonWrap {

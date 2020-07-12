@@ -138,6 +138,8 @@ export default {
 /**
  * common
  */
+.content { width: 100%; }
+
 .functionWrap {
   padding-top: 20px;
   width: 100%;
