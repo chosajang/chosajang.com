@@ -29,6 +29,9 @@ export default {
 </script>
 
 <style>
+/** common Style */
+.contentWrap .content { width: 100%; }
+
 /**
  * Toast UI Viewer Custom
  */
@@ -96,4 +99,5 @@ export default {
   font-size: 14px !important;
   font-family: Consolas, Courier, "Apple SD 산돌고딕 Neo", -apple-system, "Lucida Grande", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", "Segoe UI", "돋움", dotum, sans-serif !important;
 }
+
 </style>

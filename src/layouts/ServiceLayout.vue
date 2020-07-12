@@ -1,7 +1,7 @@
 <template>
   <div>
-      <service-header></service-header>
-      <slot></slot>
+    <service-header></service-header>
+    <slot></slot>
   </div>
 </template>
 

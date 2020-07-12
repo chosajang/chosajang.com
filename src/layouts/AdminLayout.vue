@@ -25,7 +25,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 /**
  * common
  */
@@ -61,10 +61,6 @@ export default {
   width: 100%;
   background-color: #FFF;
   transition: .2s;
-}
-
-.contentWrap > .content {
-  width: 100%;
 }
 
 /**
