@@ -8,7 +8,7 @@
         <div class="image">이미지</div>
         <div class="text">
           <div class="title">{{item.TITLE}}</div>
-          <div class="summary">내용 요약본이 여기에 출력됩니다 최대 2줄까지를 기획중이며, 글이 넘어가는 경우 마지막에 ...으로 표시하여 화면이 깨지는 것을 방지할 수 있도록 합니다</div>
+          <div class="preview">{{item.CONTENT_PREVIEW}}</div>
           <div class="info"><i class="far fa-calendar-alt"></i> {{$moment(item.ADD_DATE).format('YYYY.MM.DD')}}</div>
         </div>
       </div>
@@ -60,11 +60,12 @@ export default {
   height: 200px;
   background-color: coral;
   margin: 0 auto;
+  font-size: 20px;
 }
 
 .content > .list {
   max-width: 900px;
-  width: 900px;
+  width: 100%;
   margin: 0 auto;
   background-color: cyan;
 }
@@ -78,17 +79,18 @@ export default {
 }
 
 .post > .image {
-  width: 200px;
+  width: 20%;
   height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid #EEE;
 }
 
 .post > .text {
+  width: 80%;
   display: flex;
   flex-direction: column;
-  width: 100%;
   padding: 10px 0 10px 0;
 }
 
@@ -96,9 +98,37 @@ export default {
   font-size: 22px;
 }
 
-.text > .summary {
+.text > .preview {
   font-size: 16px;
   margin: 6px 0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap:break-word;
 }
 
+/**
+ * Mobile
+ */
+@media all and (max-width:768px) {
+  .post > .list {
+    width: 100%;
+  }
+
+  .text > .title {
+    font-size: 20px;
+  }
+
+  .text > .preview {
+    font-size: 12px;
+    -webkit-line-clamp: 3;
+  }
+}
+/**
+ * Tablet & Desktop
+ */
+@media all and (min-width:768px) {
+}
 </style>
