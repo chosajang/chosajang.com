@@ -9,7 +9,7 @@
         <div class="text">
           <div class="title">{{item.TITLE}}</div>
           <div class="preview">{{item.CONTENT_PREVIEW}}</div>
-          <div class="info"><i class="far fa-calendar-alt"></i> {{$moment(item.ADD_DATE).format('YYYY.MM.DD')}}</div>
+          <div class="other"><i class="far fa-calendar-alt"></i> {{$moment(item.ADD_DATE).format('YYYY.MM.DD')}}</div>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@ export default {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 200px;
+  height: 300px;
   background-color: coral;
   margin: 0 auto;
   font-size: 20px;
@@ -91,11 +91,12 @@ export default {
   width: 80%;
   display: flex;
   flex-direction: column;
-  padding: 10px 0 10px 0;
+  padding: 10px;
 }
 
 .text > .title {
   font-size: 22px;
+  font-weight: bold;
 }
 
 .text > .preview {
@@ -109,6 +110,10 @@ export default {
   word-wrap:break-word;
 }
 
+.text > .other {
+  font-size: 16px;
+}
+
 /**
  * Mobile
  */
@@ -118,12 +123,16 @@ export default {
   }
 
   .text > .title {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .text > .preview {
     font-size: 12px;
     -webkit-line-clamp: 3;
+  }
+
+  .text > .other {
+    font-size: 12px;
   }
 }
 /**
