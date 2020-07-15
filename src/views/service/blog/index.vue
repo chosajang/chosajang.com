@@ -58,7 +58,6 @@ export default {
   justify-content: center;
   width: 100%;
   height: 300px;
-  background-color: coral;
   margin: 0 auto;
   font-size: 20px;
 }
@@ -67,7 +66,6 @@ export default {
   max-width: 900px;
   width: 100%;
   margin: 0 auto;
-  background-color: cyan;
 }
 
 .content > .list > .post {
