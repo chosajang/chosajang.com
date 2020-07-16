@@ -60,6 +60,7 @@ export default {
   height: 300px;
   margin: 0 auto;
   font-size: 20px;
+  background-color: aqua;
 }
 
 .content > .list {
