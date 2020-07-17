@@ -1,138 +1,120 @@
 <template>
-  <div class="content">
-    <div class="banner">
-      공부하고 만들며 경험한 것을 정리하여 나누는 공간 :)
-    </div>
-    <div class="list">
-      <div class="post" v-for="item in itemList" v-bind:key="item.SEQ" :value="item.SEQ">
-        <div class="image">이미지</div>
-        <div class="text">
-          <div class="title">{{item.TITLE}}</div>
-          <div class="preview">{{item.CONTENT_PREVIEW}}</div>
-          <div class="other"><i class="far fa-calendar-alt"></i> {{$moment(item.ADD_DATE).format('YYYY.MM.DD')}}</div>
-        </div>
+  <div class="postWrap">
+    <div class="post">
+      <div class="title">
+        <h1>{{ postInfo.TITLE }}</h1>
+      </div>
+      <div class="postInfo">
+        <i class="far fa-calendar-alt"></i>
+        {{$moment(postInfo.ADD_DATE).format('YYYY.MM.DD')}}
+      </div>
+      <viewer
+        v-if="editorRender"
+        :initialValue="postInfo.CONTENT"
+      />
+      <div class="function">
+        <input type="button" class="btn btn-secondary" value="List" @click="postList" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { servicePostList } from '@/api';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import { Viewer } from '@toast-ui/vue-editor';
+import { servicePostRead } from '@/api';
 
 export default {
+  components: {
+    viewer: Viewer
+  },
   data () {
     return {
-      itemList: [],
-      pageSize: 10,
-      pageNum: 0
+      postSeq: '',
+      editorRender: false,
+      postTitle: '',
+      postInfo: {
+        TITLE: 'Default Title',
+        CONTENT: 'Default Content'
+      }
     };
   },
   created () {
     const vm = this;
-    servicePostList()
+    this.postSeq = this.$route.params.seq;
+    console.log(this.postSeq);
+    servicePostRead(this.postSeq)
       .then(response => {
+        console.log(response);
         if (response.data.result) {
-          vm.itemList = response.data.data;
+          vm.postInfo = response.data.article;
+          // Toast UI Editor Render
+          vm.editorRender = true;
+        } else {
+          this.$swal({
+            title: '게시물 내용조회 실패',
+            text: '삭제된 게시물이거나, 내용조회를 할 수 없습니다',
+            icon: 'warning'
+          }).then((result) => {
+            this.$router.push({ path: '/blog' });
+          });
         }
       })
       .catch(error => {
         console.log(error);
       });
+  },
+  methods: {
+    postList () {
+      this.$router.push({ path: '/blog' });
+    }
   }
 };
 </script>
 
 <style scoped>
-.content {
+/**
+ * common
+ */
+.postWrap {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  justify-content: center;
   align-content: center;
   width: 100%;
 }
 
-.content > .banner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 300px;
-  margin: 0 auto;
-  font-size: 20px;
-  background-color: aqua;
-}
-
-.content > .list {
+.postWrap > .post {
   max-width: 900px;
-  width: 100%;
-  margin: 0 auto;
+  width: 900px;
+  margin-bottom: 60px;
 }
 
-.content > .list > .post {
-  display: flex;
-  justify-content: start;
-  margin: 20px 0px 20px 0px;
-  height: 140px;
-  background-color: #FFF;
+.title {
+  padding: 30px 0 10px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #EEE;
 }
 
-.post > .image {
-  width: 20%;
-  height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #EEE;
+.postInfo {
+  margin: 20px 0 20px 0;
+  color:#1A2229;
 }
 
-.post > .text {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
+.postInfo i {
+  margin-right: 6px;
 }
 
-.text > .title {
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.text > .preview {
-  font-size: 16px;
-  margin: 6px 0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  word-wrap:break-word;
-}
-
-.text > .other {
-  font-size: 16px;
+.function {
+  text-align: right;
+  padding-top: 20px;
+  border-top: 1px solid #EEE;
 }
 
 /**
  * Mobile
  */
 @media all and (max-width:768px) {
-  .post > .list {
-    width: 100%;
-  }
-
-  .text > .title {
-    font-size: 18px;
-  }
-
-  .text > .preview {
-    font-size: 12px;
-    -webkit-line-clamp: 3;
-  }
-
-  .text > .other {
-    font-size: 12px;
-  }
 }
 /**
  * Tablet & Desktop
