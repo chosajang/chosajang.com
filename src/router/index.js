@@ -9,6 +9,7 @@ import AdminPostReadView from '../views/admin/post';
 import AdminPostEditView from '../views/admin/post/edit';
 import AdminUserView from '../views/admin/user';
 
+import BlogListView from '../views/service/blog/list';
 import BlogView from '../views/service/blog';
 import ProjectView from '../views/service/project';
 import ProfileView from '../views/service/profile';
@@ -42,10 +43,18 @@ const routes = [
     meta: {
       layout: 'ServiceLayout'
     },
-    component: BlogView,
+    component: BlogListView,
     beforeEnter: (to, from, next) => {
       next();
     }
+  },
+  {
+    path: '/blog/:seq',
+    name: 'blog',
+    meta: {
+      layout: 'ServiceLayout'
+    },
+    component: BlogView
   },
   {
     path: '/project',
