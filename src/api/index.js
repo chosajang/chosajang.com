@@ -137,6 +137,14 @@ function servicePostList () {
   return axios.get(`${config.baseUrl}/posts/list`);
 }
 
+function servicePostRead (postSeq) {
+  return axios.get(`${config.baseUrl}/posts/read`, {
+    params: {
+      article_seq: postSeq
+    }
+  });
+}
+
 export {
   fetchUserLogin,
   fetchUserList,
@@ -152,5 +160,6 @@ export {
   postUpdate,
   postContentFileUpload,
   postDelete,
-  servicePostList
+  servicePostList,
+  servicePostRead
 };
