@@ -1,11 +1,13 @@
 <template>
   <div class="content">
     <div class="banner">
-      공부하고 만들며 경험한 것을 정리하여 나누는 공간 :)
+      <h3>기술과 경험을 정리하여 나누는 공간 :)</h3>
     </div>
     <div class="list">
       <div class="post" v-for="item in itemList" v-bind:key="item.ARTICLE_SEQ" :value="item.ARTICLE_SEQ" @click="postRead(item.ARTICLE_SEQ)">
-        <div class="image">이미지</div>
+        <div class="image">
+          <img src="" onerror="this.src='/img/blog-post-default.png'">
+        </div>
         <div class="text">
           <div class="title">{{item.TITLE}}</div>
           <div class="preview">{{item.CONTENT_PREVIEW}}</div>
@@ -64,22 +66,31 @@ export default {
   width: 100%;
   height: 300px;
   margin: 0 auto;
-  font-size: 20px;
-  background-color: aqua;
+  background-image: url('/img/blog-banner.png');
+  background-repeat: no-repeat;
+  background-color: #71cdff;
+  background-position: center 30%;
+}
+
+.content > .banner > h3, h4 {
+  color: #FFF;
+  background-color: #608BCB;
 }
 
 .content > .list {
   max-width: 900px;
   width: 100%;
   margin: 0 auto;
+  padding-top: 40px;
 }
 
 .content > .list > .post {
   display: flex;
   justify-content: start;
-  margin: 20px 0px 20px 0px;
-  height: 140px;
+  padding: 30px 0px 30px 0px;
   background-color: #FFF;
+  cursor: pointer;
+  border-bottom: 1px solid #EEE;
 }
 
 .post > .image {
@@ -88,7 +99,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #EEE;
+}
+
+.post > .image > img {
+  width: 90%;
 }
 
 .post > .text {
