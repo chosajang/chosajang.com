@@ -9,7 +9,7 @@
         {{$moment(postInfo.ADD_DATE).format('YYYY.MM.DD')}}
       </div>
       <viewer
-        v-if="editorRender"
+        v-if="viewerRender"
         :initialValue="postInfo.CONTENT"
       />
       <div class="function">
@@ -31,11 +31,11 @@ export default {
   data () {
     return {
       postSeq: '',
-      editorRender: false,
+      viewerRender: false,
       postTitle: '',
       postInfo: {
-        TITLE: 'Default Title',
-        CONTENT: 'Default Content'
+        TITLE: '',
+        CONTENT: ''
       }
     };
   },
@@ -49,7 +49,7 @@ export default {
         if (response.data.result) {
           vm.postInfo = response.data.article;
           // Toast UI Editor Render
-          vm.editorRender = true;
+          vm.viewerRender = true;
         } else {
           this.$swal({
             title: '게시물 내용조회 실패',
