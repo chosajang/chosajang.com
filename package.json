@@ -19,6 +19,8 @@
     "core-js": "^3.6.4",
     "sweetalert2": "^9.14.4",
     "vue": "^2.6.11",
+    "vue-disqus-embed": "^1.0.1",
+    "vue-meta": "^2.4.0",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.1.5",
     "vue-sweetalert2": "^3.0.5",
