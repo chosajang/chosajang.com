@@ -15,6 +15,13 @@
       <div class="function">
         <input type="button" class="btn btn-secondary" value="List" @click="postList" />
       </div>
+      <div class="comment">
+        <vue-disqus-embed
+          :identifier="identifier"
+          :url="url"
+          :title="TEST"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -36,7 +43,9 @@ export default {
       postInfo: {
         TITLE: '',
         CONTENT: ''
-      }
+      },
+      identifier: this.$route.params.seq,
+      url: 'http://chosajang.github.io/blog/' + this.$route.params.seq
     };
   },
   created () {
@@ -109,6 +118,11 @@ export default {
   text-align: right;
   padding-top: 20px;
   border-top: 1px solid #EEE;
+}
+
+.disqus {
+  width: 100%;
+  max-width: 30rem;
 }
 
 /**
