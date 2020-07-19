@@ -14,6 +14,22 @@
           <div class="other"><i class="far fa-calendar-alt"></i> {{$moment(item.ADD_DATE).format('YYYY.MM.DD')}}</div>
         </div>
       </div>
+      <div class="pagination-cutstom">
+        <!-- Page Navigation -->
+        <nav aria-label="Page navigation">
+          <paginate
+            :pageCount="pageCount"
+            :clickHandler="pageMove"
+            :containerClass="'pagination justify-content-center'"
+            :prev-class="'page-item'"
+            :prev-link-class="'page-link'"
+            :page-class="'page-item'"
+            :page-link-class="'page-link'"
+            :next-class="'page-item'"
+            :next-link-class="'page-link'">
+          </paginate>
+        </nav>
+      </div>
     </div>
   </div>
 </template>
@@ -41,9 +57,43 @@ export default {
         console.log(error);
       });
   },
+  computed: {
+    pageCount () {
+      const listLeng = this.listFiltered.length;
+      const listSize = this.pageSize;
+      let page = Math.floor(listLeng / listSize);
+      if (listLeng % listSize > 0) {
+        page += 1;
+      }
+      return page;
+    },
+    /**
+     * 회원 ID,이름 검색 시 필터 처리
+     */
+    listFiltered () {
+      // const boardSeq = this.selectBoard;
+      // List Filter
+      // return this.itemList.filter(item => {
+      //   return item.BOARD_SEQ.includes(boardSeq);
+      // });
+      return this.itemList;
+    },
+    /**
+     * 페이지네이션을 위한 배열 슬라이스
+     */
+    itemListSlice () {
+      // Paginated(Item Slice)
+      const start = this.pageNum * this.pageSize;
+      const end = start + this.pageSize;
+      return this.listFiltered.slice(start, end);
+    }
+  },
   methods: {
     postRead (postSeq) {
       this.$router.push({ path: '/blog/' + postSeq });
+    },
+    pageMove (pageNum) {
+      this.pageNum = pageNum - 1;
     }
   }
 };
@@ -91,6 +141,12 @@ export default {
   background-color: #FFF;
   cursor: pointer;
   border-bottom: 1px solid #EEE;
+  transition: 0.3s;
+}
+
+.content > .list > .post:hover {
+  border-bottom: 1px solid #608BCB;
+  transition: 0.3s;
 }
 
 .post > .image {
@@ -130,6 +186,10 @@ export default {
 
 .text > .other {
   font-size: 16px;
+}
+
+.content > .list > .pagination-cutstom {
+  margin-top: 40px;
 }
 
 /**
