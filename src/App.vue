@@ -17,8 +17,6 @@ export default {
 </script>
 
 <style>
-@import url('http://fonts.googleapis.com/earlyaccess/notosanskr.css');
-
 body {
   padding: 0;
   margin: 0;
