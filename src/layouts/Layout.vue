@@ -24,6 +24,16 @@ export default {
     return {
       layout
     };
+  },
+  metaInfo: {
+    title: 'chosajang.github.io',
+    titleTemplate: '%s - chosajang.github.io',
+    meta: [
+      {
+        'http-equiv': 'Content-Security-Policy',
+        content: 'upgrade-insecure-requests'
+      }
+    ]
   }
 };
 </script>

@@ -10,6 +10,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import Paginate from 'vuejs-paginate';
 import store from './store/index.js';
 import VueMoment from 'vue-moment';
+import VueDisqusEmbed from 'vue-disqus-embed';
+import Meta from 'vue-meta';
 
 Vue.config.productionTip = false;
 
@@ -17,6 +19,10 @@ Vue.use(VueCompositionApi);
 Vue.use(Bootstrap);
 Vue.use(VueSweetalert2);
 Vue.use(VueMoment);
+Vue.use(Meta);
+Vue.use(VueDisqusEmbed, {
+  shortname: 'vue-disqus-embed'
+});
 Vue.component('paginate', Paginate);
 
 new Vue({
