@@ -8,7 +8,7 @@
     </div>
     <div class="nav">
       <router-link to="/posts">Blog</router-link>
-      <router-link to="/project">Project</router-link>
+      <!-- <router-link to="/project">Project</router-link> -->
       <router-link to="/profile">Profile</router-link>
       <router-link to="/admin/user">Admin.user</router-link>
     </div>
