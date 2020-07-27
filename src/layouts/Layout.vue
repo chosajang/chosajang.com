@@ -26,8 +26,8 @@ export default {
     };
   },
   metaInfo: {
-    title: 'chosajang.github.io',
-    titleTemplate: '%s - chosajang.github.io',
+    title: 'chosajang.com',
+    titleTemplate: '%s - chosajang.com',
     meta: [
       {
         'http-equiv': 'Content-Security-Policy',
