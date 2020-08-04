@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="mobile-nav">
-      M
+      <i class="fas fa-bars"></i>
     </div>
     <div class="logo">
       <router-link to="/">CHOSAJANG</router-link>
@@ -59,6 +59,10 @@ export default {
 
   .mobile-nav {
     flex: none;
+  }
+
+  .mobile-nav i {
+    font-size: 20px;
   }
 }
 /**
