@@ -1,3 +1,5 @@
 module.exports = {
-  lintOnSave: false
+  lintOnSave: false,
+  publicPath: '/chosajang.github.io',
+  outputDir: 'docs'
 };
