@@ -46,7 +46,7 @@ export default {
       },
       identifier: this.$route.params.seq,
       // 도메인 변경 필요
-      url: 'http://chosajang.github.io/blog/' + this.$route.params.seq
+      url: 'http://chosajang.com/blog/' + this.$route.params.seq
     };
   },
   created () {
