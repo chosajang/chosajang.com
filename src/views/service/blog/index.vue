@@ -91,13 +91,12 @@ export default {
   flex-wrap: wrap;
   flex-direction: column;
   align-content: center;
+  margin: 0 20px;
   width: 100%;
 }
 
 .postWrap > .post {
   max-width: 900px;
-  width: 900px;
-  margin-bottom: 60px;
 }
 
 .title {
@@ -130,10 +129,12 @@ export default {
  * Mobile
  */
 @media all and (max-width:768px) {
+
 }
 /**
  * Tablet & Desktop
  */
 @media all and (min-width:768px) {
+
 }
 </style>
