@@ -129,7 +129,9 @@ export default {
  * Mobile
  */
 @media all and (max-width:768px) {
-
+  .post > .title h1 {
+    font-size: 26px;
+  }
 }
 /**
  * Tablet & Desktop
