@@ -110,4 +110,18 @@ export default {
   font-family: Consolas, Courier, "Apple SD 산돌고딕 Neo", -apple-system, "Lucida Grande", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", "Segoe UI", "돋움", dotum, sans-serif !important;
 }
 
+/**
+ * Mobile
+ */
+@media all and (max-width:768px) {
+  .tui-editor-contents {
+    font-size: 15px !important;
+    line-height: 22px !important;
+  }
+}
+/**
+ * Tablet & Desktop
+ */
+@media all and (min-width:768px) {
+}
 </style>
