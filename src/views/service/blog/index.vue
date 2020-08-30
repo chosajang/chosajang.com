@@ -91,12 +91,12 @@ export default {
   flex-wrap: wrap;
   flex-direction: column;
   align-content: center;
-  margin: 0 20px;
   width: 100%;
 }
 
 .postWrap > .post {
   max-width: 900px;
+  margin: 0 10px;
 }
 
 .title {
