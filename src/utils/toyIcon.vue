@@ -16,7 +16,7 @@ library.add(fas);
 library.add(far);
 library.add(fab);
 export default defineComponent({
-    name: 'toyIcon',
+    name: 'ToyIcon',
     props: {
         icon: {
             type: String,
