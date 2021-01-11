@@ -1,13 +1,9 @@
 <template>
-  <div class="m-10">
-    Hi
-    <toy-icon icon="user-secret" />
-    <toy-icon icon="address-book" size="40" />
-    <toy-icon type="fab" icon="adn" />
-  </div>
-  <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-
-  <!-- <HelloWorld msg="Hello World"/> -->
+  <!-- class to center image -->
+  <img class="mx-auto" alt="Vue logo" src="./assets/logo.png" />
+  <HelloWorld msg="Welcome to Your Vue.js v3 + TailwindCSS v2 App" />
+  <p class="text-xl text-blue-500 font-bold my-4">This is a blue text</p>
+  <button class="btn-green">Action</button>
 </template>
 
 <script>
@@ -20,3 +16,5 @@ export default {
   }
 }
 </script>
+
+<style src="./assets/tailwind.css"/>
