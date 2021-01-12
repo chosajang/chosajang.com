@@ -12,12 +12,12 @@
 </template>
 
 <script>
-console.log('App.vue');
+import Layout from './layouts/Layout.vue';
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld
+    Layout
   }
 }
 </script>

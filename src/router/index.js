@@ -12,9 +12,6 @@ const routes = [
     path: '/blog',
     name: 'blog',
     props: true,
-    meta: {
-      layout: 'BlogLayout'
-    },
     component: BlogView
   }
 ];

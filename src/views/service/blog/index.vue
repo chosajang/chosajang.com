@@ -4,6 +4,7 @@
   </div>
 </template>
 <script>
+console.log('views/service/blog/index.vue');
 export default {
   
 }
