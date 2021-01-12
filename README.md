@@ -15,6 +15,8 @@ Vue CLI v4.5.10
 ```
 
 - vue 3.0 + tailwind css 2.x 설치시 장애 발생
+ > yarn add tailwindcss@latest postcss@latest autoprefixer@latest
+ >
  > Error: PostCSS plugin autoprefixer requires PostCSS 8. Update PostCSS or downgrade this plugin
  >
  > 해결방법 참고 : https://tailwindcss.com/docs/installation 
