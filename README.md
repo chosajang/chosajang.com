@@ -14,7 +14,6 @@ Because PostCSS 8 is only a few months old, many other tools in the ecosystem ha
 
  > Error: PostCSS plugin tailwindcss requires PostCSS 8.
 
-
 To help bridge the gap until everyone has updated, we also publish a PostCSS 7 compatibility build under the compat channel on npm.
 
 If you run into the error mentioned above, uninstall Tailwind and re-install using the compatibility build instead:
