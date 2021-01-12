@@ -9,7 +9,8 @@
 ```
 PostCSS 7 compatibility build
 
-As of v2.0, Tailwind CSS depends on PostCSS 8. Because PostCSS 8 is only a few months old, many other tools in the ecosystem haven't updated yet, which means you might see an error like this in your terminal after installing Tailwind and trying to compile your CSS:
+As of v2.0, Tailwind CSS depends on PostCSS 8. 
+Because PostCSS 8 is only a few months old, many other tools in the ecosystem haven't updated yet, which means you might see an error like this in your terminal after installing Tailwind and trying to compile your CSS:
 
  > Error: PostCSS plugin tailwindcss requires PostCSS 8.
 
