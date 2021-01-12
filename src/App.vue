@@ -1,13 +1,18 @@
 <template>
-  <!-- class to center image -->
-  <img class="mx-auto" alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js v3 + TailwindCSS v2 App" />
-  <p class="text-xl text-blue-500 font-bold my-4">This is a blue text</p>
-  <button class="btn-green">Action</button>
+  <div class="containter mx-auto">
+    <!-- url에 다른 뷰컴포넌트 출력 -->
+    <layout>
+      <router-view></router-view>
+    </layout>
+  </div>
+  <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
+  
+
+  <!-- <HelloWorld msg="Hello World"/> -->
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+console.log('App.vue');
 
 export default {
   name: 'App',
