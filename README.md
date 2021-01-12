@@ -24,6 +24,7 @@ If you run into the error mentioned above, uninstall Tailwind and re-install usi
 
 - tailwindcss 2.x 호환성 빌드를 사용하여 재설치
  > yarn remove tailwindcss postcss autoprefixer
+ >
  > yarn add tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9
  
  
