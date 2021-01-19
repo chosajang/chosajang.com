@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ... -->
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript" src="./assets/vendor/jspdf.min.js"></script>
+  <script type="text/javascript" src="./assets/vendor/html2canvas.min.js"></script>
+
+  <script type="text/javascript" src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+  <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css" >
+  
+
+</head>
+<body class="text-gray-800 antialiased" >
+  <div id="root">
+    <nav class="fixed flex flex-row">
+      <div>
+        <button type="button" id="savePdf" class="border border-red-500 bg-red-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-red-600 focus:outline-none focus:shadow-outline">
+          Print PDF
+        </button>
+        <button type="button" id="html2Canvas" class="border border-green-500 bg-green-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline">
+          HTML2Canvas
+        </button>
+      </div>
+    </nav>
+    <div class="flex flex-col items-center">
+      <div id="pdfDiv">
+        <div style="width:770px; height:1100px;" class="border-solid border-4 border-black">PDF Page 1
+          <canvas id="imgCanvas" width="127" height="127"></canvas>
+          <img src="file:///D:/02.Workspace/Github/chosajang.com-publish/assets/report.png"/>
+          
+        </div>
+        <div style="width:770px; height:1100px;" class="border-solid border-4 border-black">PDF Page 2</div>
+        <div style="width:770px; height:1100px;" class="border-solid border-4 border-black">PDF Page 3</div>
+      </div>
+      <!-- <video src="./assets//test_360p.mp4" type="video/mp4" controls="true"></video> -->
+    </div>
+  </div>
+  <script>
+    $(document).ready(function() {
+      /**
+       * 이미지를 캔버스에 출력
+       */
+      function canvasDraw() {
+        let imgObj = new Image();
+
+        imgObj.addEventListener('load', function(){
+          let ctx = document.getElementById('imgCanvas').getContext("2d");
+          ctx.drawImage(imgObj,0,0,127,127);
+        }, false);
+
+        imgObj.src = "./assets/report.png";
+      }
+      canvasDraw();
+
+      $('#savePdf').click(function() { // pdf저장 button id
+        html2canvas($('#pdfDiv')[0]).then(function(canvas) { //저장 영역 div id
+          let filename = 'REPORT_' + Date.now() + '.pdf';
+          let doc = new jsPDF('p', 'mm', 'a4');
+          // 캔버스를 이미지로 변환
+          const imgData = canvas.toDataURL('image/png');
+          
+          let imgWidth = 200;// 이미지 가로 길이(mm) / A4 기준 210mm
+          let pageHeight = imgWidth * 1.414;// 출력 페이지 세로 길이 계산 A4 기준
+          let imgHeight = canvas.height * imgWidth / canvas.width;
+          let heightLeft = imgHeight;
+          let margin = 10; // 출력 페이지 여백설정
+          let position = 0;
+          
+          // 첫 페이지 출력
+          doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+
+          heightLeft -= pageHeight;
+          // 한 페이지 이상일 경우 루프 돌면서 출력
+          while (heightLeft >= 0) {
+              position = heightLeft - imgHeight;
+              doc.addPage();
+              doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+              heightLeft -= pageHeight;
+          }
+          
+          // 파일 저장
+          doc.save('file-name.pdf');
+        });
+      });
+
+      $('#html2Canvas').click(function(){
+        html2canvas($('#pdfDiv')[0],{
+          logging: true,
+          allowTaint: true,
+          foreignObjectRendering: true
+        }).then(canvas => {
+          let imageData = canvas.toDataURL("image/png");
+          let a = document.createElement('a');
+          a.href = imageData;
+          a.download = 'test.jpg';
+          a.click();
+        });
+
+        // html2canvas($('#pdfDiv')[0],{
+        //   logging: true,
+        //   letterRendering: 1,
+        //   allowTaint: true,
+        //   useCORS: true
+        // }).then(function(canvas){
+        //   // let imageData = canvas.toDataURL("image/png");
+        //   // imageData = imageData.replace("data:image/png;base64,","");
+
+        //   // let imageData = canvas.toDataURL("image/jpeg").replace("image/jpeg","image/octet-stream");
+        //   let imageData = canvas.toDataURL("image/png");
+        //   let a = document.createElement('a');
+        //   a.href = imageData;
+        //   a.download = 'test.jpg';
+        //   a.click();
+        // });
+      });
+
+      // let pdf = new jsPDF('p', 'pt', 'letter');
+
+      // pdf.html($('#pdfDiv')[0], {
+      //   callback: function (pdf) {
+      //     var iframe = document.createElement('iframe');
+      //     iframe.setAttribute('style', 'position:absolute;right:0; top:0; bottom:0; height:100%; width:500px');
+      //     document.body.appendChild(iframe);
+      //     iframe.src = pdf.output('datauristring');
+      //   }
+      // });
+    });
+
+  </script>
+</body>
+</html>
