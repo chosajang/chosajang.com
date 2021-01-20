@@ -22,18 +22,46 @@
       <div>
         <button type="button" id="savePdf" class="border border-red-500 bg-red-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-red-600 focus:outline-none focus:shadow-outline">
           Print PDF
-        </button>
+        </button><br/>
         <button type="button" id="html2Canvas" class="border border-green-500 bg-green-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline">
           HTML2Canvas
         </button>
+        <br/>
+        <button type="button" id="printJs" class="border border-yellow-500 bg-yellow-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-yellow-600 focus:outline-none focus:shadow-outline">
+          PrintJS
+        </button>
       </div>
     </nav>
+    <div id="hiddendiv" style="visibility: hidden;">hidden</div>
     <div class="flex flex-col items-center">
       <div id="pdfDiv">
-        <div style="width:770px; height:1100px;" class="border-solid border-4 border-black">PDF Page 1
+        <div style="width:770px; height:1100px; border:solid 1px;" class="border-solid border-4 border-black">PDF Page 1
           <canvas id="imgCanvas" width="127" height="127"></canvas>
           <img src="file:///D:/02.Workspace/Github/chosajang.com-publish/assets/report.png"/>
-          
+          <table style="border: solid 1px;">
+            <thead>
+              <tr>
+                <th>제목1</th>
+                <th>제목2</th>
+                <th>제목3</th>
+                <th>제목4</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>내용1</td>
+                <td>내용2</td>
+                <td>내용3</td>
+                <td>내용4</td>
+              </tr>
+              <tr>
+                <td>내용1</td>
+                <td>내용2</td>
+                <td>내용3</td>
+                <td>내용4</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div style="width:770px; height:1100px;" class="border-solid border-4 border-black">PDF Page 2</div>
         <div style="width:770px; height:1100px;" class="border-solid border-4 border-black">PDF Page 3</div>
@@ -43,6 +71,20 @@
   </div>
   <script>
     $(document).ready(function() {
+      /**
+       * Print JS
+       */
+      $('#printJs').click(() => {
+        printJS({
+          printable: 'pdfDiv',
+          documentTitle: 'AI면접 리포트',
+          maxWidth: '790',
+          type: 'html',
+          css: ['https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css','/winsidaero/client/css/renewal_style.css','/winsidaero/client/css/re_sub_style.css','/winsidaero/client/css/renewal_report_imsi.css','/winsidaero/client/css/billboard.min.css'],
+          base64: true
+        });
+      });
+
       /**
        * 이미지를 캔버스에 출력
        */
