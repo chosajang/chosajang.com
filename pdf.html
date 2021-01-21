@@ -30,6 +30,10 @@
         <button type="button" id="printJs" class="border border-yellow-500 bg-yellow-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-yellow-600 focus:outline-none focus:shadow-outline">
           PrintJS
         </button>
+        <br/>
+        <button type="button" id="wPrint" class="border border-indigo-500 bg-indigo-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-indigo-600 focus:outline-none focus:shadow-outline">
+          window.print
+        </button>
       </div>
     </nav>
     <div id="hiddendiv" style="visibility: hidden;">hidden</div>
@@ -72,6 +76,21 @@
   </div>
   <script>
     $(document).ready(function() {
+      /**
+       * window.print
+       */
+      
+      $('#wPrint').click(() => {
+        const orgBody = document.body.innerHTML;
+        window.onbeforeprint = () => {
+          document.body.innerHTML = document.getElementById('pdfDiv').innerHTML;
+        };
+        window.onafterprint = () => {
+          document.body.innerHTML = orgBody;
+        };
+        window.print();
+      });
+
       /**
        * Print JS
        */
