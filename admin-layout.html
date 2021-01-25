@@ -10,27 +10,26 @@
 <body class="">
   <!--// Header -->
   <header class="flex flex-none w-full h-16 sticky top-0 z-10">
-    <!--// logo -->
-    <div class="flex w-64 items-center bg-gray-200 z-10">
-      <a href="#" class="m-0 m-auto text-lg text-center text-gray-900 font-semibold tracking-widest uppercase rounded-lg focus:outline-none focus:shadow-outline">admin</a>
+    <!--// mobile menu icon -->
+    <div class="flex items-center px-4 bg-gray-100 md:hidden">
+      <i class="fas fa-bars text-2xl"></i>
     </div>
-    <!--// menu -->
-    <div class="flex flex-auto items-center bg-gray-200 z-11">
-      <div class="ml-10">
-        Header Menu
-      </div>
-      <div class="absolute right-0 mr-10">
-        Personal Menu
-      </div>
+    <!--// logo -->
+    <div class="flex flex-auto md:w-64 items-center bg-gray-100 z-10">
+      <a href="#" class="m-auto md:ml-10 text-lg text-gray-900 items-center inline-block align-middle font-semibold tracking-widest uppercase focus:outline-none focus:shadow-outline"><i class="fas fa-flask text-xl"></i> chosajang.com</a>
+    </div>
+    <!--// personal menu -->
+    <div class="flex items-center px-4 bg-gray-100 z-11">
+      <i class="fas fa-child text-3xl"></i>
     </div>
   </header>
 
   <!--// Contents -->
   <section class="min-h-screen w-full">
     <!--// side-bar -->
-    <aside class="md:left-0 md:block md:fixed md:top-16 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap md:overflow-hidden shadow-md bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6 hidden">
+    <aside class="shadow-md bg-white items-center hidden md:block md:left-0 md:fixed md:top-16 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap md:overflow-hidden md:w-64 z-10">
       <div class="px-8 py-4 flex flex-row items-center justify-between">
-        <a href="#" class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg focus:outline-none focus:shadow-outline">SIDE BAR</a>
+        <a href="#" class="text-lg font-semibold tracking-widest text-gray-900 uppercase focus:outline-none focus:shadow-outline">SIDE BAR</a>
       </div>
     </aside>
     <!--// contents -->
