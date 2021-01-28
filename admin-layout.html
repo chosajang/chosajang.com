@@ -37,10 +37,17 @@
         </div>
       </div>
       <!--// Left Menu -->
-      <ul class="ml-2">
+      <ul class="ml-2" id="aside-menu">
         <li>menu 1</li>
         <li>menu 2</li>
-        <li>menu 3</li>
+        <li extension="Y">
+          menu 3 <i class="fas fa-angle-down"></i>
+          <ul>
+            <li>menu 3-1</li>
+            <li>menu 3-2</li>
+            <li>menu 3-3</li>
+          </ul>
+        </li>
       </ul>
       <div class="px-8 py-4 flex flex-row items-center justify-between">
         <a href="#" class="text-lg font-semibold tracking-widest text-gray-900 uppercase focus:outline-none focus:shadow-outline">SIDE BAR</a>
@@ -60,5 +67,31 @@
     </section>
   </section>
 </body>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  // 이벤트 객체 생성
+  let customEvent = document.createEvent('Event');
+  customEvent.initEvent('click', true, false);
+  
+  // 메뉴 펼침/닫힘 이벤트
+  let menuObj = document.getElementById('aside-menu');
+  menuObj.addEventListener('click',(thisObj) => {
+    // 클릭한 요소의 dom 요소 접근
+    const cObj = thisObj.path[0];
+    if( cObj.getAttribute('extension') == 'Y' ){
+      console.log('childNodes - ', cObj.getElementsByTagName('ul'));
+      let ulObj = cObj.getElementsByTagName('ul');
+      // ulObj.setAttribute('hidden');
+    }
+    // cObj.getAttribute('extension');
+    console.log('click => ', thisObj.path);
+    
+  }, false);
+
+  // 이벤트 실행(준비)
+  menuObj.dispatchEvent(customEvent);
+});
+</script>
 </html>
+
 
