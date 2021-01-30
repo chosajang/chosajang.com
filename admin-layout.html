@@ -6,10 +6,11 @@
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
   <!-- ... -->
+  <script src="./assets/js/admin-layout.js"></script>
 </head>
 <body class="">
   <!--// Header -->
-  <header class="flex flex-none w-full h-16 sticky top-0 z-10">
+  <header id="header" class="flex flex-none w-full h-16 sticky top-0 z-10">
     <!--// mobile menu icon -->
     <div class="flex flex-none items-center px-4 bg-gray-100 md:hidden">
       <i class="fas fa-bars text-2xl"></i>
@@ -49,9 +50,6 @@
           </ul>
         </li>
       </ul>
-      <div class="px-8 py-4 flex flex-row items-center justify-between">
-        <a href="#" class="text-lg font-semibold tracking-widest text-gray-900 uppercase focus:outline-none focus:shadow-outline">SIDE BAR</a>
-      </div>
     </aside>
     <!--// contents -->
     <section class="relative md:ml-52">
@@ -67,30 +65,18 @@
     </section>
   </section>
 </body>
+<!-- <link rel="import" href="./layouts/header.html" crossorigin="anonymous" onload="headerLoaded(event)" onerror="importError(event)"> -->
 <script>
-document.addEventListener("DOMContentLoaded", function(){
-  // 이벤트 객체 생성
-  let customEvent = document.createEvent('Event');
-  customEvent.initEvent('click', true, false);
-  
-  // 메뉴 펼침/닫힘 이벤트
-  let menuObj = document.getElementById('aside-menu');
-  menuObj.addEventListener('click',(thisObj) => {
-    // 클릭한 요소의 dom 요소 접근
-    const cObj = thisObj.path[0];
-    if( cObj.getAttribute('extension') == 'Y' ){
-      console.log('childNodes - ', cObj.getElementsByTagName('ul'));
-      let ulObj = cObj.getElementsByTagName('ul');
-      // ulObj.setAttribute('hidden');
-    }
-    // cObj.getAttribute('extension');
-    console.log('click => ', thisObj.path);
-    
-  }, false);
+  window.onload = () => {
 
-  // 이벤트 실행(준비)
-  menuObj.dispatchEvent(customEvent);
-});
+  };
+let headerLoaded = (event) => {
+  console.log(event);
+};
+
+let importError = (event) => {
+  console.log('importError');
+};
 </script>
 </html>
 
