@@ -5,11 +5,11 @@
  */
 document.addEventListener("DOMContentLoaded", function(){
   // 이벤트 객체 생성
-  let customEvent = document.createEvent('Event');
-  customEvent.initEvent('click', true, false);
+  // let customEvent = document.createEvent('Event');
+  // customEvent.initEvent('click', true, false);
   
   // 메뉴 펼침/닫힘 이벤트
-  let menuObj = document.getElementById('aside-menu');
+  let menuObj = document.getElementById('menu-ext');
   menuObj.addEventListener('click',(thisObj) => {
     // 클릭한 요소의 dom 요소 접근
     const cObj = thisObj.path[0];
@@ -20,5 +20,19 @@ document.addEventListener("DOMContentLoaded", function(){
   }, false);
 
   // 이벤트 실행(준비)
-  menuObj.dispatchEvent(customEvent);
+  // menuObj.dispatchEvent(customEvent);
+
+  // 모바일 메뉴 이벤트
+  let asideObj = document.getElementById('aside-menu');
+  let btnMobileMenuObj = document.getElementById('mobile-menu-btn');
+
+  btnMobileMenuObj.addEventListener('click',(thisObj) => {
+    asideObj.classList.toggle('hidden');
+  });
+
+  document.addEventListener('mouseup', (thisObj) => {
+    console.log('mouse up', thisObj);
+    // aside-menu 위인지 판단
+
+  });
 });

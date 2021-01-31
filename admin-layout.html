@@ -12,7 +12,7 @@
   <!--// Header -->
   <header id="header" class="flex flex-none w-full h-16 sticky top-0 z-10">
     <!--// mobile menu icon -->
-    <div class="flex flex-none items-center px-4 bg-gray-100 md:hidden">
+    <div id="mobile-menu-btn" class="flex flex-none items-center px-4 bg-gray-100 md:hidden cursor-pointer">
       <i class="fas fa-bars text-2xl"></i>
     </div>
     <!--// logo -->
@@ -28,9 +28,9 @@
   <!--// Contents -->
   <section class="min-h-screen w-full">
     <!--// side-bar -->
-    <aside class="shadow-md bg-white items-center hidden md:block md:left-0 md:fixed md:top-16 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap md:overflow-hidden md:w-52 z-10">
+    <aside id="aside-menu" class="shadow-md bg-white items-center hidden md:block left-0 fixed top-16 bottom-0 overflow-y-auto flex-row flex-no-wrap overflow-hidden w-52 z-10">
       <!--// Profile Info -->
-      <div class="flex flex-row items-center my-2">
+      <div class="hidden md:flex flex-row items-center my-2">
         <div class="flex-none w-14 h-14 ml-2"><img src="" onerror="this.src='./assets/images/ghost.png'" alt="profile" /></div>
         <div class="flex-col space-y-1 pl-2 w-full h-14 justify-content items-center">
           <div class="mt-2 whitespace-nowrap text-sm">유저이름</div>
@@ -38,7 +38,7 @@
         </div>
       </div>
       <!--// Left Menu -->
-      <ul class="ml-2" id="aside-menu">
+      <ul class="ml-2" id="menu-ext">
         <li>menu 1</li>
         <li>menu 2</li>
         <li extension="Y">
@@ -52,8 +52,8 @@
       </ul>
     </aside>
     <!--// contents -->
-    <section class="relative md:ml-52">
-      <section class="m-4 md:m-6">
+    <section class="md:ml-52">
+      <section class="container p-4 md:p-6">
         <div class="relative w-64 items-center content-center text-center">
           TEXT
         </div>
