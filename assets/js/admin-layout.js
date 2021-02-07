@@ -13,9 +13,9 @@ document.addEventListener("DOMContentLoaded", function(){
   menuObj.addEventListener('click',(thisObj) => {
     // 클릭한 요소의 dom 요소 접근
     const cObj = thisObj.path[0];
-    if( cObj.getAttribute('extension') == 'Y' ){
-      let ulObj = cObj.getElementsByTagName('ul')[0];
-      ulObj.style.display == '' ? ulObj.style.display = 'none' : ulObj.style.display = '';
+    const extMenuObj = document.getElementById(cObj.getAttribute('for'));
+    if(extMenuObj != null ){
+      extMenuObj.classList.toggle('hidden');
     }
   }, false);
 
@@ -23,16 +23,17 @@ document.addEventListener("DOMContentLoaded", function(){
   // menuObj.dispatchEvent(customEvent);
 
   // 모바일 메뉴 이벤트
-  let asideObj = document.getElementById('aside-menu');
-  let btnMobileMenuObj = document.getElementById('mobile-menu-btn');
+  const asideObj = document.getElementById('aside-menu');
+  const btnMobileMenuObj = document.getElementById('mobile-menu-btn');
 
   btnMobileMenuObj.addEventListener('click',(thisObj) => {
     asideObj.classList.toggle('hidden');
   });
 
-  document.addEventListener('mouseup', (thisObj) => {
-    console.log('mouse up', thisObj);
-    // aside-menu 위인지 판단
-
+  // 헤더 : 개인 메뉴
+  const personalInfoObj = document.getElementById('personal-info');
+  const personalMenuObj = document.getElementById('personal-menu');
+  personalInfoObj.addEventListener('click',(thisObj) => {
+    personalMenuObj.classList.toggle('hidden');
   });
 });
