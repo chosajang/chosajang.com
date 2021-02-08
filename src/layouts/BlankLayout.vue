@@ -3,7 +3,7 @@
 </template>
 
 <script>
-console.log('BlankLayout');
+console.log('#4 BlankLayout.vue');
 export default {
   name: 'BlankLayout'
 };

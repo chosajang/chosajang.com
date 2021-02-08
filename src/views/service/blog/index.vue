@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-console.log('views/service/blog/index.vue');
+console.log('#Last blog index');
 export default {
   
 }

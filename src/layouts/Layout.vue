@@ -1,15 +1,12 @@
 <template>
   <blank-layout>
-    <transition name="page" mode="out-in">
-      <slot></slot>
-    </transition>
+    <slot></slot>
   </blank-layout>
 </template>
 
 <script>
-// import { computed } from '@vue/composition-api';
 import BlankLayout from './BlankLayout.vue';
-// import ServiceLayout from './ServiceLayout.vue';
+console.log('#3 Layout.vue');
 
 export default {
   name: 'Layout',

@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 
 import BlogView from "../views/service/blog";
-
+console.log('#2 router');
 const routes = [
   {
     path: '/',
