@@ -13,9 +13,13 @@ document.addEventListener("DOMContentLoaded", function(){
   menuObj.addEventListener('click',(thisObj) => {
     // 클릭한 요소의 dom 요소 접근
     const cObj = thisObj.path[0];
+    const iObj = cObj.children[0];
+    console.log(iObj);
     const extMenuObj = document.getElementById(cObj.getAttribute('for'));
+    console.log(extMenuObj);
     if(extMenuObj != null ){
       extMenuObj.classList.toggle('hidden');
+      iObj.classList.toggle('fa-rotate-180');
     }
   }, false);
 
