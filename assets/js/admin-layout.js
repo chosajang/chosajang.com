@@ -6,7 +6,7 @@
 document.addEventListener("DOMContentLoaded", function(){
   
   // 메뉴 펼침/닫힘 이벤트
-  let liList = document.getElementById('menu-ext').querySelectorAll("li");
+  const liList = document.getElementById('menu-ext').querySelectorAll("li");
   liList.forEach( liObj => {
     liObj.addEventListener('click', () => {
       const extMenuObj = document.getElementById(liObj.getAttribute('for'));
@@ -25,14 +25,14 @@ document.addEventListener("DOMContentLoaded", function(){
   const asideObj = document.getElementById('aside-menu');
   const btnMobileMenuObj = document.getElementById('mobile-menu-btn');
 
-  btnMobileMenuObj.addEventListener('click',(thisObj) => {
+  btnMobileMenuObj.addEventListener('click',() => {
     asideObj.classList.toggle('hidden');
   });
 
   // 헤더 : 개인 메뉴
   const personalInfoObj = document.getElementById('personal-info');
   const personalMenuObj = document.getElementById('personal-menu');
-  personalInfoObj.addEventListener('click',(thisObj) => {
+  personalInfoObj.addEventListener('click',() => {
     personalMenuObj.classList.toggle('hidden');
   });
 });
