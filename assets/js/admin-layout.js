@@ -1,7 +1,7 @@
 /**
  * DOMContentLoaded
  * 문서(html,php...) 모든 자원이 로드 되었을때 발생(예:onload)하는 것이 아닌,
- * DOM 트리만 완성되면 바로 실행하는 이벤트
+ * DOM 트리만 완성되면 실행되는 이벤트
  */
 document.addEventListener("DOMContentLoaded", function(){
   
@@ -17,9 +17,6 @@ document.addEventListener("DOMContentLoaded", function(){
       }
     });
   });
-
-  // 이벤트 실행(준비)
-  // menuObj.dispatchEvent(customEvent);
 
   // 모바일 메뉴 이벤트
   const asideObj = document.getElementById('aside-menu');
