@@ -1,7 +1,7 @@
 ## 퍼블리시 저장소
 - 개발스펙 : HTML5, Javascript, Tailwind CSS 2.x, Font Awesome 5.x Free
 - Tailwind
-```js:index.html
+```javascript
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 ```
 
