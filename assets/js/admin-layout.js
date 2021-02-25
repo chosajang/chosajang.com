@@ -4,7 +4,6 @@
  * DOM 트리만 완성되면 실행되는 이벤트
  */
 document.addEventListener("DOMContentLoaded", function(){
-  
   // 메뉴 펼침/닫힘 이벤트
   const liList = document.getElementById('menu-ext').querySelectorAll("li");
   liList.forEach( liObj => {
