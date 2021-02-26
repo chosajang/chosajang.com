@@ -23,9 +23,7 @@ const headerHTML = `
 </div>`;
 
 /**
- * DOMContentLoaded
- * 문서(html,php...) 모든 자원이 로드 되었을때 발생(예:onload)하는 것이 아닌,
- * DOM 트리만 완성되면 실행되는 이벤트
+ * DOM 트리 완성 후 실행
  */
 document.addEventListener("DOMContentLoaded", function(){
   // 헤더 객체 
@@ -34,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function(){
   headerObj.classList.add('flex', 'flex-none', 'w-full', 'h-16', 'bg-gray-800', 'sticky', 'top-0', 'z-10');
   // 헤더 HTML 삽입
   headerObj.innerHTML = headerHTML;
-
+  
   // 헤더 : 개인 메뉴
   const personalInfoObj = document.getElementById('personal-info');
   const personalMenuObj = document.getElementById('personal-menu');
