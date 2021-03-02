@@ -12,11 +12,13 @@
 <body class="bg-gray-100">
   <header id="header"></header>
 
-  <!--// Contents : ST -->
+  <!--// Contents(Sidebar + Contents) : ST -->
   <section class="w-full">
+    <!--// Sidebar : ST -->
     <aside id="aside-menu"></aside>
+    <!--// Sidebar : ST -->
     
-    <!--// contents -->
+    <!--// Contents > contents : ST -->
     <section class="md:ml-52">
       <section class="container p-4 md:p-6">
         <!-- Title -->
@@ -46,9 +48,49 @@
               <a href="#" class="no-underline mr-4 text-blue-500 hover:text-blue-400">Link 2</a>
           </div>
         </div>
+
+        <!-- Blog Card Style -->
+        <div class="bg-white shadow flex">
+          <div class="flex w-40 h-40">Image</div>
+          <div class="flex">Contents</div>
+        </div>
+
+        <!-- Info Card -->
+        <div class="bg-white shadow p-3 rounded lg:w-64 lg:float-left">
+          <div>
+            <div style="background-image: url('')" class="bg-cover bg-center bg-gray-300 h-32 rounded"></div>
+          </div>
+          <div class="mt-6">
+            <p class="text-lg text-bold tracking-wide text-gray-600 mb-2">
+              Title
+            </p>
+            <p class="text-sm text-gray-600 font-hairline">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+          <div class="mt-6">
+            <button class="rounded shadow-md flex items-center shadow bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">Default</button>
+          </div>
+        </div>
+
+        <div class="bg-white shadow p-3 rounded my-4 lg:my-0 lg:w-64 lg:float-left lg:ml-6">
+          <div>
+            <div style="background-image: url('')" class="bg-cover bg-center bg-gray-300 h-32 rounded"></div>
+          </div>
+          <div class="mt-6">
+            <p class="text-lg text-bold tracking-wide text-gray-600 mb-2">Title</p>
+            <p class="text-sm text-gray-600 font-hairline">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+          <div class="mt-6">
+            <button class="rounded shadow-md flex items-center shadow bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">Default</button>
+          </div>
+        </div>
       </section>
     </section>
+    <!--// Contents > contents : ED -->
   </section>
-  <!--// Contents : ED -->
+  <!--// Contents(Sidebar + Contents) : ED -->
 </body>
 </html>

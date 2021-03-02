@@ -10,8 +10,13 @@ const asideHTML = `
 <!--// Left Menu : ST -->
 <ul class="select-none" id="menu-ext">
   <li class="pt-4 py-2 pl-4"><p class="text-xs font-bold text-gray-300">기본 그룹</p></li>
+<<<<<<< HEAD
   <a href="./index.html"><li class="py-3 pl-4 cursor-pointer hover:bg-gray-600 border-l-4 border-transparent hover:border-blue-500"><i class="far fa-user mr-4"></i>User</li></a>
   <a href="./board.html"><li class="py-3 pl-4 cursor-pointer hover:bg-gray-600 border-l-4 border-transparent hover:border-blue-500"><i class="far fa-clipboard mr-4"></i>Board</li></a>
+=======
+  <li class="py-3 pl-4 cursor-pointer hover:bg-gray-600 border-l-4 border-transparent hover:border-blue-500"><a href="javascript:void(0);"><i class="far fa-user mr-4"></i>Dashboard</a></li>
+  <li class="py-3 pl-4 cursor-pointer hover:bg-gray-600 border-l-4 border-transparent hover:border-blue-500"><a href="javascript:void(0);"><i class="far fa-clipboard mr-4"></i>Board</a></li>
+>>>>>>> 2212e396db91d86cc57bc61510350778dea0db3e
   <li class="pt-4 py-2 pl-4"><p class="text-xs font-bold text-gray-300">2차 그룹</p></li>
   <li class="py-3 pl-4 cursor-pointer hover:bg-gray-600 border-l-4 border-transparent hover:border-blue-500 inline-flex items-center justify-between w-full" for="ext3">
     <span class="inline-flex items-center"><i class="fas fa-layer-group mr-4"></i>Menu Group</span>
