@@ -15,7 +15,7 @@ const asideHTML = `
   <li class="pt-4 py-2 pl-4"><p class="text-xs font-bold text-gray-300">2차 그룹</p></li>
   <li class="py-3 pl-4 cursor-pointer hover:bg-gray-600 border-l-4 border-transparent hover:border-blue-500 inline-flex items-center justify-between w-full" for="ext3">
     <span class="inline-flex items-center"><i class="fas fa-layer-group mr-4"></i>Menu Group</span>
-    <span class="pr-4"><i class="fas fa-angle-right"></i></span>
+    <span class="pr-4"><i class="fas fa-angle-right transition-transform transform"></i></span>
   </li>
   <li id="ext3" class="hidden">
     <ul class="bg-gray-800">
@@ -34,17 +34,13 @@ const asideHTML = `
     </ul>
   </li>
   <li class="py-3 pl-4 cursor-pointer hover:bg-gray-600 border-l-4 border-transparent hover:border-blue-500 inline-flex items-center justify-between w-full" for="ext4">
-    <span class="inline-flex items-center"><i class="fas fa-layer-group mr-4"></i>Menu Group</span>
-    <span class="pr-4"><i class="fas fa-angle-right"></i></span>
+    <span class="inline-flex items-center"><i class="fas fa-layer-group mr-4"></i>Pages</span>
+    <span class="pr-4"><i class="fas fa-angle-right transition-transform transform"></i></span>
   </li>
   <li id="ext4" class="hidden">
     <ul class="bg-gray-800">
-      <li class="py-3 pl-6 cursor-pointer hover:bg-blue-500">
-        <a href="javascript:void(0);"><i class="fas fa-angle-right mr-4"></i>SubMenu 1</a>
-      </li>
-      <li class="py-3 pl-6 cursor-pointer hover:bg-blue-500">
-        <a href="javascript:void(0);"><i class="fas fa-angle-right mr-4"></i>SubMenu 2</a>
-      </li>
+      <a href="./login.html"><li class="py-3 pl-6 cursor-pointer hover:bg-blue-500"><i class="fas fa-angle-right mr-4"></i>Login</li></a>
+      <a href="javascript:void(0);"><li class="py-3 pl-6 cursor-pointer hover:bg-blue-500"><i class="fas fa-angle-right mr-4"></i>SubMenu 2</li></a>
     </ul>
   </li>
 </ul>
@@ -69,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function(){
       if(extMenuObj != null ){
         extMenuObj.classList.toggle('hidden');
         const iObj = liObj.children[1].querySelector("i")
-        iObj.classList.toggle('fa-rotate-90');
+        iObj.classList.toggle('rotate-90');
       }
     });
   });
