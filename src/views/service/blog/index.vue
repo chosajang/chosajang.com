@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="bg-gray-200">
     service / blog / index
+    <i class="fas fa-chevron-right text-red-500"></i>
   </div>
 </template>
 <script>
-console.log('#Last blog index');
 export default {
   
 }
