@@ -1,7 +1,8 @@
-import { createWebHistory, createRouter } from "vue-router";
+import { createWebHistory, createRouter } from 'vue-router'
 
-import BlogView from "../views/service/blog";
-console.log('#2 router');
+import BlogListView from '@/views/blog/list.vue'
+import BlogView from '@/views/blog/view.vue'
+
 const routes = [
   {
     path: '/',
@@ -10,6 +11,14 @@ const routes = [
   },
   {
     path: '/blog',
+    name: 'blogList',
+    meta: {
+      layout: 'ServiceLayout'
+    },
+    component: BlogListView
+  },
+  {
+    path: '/blog/:article_seq',
     name: 'blog',
     meta: {
       layout: 'ServiceLayout'
@@ -23,4 +32,4 @@ const router = new createRouter({
   routes
 });
 
-export default router;
+export default router

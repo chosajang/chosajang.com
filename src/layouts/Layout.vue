@@ -5,25 +5,26 @@
 </template>
 
 <script>
-import BlankLayout from '@/layouts/BlankLayout.vue';
+import BlankLayout from './BlankLayout.vue'
+import ServiceLayout from './ServiceLayout.vue'
 
 export default {
   name: 'Layout',
   components: {
     BlankLayout,
+    ServiceLayout
   },
   data: () => ({
-    layout : BlankLayout
+    layout : 'BlankLayout'
   }),
   watch: {
     $route: {
       immediate: true,
       async handler(route) {
         try {
-          const component = await import(`@/layouts/${route.meta.layout}.vue`)
-          this.layout = component ? component.default : BlankLayout
+          this.layout = route.meta.layout ? route.meta.layout : 'BlankLayout'
         } catch (e) {
-          this.layout = BlankLayout
+          this.layout = 'BlankLayout'
         }
       }
     }

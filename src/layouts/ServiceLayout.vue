@@ -1,19 +1,23 @@
 <template>
   <div>
     <service-header></service-header>
-    <div class="">
-      <slot></slot>
-    </div>
+    <slot></slot>
+    <service-footer></service-footer>
   </div>
 </template>
 
 <script>
-// import ServiceHeader from '../components/service/Header.vue';
+import ServiceHeader from '../components/Header.vue'
+import ServiceFooter from '../components/Footer.vue'
 
 export default {
   name: 'ServiceLayout',
   components: {
-    // ServiceHeader
+    ServiceHeader,
+    ServiceFooter
+  },
+  created() {
+    // console.log('ServiceLayout.created')
   }
 };
 </script>

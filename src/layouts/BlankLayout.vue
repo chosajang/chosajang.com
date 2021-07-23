@@ -3,9 +3,11 @@
 </template>
 
 <script>
-console.log('#4 BlankLayout.vue');
 export default {
-  name: 'BlankLayout'
+  name: 'BlankLayout',
+  created() {
+    // console.log('BlankLayout.created')
+  }
 };
 </script>
 
