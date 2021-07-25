@@ -11,14 +11,29 @@
       </div>
       
       <!--// 내용 -->
-      <div class="mx-2 md:mx-0">내용</div>
+      <div class="mx-2 md:mx-0">
+        <viewer v-if="content != null" :initialValue="content"></viewer>
+      </div>
 
     </div>
     <!--// Contents : ED -->
   </main>
 </template>
 <script>
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import { Viewer } from '@toast-ui/editor/dist/toastui-editor-viewer';
+
 export default {
-  
+  components: {
+    viewer: Viewer
+  },
+  data() {
+    return {
+      content : null
+    }
+  },
+  mounted() {
+    this.content = "#헤더 ## 헤더2a"
+  },
 }
 </script>
