@@ -13,7 +13,6 @@
       <!-- 내용 -->
       <div class="mx-2 md:mx-0">
         내용
-        <viewer v-if="content != null" :initialValue="content" height="500px" />
       </div>
 
     </div>
@@ -21,13 +20,7 @@
   </main>
 </template>
 <script>
-import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-import { Viewer } from '@toast-ui/vue-editor';
-
 export default {
-  components: {
-    viewer: Viewer
-  },
   data() {
     return {
       content : '# H1 TEST ##2 H2 TEST'

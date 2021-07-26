@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from 'vue-router'
 
 import BlogListView from '@/views/blog/list.vue'
 import BlogView from '@/views/blog/view.vue'
+import TestView from '@/views/blog/test.vue'
 
 const routes = [
   {
@@ -24,6 +25,14 @@ const routes = [
       layout: 'ServiceLayout'
     },
     component: BlogView
+  },
+  {
+    path: '/test',
+    name: 'test',
+    meta: {
+      layout: 'ServiceLayout'
+    },
+    component: TestView
   }
 ];
 
