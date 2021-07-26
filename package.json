@@ -1,49 +1,75 @@
 {
-  "name": "chosajang.com",
+  "name": "admin.chosajang.com",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "dev": "nuxt"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.13.0",
-    "@mdi/font": "^3.6.95",
-    "@sweetalert2/theme-borderless": "^3.1.4",
-    "@toast-ui/vue-editor": "^2.2.0",
-    "@vue/composition-api": "^0.5.0",
-    "axios": "^0.19.2",
-    "bootstrap": "^4.4.1",
-    "bootstrap-vue": "^2.11.0",
-    "core-js": "^3.6.4",
-    "sweetalert2": "^9.14.4",
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@sweetalert2/theme-borderless": "^4.0.5",
+    "@toast-ui/editor-plugin-chart": "^3.0.1",
+    "@toast-ui/editor-plugin-code-syntax-highlight": "^3.0.0",
+    "@toast-ui/editor-plugin-color-syntax": "^3.0.1",
+    "@toast-ui/editor-plugin-table-merged-cell": "^3.0.0",
+    "@toast-ui/editor-plugin-uml": "^3.0.1",
+    "@toast-ui/vue-editor": "^3.0.1",
+    "@vue/composition-api": "^1.0.0-rc.8",
+    "autoprefixer": "^9",
+    "axios": "^0.21.1",
+    "core-js": "^3.6.5",
+    "postcss": "^7",
+    "postcss-loader": "3",
+    "raw-loader": "0.5.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "v-click-outside": "^3.1.2",
     "vue": "^2.6.11",
-    "vue-disqus-embed": "^1.0.1",
+    "vue-axios-cors": "^1.0.1",
+    "vue-js-toggle-button": "^1.3.3",
+    "vue-jwt-decode": "^0.1.0",
     "vue-meta": "^2.4.0",
-    "vue-moment": "^4.1.0",
-    "vue-router": "^3.1.5",
-    "vue-sweetalert2": "^3.0.5",
+    "vue-router": "^3.5.1",
+    "vue-sweetalert2": "^4.3.1",
     "vuejs-paginate": "^2.1.0",
-    "vuex": "^3.1.3"
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.2.0",
-    "@vue/cli-plugin-eslint": "~4.2.0",
-    "@vue/cli-plugin-router": "~4.2.0",
-    "@vue/cli-plugin-vuex": "~4.2.0",
-    "@vue/cli-service": "~4.2.0",
-    "@vue/eslint-config-standard": "^5.1.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^6.1.2",
-    "sass": "^1.19.0",
-    "sass-loader": "^8.0.0",
+    "eslint-plugin-vue": "^6.2.2",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {
+      "no-console": "off",
+      "no-unused-vars": [
+        "error",
+        {
+          "varsIgnorePattern": "^map"
+        }
+      ]
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }

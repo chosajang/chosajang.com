@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div>
     <slot></slot>
   </div>
 </template>
@@ -9,7 +9,3 @@ export default {
   name: 'BlankLayout'
 };
 </script>
-
-<style>
-
-</style>

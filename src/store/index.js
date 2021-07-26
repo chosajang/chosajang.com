@@ -1,21 +1,28 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-// import mutations from './mutations.js';
-// import actions from './actions.js';
+import Vue from 'vue'
+import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
+import mutations from './mutations.js'
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
+  strict: false,
   state: {
-    config: {
-      apiUrl: 'http://api.chosajang.com'
-    },
-    VALID: {
-      EMAIL: 'EMAIL',
-      TEXT: 'TEXT',
-      PASSWORD: 'PASSWORD'
+    userInfo: {
+      access_token: ''
     }
-  }
-  // mutations,
-  // actions
-});
+  },
+  plugins: [
+    createPersistedState({
+      paths: ['userInfo'],
+    })
+  ],
+  getters: {
+    getUserInfo: (state) => {
+      return state.userInfo
+    }
+  },
+  mutations,
+})
+
+export default store

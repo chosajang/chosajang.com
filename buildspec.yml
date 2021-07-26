@@ -1,0 +1,30 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      - npm install -g yarn
+      # - git config --global credential.helper '!aws codecommit credential-helper $@'
+      # - git config --global credential.UseHttpPath true
+      - yarn
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - yarn install
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Compiling the Node.js code
+      - yarn build
+  post_build:
+    commands:
+      # 빌드 결과물 용량 최적화
+      - rm -rf node_modules .git
+      - ls -al
+      # - echo Build completed on `date`
+      # - echo Distributing to S3...
+      # - aws s3 cp --recursive dist/ s3://chosajang.com
+artifacts:
+  files:
+    - './**/*'
+  base-directory: dist

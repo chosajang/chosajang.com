@@ -1,165 +1,133 @@
-import axios from 'axios';
-import { getUserInfo } from '../utils/common.js';
+import axios from 'axios'
+import store from '../store/index.js'
+import bus from '@/utils/bus.js'
 
-// HTTP Request & Response 관련 기본 설정
-const config = {
-  baseUrl: 'http://api.chosajang.com'
-};
+const instance = axios.create({
+  baseURL: process.env.VUE_APP_API_URL
+})
+instance.authCheck = true
 
-// API 함수 정리
-function fetchUserLogin (id, password) {
-  const params = new URLSearchParams();
-  params.append('id', id);
-  params.append('password', password);
-  return axios.post(`${config.baseUrl}/user/login`, params);
-}
-
-function fetchUserList () {
-  const userInfo = getUserInfo();
-  return axios.get(`${config.baseUrl}/admin/user/list`, {
-    params: {
-      member_seq: userInfo.SEQ,
-      session_id: userInfo.SESSION_ID
+instance.interceptors.request.use(
+  (config) => {
+    /**
+     * 인증키가 필요한 API 인지 판단하여, 인증키가 없는 경우 강제 로그아웃을 진행
+     */
+    if( instance.authCheck && store.getters.getUserInfo.access_token == undefined ) {
+      bus.$emit('forceAlert', process.env.VUE_APP_AUTH_FAILURE)
+      return false
+    } else {
+      config.headers.Authorization = `${ store.getters.getUserInfo.token_type } ${ store.getters.getUserInfo.access_token }`
+      return config
     }
-  });
-}
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
-function userUpdate (formData) {
-  const userInfo = getUserInfo();
-  const headerInfo = {
-    headers: {
-      'Content-Type': 'multipart/fomr-data'
+instance.interceptors.response.use(
+  (response) => {
+    bus.$emit('end:spinner')
+    return response
+  },
+  (error) => {
+    bus.$emit('end:spinner')
+    if( error.response !== undefined ) {
+      if( error.response.status == 401 ) {
+        bus.$emit('forceAlert', process.env.VUE_APP_AUTH_FAILURE)
+      }
+    } else {
+      bus.$emit('forceAlert', process.env.VUE_APP_NETWORK_ERROR)
     }
-  };
-  formData.append('member_seq', userInfo.SEQ);
-  formData.append('session_id', userInfo.SESSION_ID);
-  return axios.post(`${config.baseUrl}/admin/user/update`, formData, headerInfo);
+    return Promise.reject(error)
+  }
+)
+
+function apiUserInfo(user_seq) {
+  return instance.get(`/api/users/${user_seq}`)
 }
 
-function userCreate (formData) {
-  const userInfo = getUserInfo();
-  const headerInfo = {
-    headers: {
-      'Content-Type': 'multipart/fomr-data'
-    }
-  };
-  formData.append('member_seq', userInfo.SEQ);
-  formData.append('session_id', userInfo.SESSION_ID);
-  return axios.post(`${config.baseUrl}/admin/user/create`, formData, headerInfo);
+function apiLogin (id, password) {
+  instance.authCheck = false
+  let form = new FormData()
+  form.append('id', id)
+  form.append('password', password)
+  return instance.post('/api/login', form)
 }
 
-function boardList () {
-  const userInfo = getUserInfo();
-  return axios.get(`${config.baseUrl}/admin/board/list`, {
-    params: {
-      member_seq: userInfo.SEQ,
-      session_id: userInfo.SESSION_ID
-    }
-  });
+function apiTokenRefresh() {
+  return instance.get('/api/refresh')
 }
 
-function boardCreate (formData) {
-  const userInfo = getUserInfo();
-  formData.append('member_seq', userInfo.SEQ);
-  formData.append('session_id', userInfo.SESSION_ID);
-  return axios.post(`${config.baseUrl}/admin/board/create`, formData);
+function apiDashboard() {
+  return instance.get('/api/dashboard')
 }
 
-function boardUpdate (formData) {
-  const userInfo = getUserInfo();
-  formData.append('member_seq', userInfo.SEQ);
-  formData.append('session_id', userInfo.SESSION_ID);
-  return axios.post(`${config.baseUrl}/admin/board/update`, formData);
+function apiUserList () {
+  return instance.get('/api/users')
 }
 
-function boardDelete (formData) {
-  const userInfo = getUserInfo();
-  formData.append('member_seq', userInfo.SEQ);
-  formData.append('session_id', userInfo.SESSION_ID);
-  return axios.post(`${config.baseUrl}/admin/board/delete`, formData);
+function apiUserProfileImage (user_seq, fileObj) {
+  let form = new FormData();
+  form.append('_method', 'PATCH')
+  form.append('user_seq', user_seq)
+  form.append('file', fileObj)
+  return instance.post('/api/users/profileImage', form)
 }
 
-function postList () {
-  const userInfo = getUserInfo();
-  return axios.get(`${config.baseUrl}/admin/article/list`, {
-    params: {
-      member_seq: userInfo.SEQ,
-      session_id: userInfo.SESSION_ID
-    }
-  });
+function apiUserUpdate(formData) {
+  formData.append('_method', 'PUT')
+  return instance.post('/api/users', formData)
 }
 
-function postRead (postSeq) {
-  const userInfo = getUserInfo();
-  return axios.get(`${config.baseUrl}/admin/article/read`, {
-    params: {
-      member_seq: userInfo.SEQ,
-      session_id: userInfo.SESSION_ID,
-      article_seq: postSeq
-    }
-  });
+function apiUserPasswordChange(formData) {
+  formData.append('_method', 'PATCH')
+  return instance.post('/api/users/passwordChange', formData)
 }
 
-function postWrite (formData) {
-  const userInfo = getUserInfo();
-  formData.append('member_seq', userInfo.SEQ);
-  formData.append('session_id', userInfo.SESSION_ID);
-  return axios.post(`${config.baseUrl}/admin/article/write`, formData);
+function apiArticleList() {
+  return instance.get('/api/articles')
 }
 
-function postUpdate (formData) {
-  const userInfo = getUserInfo();
-  formData.append('member_seq', userInfo.SEQ);
-  formData.append('session_id', userInfo.SESSION_ID);
-  return axios.post(`${config.baseUrl}/admin/article/modify`, formData);
+function apiArticleCreate(formData) {
+  return instance.post('/api/articles', formData)
 }
 
-function postContentFileUpload (formData) {
-  const userInfo = getUserInfo();
-  const headerInfo = {
-    headers: {
-      'Content-Type': 'multipart/fomr-data'
-    }
-  };
-  formData.append('member_seq', userInfo.SEQ);
-  formData.append('session_id', userInfo.SESSION_ID);
-  return axios.post(`${config.baseUrl}/admin/article/file_upload`, formData, headerInfo);
+function apiEditorImageUpload(formData) {
+  return instance.post('/api/articles/editorUpload', formData)
 }
 
-function postDelete (formData) {
-  const userInfo = getUserInfo();
-  formData.append('member_seq', userInfo.SEQ);
-  formData.append('session_id', userInfo.SESSION_ID);
-  return axios.post(`${config.baseUrl}/admin/article/delete`, formData);
+function apiArticleRead(article_seq) {
+  return instance.get(`/api/articles/${article_seq}`)
 }
 
-function servicePostList () {
-  return axios.get(`${config.baseUrl}/posts/list`);
+function apiArticleUpdate(formData) {
+  formData.append('_method', 'PUT')
+  return instance.post('/api/articles', formData)
 }
 
-function servicePostRead (postSeq) {
-  return axios.get(`${config.baseUrl}/posts/read`, {
-    params: {
-      article_seq: postSeq
-    }
-  });
+function apiArticleDelete(article_seq) {
+  let form = new FormData();
+  form.append('_method', 'PATCH')
+  form.append('article_seq', article_seq)
+  form.append('use_yn', 'N')
+  return instance.post('/api/articles/delete', form)
 }
+
 
 export {
-  fetchUserLogin,
-  fetchUserList,
-  userUpdate,
-  userCreate,
-  boardList,
-  boardCreate,
-  boardUpdate,
-  boardDelete,
-  postList,
-  postRead,
-  postWrite,
-  postUpdate,
-  postContentFileUpload,
-  postDelete,
-  servicePostList,
-  servicePostRead
-};
+  apiLogin,
+  apiTokenRefresh,
+  apiDashboard,
+  apiUserInfo,
+  apiUserList,
+  apiUserProfileImage,
+  apiUserUpdate,
+  apiUserPasswordChange,
+  apiArticleList,
+  apiArticleCreate,
+  apiEditorImageUpload,
+  apiArticleRead,
+  apiArticleUpdate,
+  apiArticleDelete
+}
