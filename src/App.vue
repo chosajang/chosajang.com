@@ -16,8 +16,8 @@ export default {
       this.$swal({
         text: 'Loading...',
         width: 180,
-        allowEscapeKey: false,
-        allowOutsideClick: false,
+        allowEscapeKey: true,
+        allowOutsideClick: true,
         backdrop: 'rgba(0,0,0,0.1)',
         didOpen: () => {
           this.$swal.showLoading()
@@ -32,10 +32,7 @@ export default {
     forceAlert(state_code) {
       let title = ''
       let message = ''
-      if( state_code == process.env.VUE_APP_AUTH_FAILURE ) {
-        title = '인증실패'
-        message = 'API 인증키가 만료되었거나 유효하지 않습니다.<br/>자동로그아웃 되니 다시 로그인하여 사용해주세요'
-      } else {
+      if( state_code == process.env.VUE_APP_NETWORK_ERROR ) {
         title = '네트워크 장애'
         message = 'API 서버에 문제가 발생되었습니다.<br/>다시 시도해 주세요'
       }
@@ -44,10 +41,6 @@ export default {
         html: message
       })
       .then(() => {
-        if( state_code == process.env.VUE_APP_AUTH_FAILURE ) {
-          this.$store.commit('SET_USERINFO', '')
-          this.$router.push({ path: '/login' })
-        }
       })
     },
   },

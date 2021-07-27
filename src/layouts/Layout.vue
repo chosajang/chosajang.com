@@ -24,7 +24,7 @@ export default {
     };
   },
   metaInfo: {
-    title: 'CSJ Admin',
+    title: 'chosajang.com',
     titleTemplate: '%s',
     // meta: [
     //   {

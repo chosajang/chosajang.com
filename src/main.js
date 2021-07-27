@@ -9,7 +9,6 @@ import vClickOutside from 'v-click-outside'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 import AxiosPlugin from 'vue-axios-cors'
-import store from './store/index.js'
 import VueJwtDecode from 'vue-jwt-decode'
 import Paginate from 'vuejs-paginate'
 import ToggleButton from 'vue-js-toggle-button'
@@ -29,6 +28,5 @@ Vue.prototype.$EventBus = new Vue()
 
 new Vue({
   render: h => h(App),
-  router,
-  store
+  router
 }).$mount('#app')
