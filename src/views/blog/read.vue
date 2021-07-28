@@ -46,22 +46,7 @@ export default {
       if( res.status == 200 ) {
         const article = res.data.article
         this.title = article.title
-        const date = new Date(article.created_at)
-        const formatDate = (date)=>{
-          let month = date.getMonth() + 1
-          let day = date.getDate()
-          let hours = date.getHours()
-          let minutes = date.getMinutes()
-
-          if (month < 10) month = '0' + month
-          if (day < 10) day = '0' + day
-          if (hours < 10) hours = '0' + hours
-          if (minutes < 10) minutes = '0' + minutes
-
-          let formatted_date = date.getFullYear() + "-" + month + "-" + day + " " + hours + ":" + minutes
-          return formatted_date;
-        }
-        this.created_at = formatDate(date)
+        this.created_at = article.created_at
         this.contents = article.contents
       } else {
         this.$swal({
