@@ -37,11 +37,11 @@ instance.interceptors.response.use(
 )
 
 function apiArticleList() {
-  return instance.get('/api/articles')
+  return instance.get('/api/blog/posts')
 }
 
 function apiArticleRead(article_seq) {
-  return instance.get(`/api/articles/${article_seq}`)
+  return instance.get(`/api/blog/posts/${article_seq}`)
 }
 
 

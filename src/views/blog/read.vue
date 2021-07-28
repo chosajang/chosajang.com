@@ -6,34 +6,73 @@
       
       <!-- 제목 -->
       <div class="mb-10 mx-2 md:mx-0">
-        <div class="text-2xl md:text-3xl text-gray-800 border-b border-gray-100 pb-4 mb-4">블로그 제작하기 - 개발 및 운영 환경</div>
-        <div class="text-gray-400 text-xs md:text-sm"><i class="far fa-calendar-alt mr-2"></i>2021-07-21</div>
+        <div class="text-2xl md:text-3xl text-gray-800 border-b border-gray-100 pb-4 mb-4">{{ title }}</div>
+        <div class="text-gray-400 text-xs md:text-sm"><i class="far fa-calendar-alt mr-2"></i>{{ created_at }}</div>
       </div>
       
       <!-- 내용 -->
       <div class="mx-2 md:mx-0">
-        내용
-        <viewer v-if="content != null" :initialValue="content" height="500px" />
+        <viewer v-if="contents != null" :initialValue="contents" />
       </div>
+
+      <!-- 작성자 -->
 
     </div>
     <!-- Contents : ED -->
   </main>
 </template>
 <script>
+import { apiArticleRead } from '@/api'
+
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Viewer } from '@toast-ui/vue-editor';
+
 export default {
   components: {
     viewer: Viewer
   },
   data() {
     return {
-      content : '# H1 TEST ##2 H2 TEST'
+      article_seq: this.$route.params.article_seq,
+      title: '',
+      created_at: '',
+      contents : null
     }
   },
   mounted() {
-    this.content = "# 헤더 ## 헤더2a"
+    apiArticleRead(this.article_seq)
+    .then(res => {
+      console.log('res', res)
+      if( res.status == 200 ) {
+        const article = res.data.article
+        this.title = article.title
+        const date = new Date(article.created_at)
+        const formatDate = (date)=>{
+          let month = date.getMonth() + 1
+          let day = date.getDate()
+          let hours = date.getHours()
+          let minutes = date.getMinutes()
+
+          if (month < 10) month = '0' + month
+          if (day < 10) day = '0' + day
+          if (hours < 10) hours = '0' + hours
+          if (minutes < 10) minutes = '0' + minutes
+
+          let formatted_date = date.getFullYear() + "-" + month + "-" + day + " " + hours + ":" + minutes
+          return formatted_date;
+        }
+        this.created_at = formatDate(date)
+        this.contents = article.contents
+      } else {
+        this.$swal({
+          title: '정보 없음',
+          html: '요청한 정보가 존재하지 않습니다<br/>목록으로 돌아갑니다',
+          icon: 'error'
+        }).then(() => {
+          this.$router.push({ path: '/blog' })
+        })
+      }
+    })
   },
 }
 </script>

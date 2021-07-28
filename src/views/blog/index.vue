@@ -13,24 +13,39 @@
       <div class="grid grid-flow-row">
 
         <!--// Card : ST -->
-        <div class="flex bg-white cursor-pointer outline-none border-b py-8 hover:border-blue-300 duration-300">
+        <router-link :to="'/blog/'+item.article_seq" v-for="(item) in listItemSlice" v-bind:key="item.SEQ" class="flex bg-white cursor-pointer outline-none border-b py-8 hover:border-blue-300 duration-300">
           <div class="flex-none w-32 md:w-48 mr-1 md:mr-0 flex items-center">
-            <img src="/assets/images/post-thumbnail.png" class="absolute object-none object-scale-down object-center w-32 h-24 md:w-48 md:h-32" onerror="this.src='/assets/images/post-thumbnail.png'" />
+            <img :src="item.thumbnail_url" class="absolute object-none object-scale-down object-center w-32 h-24 md:w-48 md:h-32" onerror="this.src='/assets/images/post-thumbnail.png'" />
           </div>
           <div class="flex-grow grid grid-flow-row grid-rows-4">
             <div class="row-span-1 text-lg md:text-2xl text-gray-800 truncate">
-              블로그 개발하기 - 개발 및 운영 환경
+              {{ item.title }}
             </div>
             <div class="row-span-2 text-sm md:text-lg truncate mt-2 text-gray-600">
-              기술 블로그 운영을 하기 위해 블로그를 제작하였습니다. 이 글을 보고 누군가에게는 도움이 누군가에게는 삽질 방지를 위한 글이 되었으면 합니다.<br/>
-              어떻게 개발하였는지 과정을 설명합니다!
+              {{ item.description }}
             </div>
             <div class="row-span-1 text-sm flex items-center text-gray-400">
-              <i class="far fa-calendar-alt mr-2"></i>2021-07-21
+              <i class="far fa-calendar-alt mr-2"></i>{{ item.created_at }}
             </div>
           </div>
-        </div>
+        </router-link>
         <!--// Card : ED -->
+
+        <!--// Pagination : ST -->
+        <div class="flex justify-center mt-10">
+          <paginate
+            :pageCount="pageCount"
+            :clickHandler="pageMove"
+            :containerClass="'flex text-sm text-gray-600'"
+            :prev-class="'mr-3 py-2'"
+            :prev-link-class="'py-2 px-3 rounded-lg hover:bg-gray-200'"
+            :page-class="'mx-1 py-2'"
+            :page-link-class="'py-2 px-3 font-bold rounded-lg hover:bg-blue-500 hover:text-gray-100'"
+            :next-class="'ml-3 py-2'"
+            :next-link-class="'py-2 px-3 rounded-lg hover:bg-gray-200'"
+            :active-class="'font-bold text-gray-100 bg-blue-500 rounded-lg'" >
+          </paginate>
+        </div><!--// Pagination : ED -->
 
       </div>
     </div>
@@ -38,7 +53,61 @@
   </main>
 </template>
 <script>
+import { apiArticleList } from '@/api'
+
 export default {
-  
+  name: 'articleList',
+  data() {
+    return {
+      articleList: [],
+      pageSize: 5,
+      pageRange: 3,
+      pageNum: 0,
+      search:"",
+    }
+  },
+  methods: {
+    pageMove (pageNum) {
+      this.pageNum = pageNum - 1;
+    },
+  },
+  created() {
+    apiArticleList()
+    .then(res => {
+      const apiData = res.data
+      this.articleList = apiData.articleList
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  },
+  computed: {
+    /**
+     * 페이지 랜더링 및 페이지네이트용 배열 자르기
+     */
+    listItemSlice () {
+      const start = this.pageNum * this.pageSize
+      const end = start + this.pageSize
+      return this.listFiltered.slice(start, end)
+    },
+    /**
+     * 회원 ID,이름 검색 시 필터 처리
+     */
+    listFiltered () {
+      const search = (this.search).replace(/ /gi, '')
+      // List Filter
+      let titleItems = this.articleList
+      titleItems = titleItems.filter(item => {
+        return item.title.toLowerCase().includes(search.toLowerCase())
+      });
+      return titleItems
+    },
+    pageCount () {
+      const listLength = this.listFiltered.length
+      const pageSize = this.pageSize
+      let page = Math.ceil(listLength / pageSize)
+      return page
+    },
+  }
 }
 </script>

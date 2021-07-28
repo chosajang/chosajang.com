@@ -1,5 +1,5 @@
 <template>
-  <header class="flex flex-none w-full h-16 top-0 z-50 bg-white border-b border-gray-200">
+  <header class="sticky top-0 z-10 flex flex-none w-full h-16 top-0 z-50 bg-white border-b border-gray-200">
     <div class="flex flex-grow items-center z-10">
       <!--// mobile menu icon -->
       <div id="mobile-menu-btn" class="hidden flex flex-none px-4 items-center md:hidden cursor-pointer text-gray-600">
