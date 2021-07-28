@@ -21,9 +21,7 @@
             <div class="row-span-1 text-lg md:text-2xl text-gray-800 truncate">
               {{ item.title }}
             </div>
-            <div class="row-span-2 text-sm md:text-lg truncate mt-2 text-gray-600">
-              {{ item.description }}
-            </div>
+            <div v-html="handleNewLine(item.description)" class="row-span-2 text-sm md:text-lg truncate mt-2 text-gray-600"></div>
             <div class="row-span-1 text-sm flex items-center text-gray-400">
               <i class="far fa-calendar-alt mr-2"></i>{{ item.created_at }}
             </div>
@@ -70,6 +68,9 @@ export default {
     pageMove (pageNum) {
       this.pageNum = pageNum - 1;
     },
+    handleNewLine(str) {    
+      return String(str).replace(/(?:\r\n|\r|\n)/g,"</br>");
+   }
   },
   created() {
     apiArticleList()
