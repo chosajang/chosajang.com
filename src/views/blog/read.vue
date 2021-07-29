@@ -32,11 +32,11 @@
           <img :src="article.user_image_url" class="absolute object-none object-scale-down object-center w-16 h-16 md:w-20 md:h-20" onerror="this.src='/assets/images/user.png'" />
         </div>
         <div class="flex-grow grid grid-flow-row grid-rows-2 ml-6 md:ml-10">
-          <div class="row-span-1 text-lg md:text-xl">
+          <div class="row-span-1 text-base md:text-xl my-auto">
             {{ article.user_name }}
             <span class="text-xs text-gray-400 mx-2 align-middle">|</span>
             {{ article.user_nickname }}</div>
-          <div class="row-span-1 text-gray-500 text-base md:text-lg">{{ article.user_comment }}</div>
+          <div class="row-span-1 text-gray-500 text-sm md:text-lg">{{ article.user_comment }}</div>
         </div>
       </div>
 

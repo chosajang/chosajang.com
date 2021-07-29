@@ -61,7 +61,6 @@
 </template>
 <script>
 import { apiArticleList } from '@/api'
-// import bus from './utils/bus'
 
 export default {
   name: 'articleList',
@@ -71,7 +70,7 @@ export default {
       pageSize: 10,
       pageRange: 3,
       pageNum: 0,
-      search: '',
+      search: this.$route.query.search == undefined ? '' : this.$route.query.search,
       paginateRender: true
     }
   },
@@ -89,7 +88,6 @@ export default {
       return String(str).replace(/(?:\r\n|\r|\n)/g,"</br>");
     },
     blogSearch(search) {
-      console.log('index.vue => ', search)
       this.search = search
     }
   },
@@ -104,7 +102,6 @@ export default {
     })
   },
   mounted() {
-    // this.search = this.$route.query.search
     this.$EventBus.$on('blogSearch', this.blogSearch)
   },
   computed: {
@@ -120,7 +117,8 @@ export default {
      * 회원 ID,이름 검색 시 필터 처리
      */
     listFiltered () {
-      const search = (this.search).replace(/ /gi, '')
+      // const search = (this.search).replace(/ /gi, '')
+      const search = this.search
       // List Filter
       let titleItems = this.articleList
       titleItems = titleItems.filter(item => {
