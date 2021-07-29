@@ -2,8 +2,11 @@
   <main class="w-full">
     <!--// Banner : ST -->
     <div class="h-40 md:h-72 bg-blue-400 m-auto grid items-center justify-center relative overflow-hidden bg-no-repeat bg-center" style="background-image: url('/assets/images/blog-banner.png')">
-      <div class="py-2 px-4 bg-white opacity-80 z-10">
-        <p class="text-xl md:text-2xl">기술과 경험을 정리하여 공유합니다 :)</p>
+      <div v-if="search == ''" class="py-2 px-4 bg-white opacity-80 z-10">
+        <p class="text-xl md:text-2xl">공부하고 알게된 내용들을 정리하여 공유합니다.</p>
+      </div>
+      <div v-if="search != ''" class="py-2 px-4 bg-white z-10">
+        <p class="text-3xl text-bold text-indigo-700 md:text-4xl">검색어 : {{ search }}</p>
       </div>
     </div>
     <!--// Banner : ED -->
@@ -11,6 +14,12 @@
     <!--// Contents : ST -->
     <div class="container m-auto max-w-screen-lg min-h-min px-1 md:px-4 my-10 md:my-14">
       <div class="grid grid-flow-row">
+
+        <!-- 게시물 또는 검색 결과가 없을 경우 -->
+        <div v-if="listFiltered.length == 0" class="bg-white outline-none py-10 text-center text-xl text-gray-700">
+          <p v-if="search == ''">게시물이 없습니다</p>
+          <p v-if="search != ''"><span class="text-blue-600 text-2xl">"{{ search }}"</span>에 대한 검색 결과가 없습니다</p>
+        </div>
 
         <!--// Card : ST -->
         <router-link :to="'/blog/'+item.article_seq" v-for="(item) in listItemSlice" v-bind:key="item.SEQ" class="flex bg-white cursor-pointer outline-none border-b py-8 hover:border-blue-300 duration-300">
@@ -21,16 +30,16 @@
             <div class="row-span-1 text-lg md:text-2xl text-gray-800 truncate">
               {{ item.title }}
             </div>
-            <div v-html="handleNewLine(item.description)" class="row-span-2 text-sm md:text-lg truncate mt-2 text-gray-600"></div>
+            <div v-html="blogDescription(item.description)" class="row-span-2 text-sm md:text-lg truncate mt-2 text-gray-600"></div>
             <div class="row-span-1 text-sm flex items-center text-gray-400">
-              <i class="far fa-calendar-alt mr-2"></i>{{ item.created_at }}
+              <i class="far fa-calendar-alt mr-2"></i><span v-html="blogDate(item.created_at)"></span>
             </div>
           </div>
         </router-link>
         <!--// Card : ED -->
 
         <!--// Pagination : ST -->
-        <div class="flex justify-center mt-10">
+        <div v-if="paginateRender" class="flex justify-center mt-10">
           <paginate
             :pageCount="pageCount"
             :clickHandler="pageMove"
@@ -52,25 +61,37 @@
 </template>
 <script>
 import { apiArticleList } from '@/api'
+// import bus from './utils/bus'
 
 export default {
   name: 'articleList',
   data() {
     return {
       articleList: [],
-      pageSize: 5,
+      pageSize: 10,
       pageRange: 3,
       pageNum: 0,
-      search:"",
+      search: '',
+      paginateRender: true
     }
   },
   methods: {
     pageMove (pageNum) {
       this.pageNum = pageNum - 1;
     },
-    handleNewLine(str) {    
+    blogDate(created_at) {
+      let date = new Date(created_at)
+      const month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)
+      const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+      return date.getFullYear() + '-' + month + '-' + day
+    },
+    blogDescription(str) {    
       return String(str).replace(/(?:\r\n|\r|\n)/g,"</br>");
-   }
+    },
+    blogSearch(search) {
+      console.log('index.vue => ', search)
+      this.search = search
+    }
   },
   created() {
     apiArticleList()
@@ -81,6 +102,10 @@ export default {
     .catch(error => {
       console.log(error)
     })
+  },
+  mounted() {
+    // this.search = this.$route.query.search
+    this.$EventBus.$on('blogSearch', this.blogSearch)
   },
   computed: {
     /**
@@ -101,6 +126,10 @@ export default {
       titleItems = titleItems.filter(item => {
         return item.title.toLowerCase().includes(search.toLowerCase())
       });
+      // 페이지네이트 출력여부
+      if( titleItems.length <= this.pageSize ){
+        this.paginateRender = false
+      }
       return titleItems
     },
     pageCount () {

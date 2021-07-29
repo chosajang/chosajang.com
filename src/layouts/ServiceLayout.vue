@@ -14,9 +14,6 @@ export default {
   components: {
     ServiceHeader,
     ServiceFooter
-  },
-  created() {
-    // console.log('ServiceLayout.created')
   }
 };
 </script>

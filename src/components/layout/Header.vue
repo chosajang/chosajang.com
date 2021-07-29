@@ -11,8 +11,8 @@
     </div>
     <!--// search menu -->
     <div class="flex flex-none items-center px-2 md:px-4 md:mr-4 z-11 relative min-w-min">
-      <input class="w-40 md:w-48 h-10 pl-4 pr-8 py-1 text-lg md:text-xl text-gray-700 font-medium outline-none border-transparent border-b-2 border-gray-200 hover:border-blue-300 focus:border-blue-300 focus:bg-white duration-300" type="text" maxlength=20 placeholder="검색">
-      <span class="absolute right-4 md:right-8 text-gray-600 cursor-pointer"><i class="fas fa-search text-2xl"></i></span>
+      <input v-model="search" v-on:keyup.enter="blogSearch" class="w-40 md:w-48 h-10 pl-4 pr-8 py-1 text-lg md:text-xl text-gray-700 font-medium outline-none border-transparent border-b-2 border-gray-200 hover:border-blue-300 focus:border-blue-300 focus:bg-white duration-300" type="text" maxlength=20 placeholder="검색">
+      <span v-on:click="blogSearch" class="absolute right-4 md:right-8 text-gray-600 cursor-pointer"><i class="fas fa-search text-2xl"></i></span>
     </div>
   </header>
 </template>
@@ -22,10 +22,16 @@ export default {
   name: 'Header',
   data () {
     return {
+      search: ''
     }
   },
   methods: {
     
+  },
+  methods: {
+    blogSearch() {
+      this.$EventBus.$emit('blogSearch', this.search)
+    }
   }
 };
 </script>
