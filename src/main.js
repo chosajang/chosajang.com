@@ -13,6 +13,7 @@ import VueJwtDecode from 'vue-jwt-decode'
 import Paginate from 'vuejs-paginate'
 import ToggleButton from 'vue-js-toggle-button'
 import VueDisqus from 'vue-disqus'
+import VueAnalytics from 'vue-analytics'
 
 Vue.config.productionTip = false
 
@@ -26,6 +27,11 @@ Vue.use(ToggleButton)
 Vue.component('paginate', Paginate)
 Vue.use(VueDisqus, {
   shortname: 'my-disqus'
+})
+
+Vue.use(VueAnalytics,{
+  id: 'G-RNCHH7F3MT', // 콘솔에서 본인의 키를 확인하세요!
+  router // 원활한 트래킹을 위해 router를 꼭 바인드 해 주어야 합니다!
 })
 
 Vue.prototype.$EventBus = new Vue()
