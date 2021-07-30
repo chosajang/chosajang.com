@@ -26,7 +26,7 @@
           <div class="flex-none w-32 md:w-48 mr-1 md:mr-0 flex items-center">
             <img :src="item.thumbnail_url" class="absolute object-none object-scale-down object-center w-32 h-24 md:w-48 md:h-32" onerror="this.src='/assets/images/post-thumbnail.png'" />
           </div>
-          <div class="flex-grow grid grid-flow-row grid-rows-4">
+          <div class="flex-grow grid grid-flow-row grid-rows-4 ml-4">
             <div class="row-span-1 text-lg md:text-2xl text-gray-800 truncate">
               {{ item.title }}
             </div>
