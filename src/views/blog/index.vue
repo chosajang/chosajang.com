@@ -32,7 +32,7 @@
             </div>
             <div v-html="blogDescription(item.description)" class="row-span-2 text-sm md:text-lg truncate mt-2 text-gray-600"></div>
             <div class="row-span-1 text-sm flex items-center text-gray-400">
-              <i class="far fa-calendar-alt mr-2"></i><span v-html="blogDate(item.created_at)"></span>
+              <i class="far fa-calendar-alt mr-2"></i>{{ item.created_at }}
             </div>
           </div>
         </router-link>
@@ -77,12 +77,6 @@ export default {
   methods: {
     pageMove (pageNum) {
       this.pageNum = pageNum - 1;
-    },
-    blogDate(created_at) {
-      let date = new Date(created_at)
-      const month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)
-      const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
-      return date.getFullYear() + '-' + month + '-' + day
     },
     blogDescription(str) {    
       return String(str).replace(/(?:\r\n|\r|\n)/g,"</br>");
