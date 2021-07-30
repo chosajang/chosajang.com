@@ -29,7 +29,7 @@
       <!-- 작성자 -->
       <div class="flex border-t border-b mt-10 py-6 md:py-10">
         <div class="flex-none flex items-center ml-6 md:ml-10 w-16 md:w-20 mr-1 md:mr-0">
-          <img :src="article.user_image_url" class="absolute object-none object-scale-down object-center w-16 h-16 md:w-20 md:h-20" onerror="this.src='/assets/images/user.png'" />
+          <img :src="article.user_image_url" class="absolute object-none object-scale-down object-center rounded-full w-16 h-16 md:w-20 md:h-20" onerror="this.src='/assets/images/user.png'" />
         </div>
         <div class="flex-grow grid grid-flow-row grid-rows-2 ml-6 md:ml-10">
           <div class="row-span-1 text-lg md:text-xl">
