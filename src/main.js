@@ -12,6 +12,7 @@ import AxiosPlugin from 'vue-axios-cors'
 import VueJwtDecode from 'vue-jwt-decode'
 import Paginate from 'vuejs-paginate'
 import ToggleButton from 'vue-js-toggle-button'
+import VueDisqus from 'vue-disqus'
 
 Vue.config.productionTip = false
 
@@ -22,7 +23,10 @@ Vue.use(VueSweetalert2)
 Vue.use(AxiosPlugin)
 Vue.use(VueJwtDecode)
 Vue.use(ToggleButton)
-Vue.component('paginate', Paginate);
+Vue.component('paginate', Paginate)
+Vue.use(VueDisqus, {
+  shortname: 'my-disqus'
+})
 
 Vue.prototype.$EventBus = new Vue()
 
