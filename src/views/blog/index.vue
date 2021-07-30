@@ -1,7 +1,7 @@
 <template>
   <main class="w-full">
     <!--// Banner : ST -->
-    <div class="h-40 md:h-72 bg-blue-400 m-auto grid items-center justify-center relative overflow-hidden bg-no-repeat bg-center" style="background-image: url('/assets/images/blog-banner.png')">
+    <div class="h-40 md:h-72 m-auto grid items-center justify-center relative overflow-hidden bg-no-repeat bg-center" style="background-image: url('/assets/images/blog-banner.png'); background-color:#71cdff;">
       <div v-if="search == ''" class="py-2 px-4 bg-white opacity-80 z-10">
         <p class="text-xl md:text-2xl">공부하고 알게된 내용들을 정리하여 공유합니다.</p>
       </div>
