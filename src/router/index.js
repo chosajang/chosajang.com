@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueGtag from 'vue-gtag'
 
 import BlogListView from '../views/blog'
 import BlogReadView from '../views/blog/read'
@@ -33,6 +34,15 @@ const routes = [
     redirect: '/'
   }
 ];
+
+
+Vue.use(VueGtag, {
+  config: {
+      id: 'G-RNCHH7F3MT'
+  },
+  appName: 'chosajang.com',
+  routes
+});
 
 export const router = new VueRouter({
   mode: 'history',
