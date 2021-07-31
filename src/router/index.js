@@ -38,7 +38,7 @@ const routes = [
 
 Vue.use(VueGtag, {
   config: {
-      id: 'G-RNCHH7F3MT'
+      id: 'UA-23567625-3'
   },
   appName: 'chosajang.com',
   routes
