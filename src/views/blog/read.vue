@@ -13,7 +13,11 @@
       <!-- 내용 -->
       <div class="mx-2 md:mx-0">
         <!-- 게시물 내용 -->
-        <viewer v-if="article.contents != null" :initialValue="article.contents" />
+        <viewer 
+          v-if="article.contents != null"
+          :initialValue="article.contents"
+          :options="tuiOptions"
+        />
         <!-- 업데이트 내역 -->
         <p class="mt-10 text-sm text-gray-600">이 글은 {{ article.updated_at }}에 마지막으로 수정했습니다.</p>
         <!-- 목록 버튼 -->
@@ -55,6 +59,12 @@ import { apiArticleRead } from '@/api'
 import '@toast-ui/editor/dist/toastui-editor-viewer.css'
 import { Viewer } from '@toast-ui/vue-editor'
 
+import 'prismjs/themes/prism.css';
+import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
+import Prism from 'prismjs'
+import 'prismjs/components/prism-clojure.js'
+import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+
 import { Disqus } from 'vue-disqus'
 
 export default {
@@ -68,6 +78,14 @@ export default {
       article: {
         contents: null
       },
+      tuiOptions: {
+        plugins: [
+          [ codeSyntaxHighlight, { highlighter: Prism } ]
+        ],
+        linkAttribute : {
+          target: '_blank'
+        },
+      }
     }
   },
   methods: {
@@ -93,3 +111,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+div >>> .toastui-editor-contents{
+  font-size: 16px !important;
+}
+</style>
