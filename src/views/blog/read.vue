@@ -112,7 +112,7 @@ export default {
 }
 </script>
 <style scoped>
-div >>> .toastui-editor-contents{
+>>> .toastui-editor-contents{
   font-size: 16px !important;
 }
 </style>
