@@ -112,7 +112,11 @@ export default {
 }
 </script>
 <style scoped>
->>> .toastui-editor-contents{
+div >>> .toastui-editor-contents{
   font-size: 16px !important;
+}
+
+.toastui-editor-contents >>> img {
+  margin: 0px auto;
 }
 </style>
