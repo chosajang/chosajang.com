@@ -24,14 +24,14 @@ export default {
     };
   },
   metaInfo: {
-    title: 'chosajang.com',
-    titleTemplate: '%s',
-    // meta: [
-    //   {
-    //     'http-equiv': 'Content-Security-Policy',
-    //     content: 'upgrade-insecure-requests'
-    //   }
-    // ]
+    title: '조사장 블로그',
+    titleTemplate: '%s | chosajang.com',
+    meta: [
+      {
+        'http-equiv': 'Content-Security-Policy',
+        content: 'upgrade-insecure-requests'
+      }
+    ]
   },
 };
 </script>

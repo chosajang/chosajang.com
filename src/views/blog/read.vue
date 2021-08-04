@@ -88,6 +88,18 @@ export default {
       }
     }
   },
+  metaInfo() {
+    const title = this.article.title
+    return {
+      title: title,
+      meta: [
+        {
+          name : 'description',
+          content: title
+        }
+      ]
+    }
+  },
   methods: {
     goList() {
       this.$router.push({ path: '/blog' })
@@ -113,10 +125,24 @@ export default {
 </script>
 <style scoped>
 div >>> .toastui-editor-contents{
-  font-size: 16px !important;
+  font-size: 16px;
 }
 
 div >>> .toastui-editor-contents img {
   margin: 0px auto;
+  border: 1px solid #1F2937;
+}
+
+div >>> .toastui-editor-contents table {
+  margin: 0px auto;
+}
+
+div >>> .toastui-editor-contents blockquote {
+  border-left: 4px solid #60A5FA;
+  padding: 6px 16px;
+}
+
+div >>> .toastui-editor-contents a {
+  text-decoration: none;
 }
 </style>
