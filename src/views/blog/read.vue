@@ -7,7 +7,11 @@
       <!-- 제목 -->
       <div class="mb-10 mx-2 md:mx-0">
         <div class="text-2xl md:text-3xl text-gray-800 border-b border-gray-100 pb-4 mb-4">{{ article.title }}</div>
-        <div class="text-gray-400 text-xs md:text-sm"><i class="far fa-calendar-alt mr-2"></i>{{ article.created_at }}</div>
+        <div class="text-gray-400 text-xs md:text-sm">
+          <i class="far fa-calendar-alt mr-2"></i>
+          <span v-if="article.created_at == article.updated_at">{{ article.created_at }}에 작성하였습니다.</span>
+          <span v-else>{{ article.created_at }}에 발행, {{ article.updated_at }}에 마지막으로 수정하였습니다.</span>
+        </div>
       </div>
       
       <!-- 내용 -->
@@ -19,12 +23,12 @@
           :options="tuiOptions"
         />
         <!-- 업데이트 내역 -->
-        <p class="mt-10 text-sm text-gray-600">이 글은 {{ article.updated_at }}에 마지막으로 수정했습니다.</p>
+        <!-- <p class="mt-10 mr-4 text-right text-sm text-gray-500">이 글은 {{ article.updated_at }}에 수정했습니다.</p> -->
         <!-- 목록 버튼 -->
-        <div class="grid grid-cols-1 items-center m-4">
+        <div class="grid grid-cols-1 items-center m-6">
           <div class="col-span-1 grid justify-items-end">
             <div>
-              <input type="button" value="목록" v-on:click="goList" class="rounded bg-gray-500 py-1 px-6 cursor-pointer text-white w-20 ml-4 hover:bg-gray-600">
+              <input type="button" value="목록" v-on:click="goList" class="rounded bg-gray-500 py-2 px-6 cursor-pointer text-white text-xl w-28 hover:bg-gray-600">
             </div>
           </div>
         </div>
@@ -144,5 +148,9 @@ div >>> .toastui-editor-contents blockquote {
 
 div >>> .toastui-editor-contents a {
   text-decoration: none;
+}
+
+div >>> .toastui-editor-contents pre {
+  overflow-x: auto;
 }
 </style>

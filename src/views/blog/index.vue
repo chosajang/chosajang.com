@@ -32,7 +32,9 @@
             </div>
             <div v-html="blogDescription(item.description)" class="row-span-2 text-sm md:text-lg truncate mt-2 text-gray-600"></div>
             <div class="row-span-1 text-sm flex items-center text-gray-400">
-              <i class="far fa-calendar-alt mr-2"></i>{{ item.created_at }}
+              <i class="far fa-calendar-alt mr-2"></i>
+              <span v-if="item.created_at == item.updated_at">{{ item.created_at }} 발행</span>
+              <span v-else>{{ item.updated_at }} 수정</span>
             </div>
           </div>
         </router-link>
