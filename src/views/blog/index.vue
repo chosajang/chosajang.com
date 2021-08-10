@@ -76,6 +76,39 @@ export default {
       paginateRender: true
     }
   },
+  metaInfo() {
+    const current_url = process.env.VUE_APP_SERVICE_URL
+    const thumbnail_url = `${process.env.VUE_APP_SERVICE_URL}/assets/images/blog-banner-thumbnail.png`
+    return {
+      title: '조사장 블로그',
+      meta: [
+        {
+          charset: 'utf-8'
+        },
+        {
+          name : 'author',
+          content : '조사장(chosajang)'
+        },
+        {
+          name : 'og:url',
+          content: current_url
+        },
+        {
+          name : 'og:title',
+          content: '조사장 블로그'
+        },
+        {
+          name : 'og:description',
+          content: '조사장 블로그 목록'
+        },
+        {
+          vmid: 'og:image',
+          name: 'og:image',
+          content : thumbnail_url
+        }
+      ]
+    }
+  },
   methods: {
     pageMove (pageNum) {
       this.pageNum = pageNum - 1;
