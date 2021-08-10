@@ -25,7 +25,7 @@
         <!-- 업데이트 내역 -->
         <!-- <p class="mt-10 mr-4 text-right text-sm text-gray-500">이 글은 {{ article.updated_at }}에 수정했습니다.</p> -->
         <!-- 목록 버튼 -->
-        <div class="grid grid-cols-1 items-center m-6">
+        <div class="grid grid-cols-1 items-center my-6">
           <div class="col-span-1 grid justify-items-end">
             <div>
               <input type="button" value="목록" v-on:click="goList" class="rounded bg-gray-500 py-2 px-6 cursor-pointer text-white text-xl w-28 hover:bg-gray-600">
