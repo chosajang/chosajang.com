@@ -94,12 +94,36 @@ export default {
   },
   metaInfo() {
     const title = this.article.title
+    const description = this.article.description
+    const user_name = `${this.article.user_name}(${this.article.user_id})`
+    const thumbnail_url = this.article.thumbnail_url
+    const current_url = `${process.env.VUE_APP_SERVICE_URL}/blog/${this.article_seq}`
     return {
       title: title,
       meta: [
         {
-          name : 'description',
+          charset: 'utf-8'
+        },
+        {
+          name : 'author',
+          content : user_name
+        },
+        {
+          name : 'og:url',
+          content: current_url
+        },
+        {
+          name : 'og:title',
           content: title
+        },
+        {
+          name : 'og:description',
+          content: description
+        },
+        {
+          vmid: 'og:image',
+          name: 'og:image',
+          content : thumbnail_url
         }
       ]
     }
