@@ -86,24 +86,27 @@ export default {
           charset: 'utf-8'
         },
         {
-          name : 'author',
+          property : 'author',
           content : '조사장(chosajang)'
         },
         {
-          name : 'og:url',
+          property : 'og:type',
+          content : 'website'
+        },
+        {
+          property : 'og:url',
           content: current_url
         },
         {
-          name : 'og:title',
+          property : 'og:title',
           content: '조사장 블로그'
         },
         {
-          name : 'og:description',
+          property : 'og:description',
           content: '조사장 블로그 목록'
         },
         {
-          vmid: 'og:image',
-          name: 'og:image',
+          property : 'og:image',
           content : thumbnail_url
         }
       ]

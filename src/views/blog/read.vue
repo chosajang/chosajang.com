@@ -105,24 +105,31 @@ export default {
           charset: 'utf-8'
         },
         {
-          name : 'author',
+          property : 'author',
           content : user_name
         },
         {
-          name : 'og:url',
+          property : 'og:site_name',
+          content : '조사장닷컴'
+        },
+        {
+          property : 'og:type',
+          content : 'website'
+        },
+        {
+          property : 'og:url',
           content: current_url
         },
         {
-          name : 'og:title',
+          property : 'og:title',
           content: title
         },
         {
-          name : 'og:description',
+          property : 'og:description',
           content: description
         },
         {
-          vmid: 'og:image',
-          name: 'og:image',
+          property : 'og:image',
           content : thumbnail_url
         }
       ]
