@@ -90,6 +90,10 @@ export default {
           content : '조사장(chosajang)'
         },
         {
+          property : 'og:site_name',
+          content : '조사장닷컴'
+        },
+        {
           property : 'og:type',
           content : 'website'
         },
