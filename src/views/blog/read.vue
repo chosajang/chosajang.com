@@ -184,4 +184,19 @@ div >>> .toastui-editor-contents a {
 div >>> .toastui-editor-contents pre {
   overflow-x: auto;
 }
+
+div >>> .toastui-editor-contents ul li {
+  margin-left: 1rem;
+}
+div >>> .toastui-editor-contents ul li::before {
+  margin-top: 10px;
+  background-color: #34495e;
+}
+
+div >>> .toastui-editor-contents ol li {
+  margin-left: 1rem;
+}
+div >>> .toastui-editor-contents ol li::before {
+  color: #34495e;
+}
 </style>
