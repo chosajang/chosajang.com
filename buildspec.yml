@@ -13,6 +13,7 @@ phases:
       - yarn install
   build:
     commands:
+      - npm rebuild puppeteer
       - echo Build started on `date`
       - echo Compiling the Node.js code
       - yarn build
