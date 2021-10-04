@@ -10,7 +10,7 @@
       </div>
     </div>
     <!--// Banner : ED -->
-    
+
     <!--// Contents : ST -->
     <div class="container m-auto max-w-screen-lg min-h-min px-1 md:px-4 my-10 md:my-14">
       <div class="grid grid-flow-row">
@@ -22,7 +22,7 @@
         </div>
 
         <!--// Card : ST -->
-        <router-link :to="'/blog/'+item.article_seq" v-for="(item) in listItemSlice" v-bind:key="item.SEQ" class="flex bg-white cursor-pointer outline-none border-b py-8 hover:border-blue-300 duration-300">
+        <router-link :to="'/blog/'+item.article_seq+'/'" v-for="(item) in listItemSlice" v-bind:key="item.SEQ" class="flex bg-white cursor-pointer outline-none border-b py-8 hover:border-blue-300 duration-300">
           <div class="flex-none w-32 md:w-48 mr-1 md:mr-0 flex items-center">
             <img :src="item.thumbnail_url" class="absolute object-none object-scale-down object-center w-32 h-24 md:w-48 md:h-32" onerror="this.src='/assets/images/post-thumbnail.png'" />
           </div>
@@ -120,7 +120,7 @@ export default {
     pageMove (pageNum) {
       this.pageNum = pageNum - 1;
     },
-    blogDescription(str) {    
+    blogDescription(str) {
       return String(str).replace(/(?:\r\n|\r|\n)/g,"</br>");
     },
     blogSearch(search) {
