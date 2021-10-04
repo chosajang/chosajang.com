@@ -19,8 +19,9 @@ module.exports = {
   lintOnSave: false,
   publicPath: '/',
   configureWebpack: (config) => {
-    if (process.env.NODE_ENV === 'production') {
-      config.plugins.push(...productionPlugins);
-    }
+    // if (process.env.NODE_ENV === 'production') {
+    //   config.plugins.push(...productionPlugins);
+    // }
+    config.plugins.push(...productionPlugins);
   },
 };
