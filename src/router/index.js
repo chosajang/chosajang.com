@@ -11,10 +11,10 @@ const routes = [
   {
     path: '/',
     name: 'default',
-    redirect: '/blog'
+    redirect: '/blog/'
   },
   {
-    path: '/blog',
+    path: '/blog/',
     name: 'blogList',
     meta: {
       layout: 'ServiceLayout'
@@ -22,7 +22,7 @@ const routes = [
     component: BlogListView,
   },
   {
-    path: '/blog/:article_seq',
+    path: '/blog/:article_seq/',
     name: 'blogRead',
     meta: {
       layout: 'ServiceLayout'

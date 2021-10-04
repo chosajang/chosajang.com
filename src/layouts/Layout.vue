@@ -28,8 +28,8 @@ export default {
     titleTemplate: '%s | chosajang.com',
     meta: [
       {
-        'http-equiv': 'Content-Security-Policy',
-        content: 'upgrade-insecure-requests'
+        // 'http-equiv': 'Content-Security-Policy',
+        // content: 'upgrade-insecure-requests'
       }
     ]
   },
