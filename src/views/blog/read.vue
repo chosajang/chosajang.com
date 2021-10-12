@@ -3,21 +3,21 @@
 
     <!-- Contents : ST -->
     <div class="container m-auto max-w-screen-lg min-h-min px-1 md:px-4 my-10 md:my-14">
-      
+
       <!-- 제목 -->
       <div class="mb-10 mx-2 md:mx-0">
         <div class="text-2xl md:text-3xl text-gray-800 border-b border-gray-100 pb-4 mb-4">{{ article.title }}</div>
         <div class="text-gray-400 text-xs md:text-sm">
           <i class="far fa-calendar-alt mr-2"></i>
-          <span v-if="article.created_at == article.updated_at">{{ article.created_at }}에 작성하였습니다.</span>
+          <span v-if="article.created_at === article.updated_at">{{ article.created_at }}에 작성하였습니다.</span>
           <span v-else>{{ article.created_at }}에 발행, {{ article.updated_at }}에 마지막으로 수정하였습니다.</span>
         </div>
       </div>
-      
+
       <!-- 내용 -->
       <div class="mx-2 md:mx-0">
         <!-- 게시물 내용 -->
-        <viewer 
+        <viewer
           v-if="article.contents != null"
           :initialValue="article.contents"
           :options="tuiOptions"
@@ -37,7 +37,7 @@
       <!-- 작성자 -->
       <div class="flex border-t border-b mt-10 py-6 md:py-10">
         <div class="flex-none flex items-center ml-6 md:ml-10 w-16 md:w-20 mr-1 md:mr-0">
-          <img :src="article.user_image_url" class="absolute object-none object-scale-down object-center rounded-full w-16 h-16 md:w-20 md:h-20" onerror="this.src='/assets/images/user.png'" />
+          <img :src="article.user_image_url" class="absolute object-none object-scale-down object-center rounded-full w-16 h-16 md:w-20 md:h-20" onerror="this.src='/assets/images/user.png'" alt="작성자 이미지" />
         </div>
         <div class="flex-grow grid grid-flow-row grid-rows-2 ml-6 md:ml-10">
           <div class="row-span-1 text-lg md:text-xl">
@@ -101,37 +101,26 @@ export default {
     return {
       title: title,
       meta: [
+        { charset: 'utf-8' },
+        // SEO setting
+        { name: 'description', vmid: 'description', content: String(description).slice(0, 320)},
+        // { name: 'keywords', content: this.board.keywords},
+        { name: 'author', vmid: 'author', content: user_name },
+        // SNS 용
         {
-          charset: 'utf-8'
+          property: 'og:title',
+          content: title,
+          template: chunk => `${chunk} | chosajang.com`,
+          vmid: 'og:title'
         },
-        {
-          property : 'author',
-          content : user_name
-        },
-        {
-          property : 'og:site_name',
-          content : '조사장닷컴'
-        },
-        {
-          property : 'og:type',
-          content : 'website'
-        },
-        {
-          property : 'og:url',
-          content: current_url
-        },
-        {
-          property : 'og:title',
-          content: title
-        },
-        {
-          property : 'og:description',
-          content: description
-        },
-        {
-          property : 'og:image',
-          content : thumbnail_url
-        }
+        { property : 'author', vmid : 'author', content : user_name },
+        { property : 'og:site_name', vmid : 'og:site_name', content : '조사장닷컴' },
+        { property : 'og:type', vmid : 'og:type', content : 'website' },
+        { property : 'og:url', vmid : 'og:url', content: current_url },
+        { property : 'og:description', vmid : 'og:description', content: description },
+        { property : 'og:image', vmid : 'og:image', content : thumbnail_url },
+        // mobile
+        { name: 'viewport', content: 'width=device-width, initial-scale=1'}
       ]
     }
   },
@@ -143,7 +132,7 @@ export default {
   mounted() {
     apiArticleRead(this.article_seq)
     .then(res => {
-      if( res.status == 200 ) {
+      if( res.status === 200 ) {
         this.article = res.data.article
       } else {
         this.$swal({

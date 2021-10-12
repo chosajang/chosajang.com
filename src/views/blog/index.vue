@@ -85,34 +85,17 @@ export default {
                 {
                     charset: 'utf-8',
                 },
-                {
-                    property: 'author',
-                    content: '조사장(chosajang)',
-                },
-                {
-                    property: 'og:site_name',
-                    content: '조사장닷컴',
-                },
-                {
-                    property: 'og:type',
-                    content: 'website',
-                },
-                {
-                    property: 'og:url',
-                    content: currentUrl,
-                },
-                {
-                    property: 'og:title',
-                    content: '조사장 블로그',
-                },
-                {
-                    property: 'og:description',
-                    content: '조사장 블로그 목록',
-                },
-                {
-                    property: 'og:image',
-                    content: thumbnailUrl,
-                }
+                // SEO setting
+                { name: 'description', vmid: 'description', content: '조사장 블로그'},
+                // { name: 'keywords', content: this.board.keywords},
+                { name: 'author', vmid: 'author', content: user_name },
+                { property: 'author', vmid: 'author', content: '조사장(chosajang)' },
+                { property: 'og:site_name', vmid: 'og:site_name', content: '조사장닷컴' },
+                { property: 'og:type', vmid: 'og:type', content: 'website' },
+                { property: 'og:url', vmid: 'og:url', content: currentUrl },
+                { property: 'og:title', vmid: 'og:title', content: '조사장 블로그' },
+                { property: 'og:description', vmid: 'og:description', content: '조사장 블로그' },
+                { property: 'og:image', vmid: 'og:image', content: thumbnailUrl }
             ],
         };
     },
