@@ -13,6 +13,7 @@ phases:
       - yarn install
   build:
     commands:
+      - aws s3 cp sitemap.xml s3://chosajang.com
       - npm rebuild puppeteer
       - echo Build started on `date`
       - echo Compiling the Node.js code
@@ -25,7 +26,6 @@ phases:
       # - echo Build completed on `date`
       # - echo Distributing to S3...
       # - aws s3 cp --recursive dist/ s3://chosajang.com
-      - aws s3 cp sitemap.xml s3://chosajang.com
 artifacts:
   files:
     - './**/*'
