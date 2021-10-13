@@ -5,9 +5,9 @@
       <div id="mobile-menu-btn" class="hidden flex flex-none px-4 items-center md:hidden cursor-pointer text-gray-600">
         <i class="fas fa-bars text-2xl"></i>
       </div>
-      <a href="/" class="flex ml-4 md:ml-10 text-xl text-black items-center font-normal tracking-widest uppercase focus:outline-none focus:shadow-outline">
+      <router-link :to="'/blog'" class="flex ml-4 md:ml-10 text-xl text-black items-center font-normal tracking-widest uppercase focus:outline-none focus:shadow-outline">
         조사장 블로그
-      </a>
+      </router-link>
     </div>
     <!--// search menu -->
     <div class="flex flex-none items-center px-2 md:px-4 md:mr-4 z-11 relative min-w-min">
