@@ -13,7 +13,6 @@ phases:
       - yarn install
   build:
     commands:
-      - aws s3 cp sitemap.xml s3://chosajang.com
       - npm rebuild puppeteer
       - echo Build started on `date`
       - echo Compiling the Node.js code
