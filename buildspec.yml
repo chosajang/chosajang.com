@@ -25,7 +25,7 @@ phases:
       # - echo Build completed on `date`
       # - echo Distributing to S3...
       # - aws s3 cp --recursive dist/ s3://chosajang.com
-      - aws s3 cp --recursive ./sitemap.xml s3://chosajang.com
+      - aws s3 cp sitemap.xml s3://chosajang.com
 artifacts:
   files:
     - './**/*'
