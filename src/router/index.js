@@ -8,44 +8,43 @@ import BlogReadView from '../views/blog/read';
 Vue.use(VueRouter);
 
 const routes = [
-    {
-        path: '/',
-        name: 'default',
-        redirect: '/blog',
+  {
+    path: '/',
+    name: 'default',
+    redirect: '/blog',
+  },
+  {
+    path: '/blog',
+    name: 'blogList',
+    meta: {
+      layout: 'ServiceLayout',
     },
-    {
-        path: '/blog',
-        name: 'blogList',
-        meta: {
-            layout: 'ServiceLayout',
-        },
-        component: BlogListView,
+    component: BlogListView,
+  },
+  {
+    path: '/blog/:article_seq',
+    name: 'blogRead',
+    meta: {
+      layout: 'ServiceLayout',
     },
-    {
-        path: '/blog/:article_seq',
-        name: 'blogRead',
-        meta: {
-            layout: 'ServiceLayout',
-        },
-        component: BlogReadView,
-    },
-    { /* 404 error 방지 */
-        path: '*',
-        redirect: '/',
-    }
+    component: BlogReadView,
+  },
+  { /* 404 error 방지 */
+    path: '*',
+    redirect: '/',
+  }
 ];
 
-
 Vue.use(VueGtag, {
-    config: {
-        id: 'G-RNCHH7F3MT',
-    },
-    appName: 'chosajang.com',
-    routes,
+  config: {
+    id: 'G-RNCHH7F3MT',
+  },
+  appName: 'chosajang.com',
+  routes,
 });
 
 export const router = new VueRouter({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes,
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes,
 });

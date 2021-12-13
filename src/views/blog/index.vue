@@ -1,7 +1,7 @@
 <template>
   <main class="w-full">
     <!--// Banner : ST -->
-    <div class="h-40 md:h-72 m-auto grid items-center justify-center relative overflow-hidden bg-no-repeat bg-center" style="background-image: url('/assets/images/blog-banner.png'); background-color:#71cdff;">
+    <div class="h-40 md:h-72 m-auto grid items-center justify-center relative overflow-hidden bg-no-repeat bg-center" :style="{'background-image': 'url(/assets/images/blog-banner.png)', 'background-color':'#71cdff'}">
       <div v-if="search === ''" class="py-2 px-4 bg-white opacity-80 z-10">
         <p class="text-xl md:text-2xl">공부하고 알게된 내용들을 정리하여 공유합니다.</p>
       </div>
@@ -65,119 +65,90 @@
 import { apiArticleList } from '@/api';
 
 export default {
-    name: 'articleList',
-    data () {
-        return {
-            articleList: [],
-            pageSize: 10,
-            pageRange: 3,
-            pageNum: 0,
-            search: this.$route.query.search === undefined ? '' : this.$route.query.search,
-            paginateRender: true,
-        };
+  name: 'articleList',
+  data () {
+    return {
+      articleList: [],
+      pageSize: 10,
+      pageRange: 3,
+      pageNum: 0,
+      search: this.$route.query.search === undefined ? '' : this.$route.query.search,
+      paginateRender: true,
+    };
+  },
+  metaInfo () {
+    const currentUrl = process.env.VUE_APP_SERVICE_URL;
+    const thumbnailUrl = `${process.env.VUE_APP_SERVICE_URL}/assets/images/blog-banner-thumbnail.png`;
+    return {
+      title: '조사장 블로그',
+      meta: [
+        { charset: 'utf-8' },
+        { property: 'author', vmid: 'author', content: '조사장(chosajang)' },
+        { property: 'og:site_name', vmid: 'og:site_name', content: '조사장닷컴' },
+        { property: 'og:type', vmid: 'og:type', content: 'website' },
+        { property: 'og:url', vmid: 'og:url', content: currentUrl },
+        { property: 'og:title', vmid: 'og:title', content: '조사장 블로그' },
+        { property: 'og:description', vmid: 'og:description', content: '조사장 블로그 목록' },
+        { property: 'og:image', vmid: 'og:image', content: thumbnailUrl }
+      ],
+    };
+  },
+  methods: {
+    pageMove (pageNum) {
+      this.pageNum = pageNum - 1;
     },
-    metaInfo () {
-        const currentUrl = process.env.VUE_APP_SERVICE_URL;
-        const thumbnailUrl = `${process.env.VUE_APP_SERVICE_URL}/assets/images/blog-banner-thumbnail.png`;
-        return {
-            title: '조사장 블로그',
-            meta: [
-                {
-                    charset: 'utf-8',
-                },
-                {
-                    property: 'author',
-                    vmid: 'author',
-                    content: '조사장(chosajang)',
-                },
-                {
-                    property: 'og:site_name',
-                    vmid: 'og:site_name',
-                    content: '조사장닷컴',
-                },
-                {
-                    property: 'og:type',
-                    vmid: 'og:type',
-                    content: 'website',
-                },
-                {
-                    property: 'og:url',
-                    vmid: 'og:url',
-                    content: currentUrl,
-                },
-                {
-                    property: 'og:title',
-                    vmid: 'og:title',
-                    content: '조사장 블로그',
-                },
-                {
-                    property: 'og:description',
-                    vmid: 'og:description',
-                    content: '조사장 블로그 목록',
-                },
-                {
-                    property: 'og:image',
-                    vmid: 'og:image',
-                    content: thumbnailUrl,
-                }
-            ],
-        };
+    blogDescription (str) {
+      return String(str).replace(/(?:\r\n|\r|\n)/g, '</br>');
     },
-    methods: {
-        pageMove (pageNum) {
-            this.pageNum = pageNum - 1;
-        },
-        blogDescription (str) {
-            return String(str).replace(/(?:\r\n|\r|\n)/g, '</br>');
-        },
-        blogSearch (search) {
-            this.search = search;
-        },
+    blogSearch (search) {
+      this.search = search;
     },
-    created () {
-        apiArticleList()
-            .then(res => {
-                const apiData = res.data;
-                this.articleList = apiData.articleList;
-            });
-        // .catch(error => {
-        //     console.log(error);
-        // });
+  },
+  created () {
+    apiArticleList()
+      .then(res => {
+        const apiData = res.data;
+        this.articleList = apiData.articleList;
+      });
+    // .catch(error => {
+    //     console.log(error);
+    // });
+  },
+  mounted () {
+    this.$EventBus.$on('blogSearch', this.blogSearch);
+  },
+  computed: {
+    /**
+     * 페이지 랜더링 및 페이지네이트용 배열 자르기
+     */
+    listItemSlice () {
+      const start = this.pageNum * this.pageSize;
+      const end = start + this.pageSize;
+      return this.listFiltered.slice(start, end);
     },
-    mounted () {
-        this.$EventBus.$on('blogSearch', this.blogSearch);
+    /**
+     * 회원 ID,이름 검색 시 필터 처리
+     */
+    listFiltered () {
+      // const search = (this.search).replace(/ /gi, '')
+      const search = this.search;
+      // List Filter
+      let titleItems = this.articleList;
+      titleItems = titleItems.filter(item => {
+        return item.title.toLowerCase().includes(search.toLowerCase());
+      });
+      // 페이지네이트 출력여부
+      if (titleItems.length <= this.pageSize) {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.paginateRender = false;
+      }
+      return titleItems;
     },
-    computed: {
-        /**
-         * 페이지 랜더링 및 페이지네이트용 배열 자르기
-         */
-        listItemSlice () {
-            const start = this.pageNum * this.pageSize;
-            const end = start + this.pageSize;
-            return this.listFiltered.slice(start, end);
-        },
-        /**
-         * 회원 ID,이름 검색 시 필터 처리
-         */
-        listFiltered () {
-            // const search = (this.search).replace(/ /gi, '')
-            const search = this.search;
-            // List Filter
-            let titleItems = this.articleList;
-            titleItems = titleItems.filter(item => {
-                return item.title.toLowerCase().includes(search.toLowerCase());
-            });
-            // 페이지네이트 출력여부
-            if (titleItems.length <= this.pageSize) {
-                this.paginateRender = false;
-            }
-            return titleItems;
-        },
-        pageCount () {
-            const listLength = this.listFiltered.length;
-            const pageSize = this.pageSize;
-            return Math.ceil(listLength / pageSize);
-        },
+    pageCount () {
+      const listLength = this.listFiltered.length;
+      const pageSize = this.pageSize;
+      return Math.ceil(listLength / pageSize);
     },
+  },
 };
 </script>

@@ -7,13 +7,14 @@
 </template>
 
 <script>
-import ServiceHeader from '../components/layout/Header.vue'
-import ServiceFooter from '../components/layout/Footer.vue'
+import ServiceHeader from '../components/layout/Header.vue';
+import ServiceFooter from '../components/layout/Footer.vue';
+
 export default {
-    name: 'ServiceLayout',
-    components: {
-        ServiceHeader,
-        ServiceFooter
-    }
+  name: 'ServiceLayout',
+  components: {
+    ServiceHeader,
+    ServiceFooter,
+  },
 };
 </script>

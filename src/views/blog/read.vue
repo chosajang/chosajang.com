@@ -58,94 +58,94 @@
   </main>
 </template>
 <script>
-import { apiArticleRead } from '@/api'
+import { apiArticleRead } from '@/api';
 
-import '@toast-ui/editor/dist/toastui-editor-viewer.css'
-import { Viewer } from '@toast-ui/vue-editor'
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import { Viewer } from '@toast-ui/vue-editor';
 
 import 'prismjs/themes/prism.css';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
-import Prism from 'prismjs'
-import 'prismjs/components/prism-clojure.js'
+import Prism from 'prismjs';
+import 'prismjs/components/prism-clojure.js';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 
-import { Disqus } from 'vue-disqus'
+import { Disqus } from 'vue-disqus';
 
 export default {
   components: {
     viewer: Viewer,
-    Disqus
+    Disqus,
   },
-  data() {
+  data () {
     return {
       article_seq: this.$route.params.article_seq,
       article: {
-        contents: null
+        contents: null,
       },
       tuiOptions: {
         plugins: [
-          [ codeSyntaxHighlight, { highlighter: Prism } ]
+          [codeSyntaxHighlight, { highlighter: Prism }]
         ],
-        linkAttribute : {
-          target: '_blank'
+        linkAttribute: {
+          target: '_blank',
         },
-      }
-    }
+      },
+    };
   },
-  metaInfo() {
-    const title = this.article.title
-    const description = this.article.description
-    const user_name = `${this.article.user_name}(${this.article.user_id})`
-    const thumbnail_url = this.article.thumbnail_url
-    const current_url = `${process.env.VUE_APP_SERVICE_URL}/blog/${this.article_seq}`
+  metaInfo () {
+    const title = this.article.title;
+    const description = this.article.description;
+    const userName = `${this.article.user_name}(${this.article.user_id})`;
+    const thumbnailUrl = this.article.thumbnail_url;
+    const currentUrl = `${process.env.VUE_APP_SERVICE_URL}/blog/${this.article_seq}`;
     return {
       title: title,
       meta: [
         { charset: 'utf-8' },
         // SEO setting
-        { name: 'description', vmid: 'description', content: String(description).slice(0, 320)},
+        { name: 'description', vmid: 'description', content: String(description).slice(0, 320) },
         // { name: 'keywords', content: this.board.keywords},
-        { name: 'author', vmid: 'author', content: user_name },
+        { name: 'author', vmid: 'author', content: userName },
         // SNS 용
         {
           property: 'og:title',
           content: title,
           template: chunk => `${chunk} | chosajang.com`,
-          vmid: 'og:title'
+          vmid: 'og:title',
         },
-        { property : 'author', vmid : 'author', content : user_name },
-        { property : 'og:site_name', vmid : 'og:site_name', content : '조사장닷컴' },
-        { property : 'og:type', vmid : 'og:type', content : 'website' },
-        { property : 'og:url', vmid : 'og:url', content: current_url },
-        { property : 'og:description', vmid : 'og:description', content: description },
-        { property : 'og:image', vmid : 'og:image', content : thumbnail_url },
+        { property: 'author', vmid: 'author', content: userName },
+        { property: 'og:site_name', vmid: 'og:site_name', content: '조사장닷컴' },
+        { property: 'og:type', vmid: 'og:type', content: 'website' },
+        { property: 'og:url', vmid: 'og:url', content: currentUrl },
+        { property: 'og:description', vmid: 'og:description', content: String(description).slice(0, 320) },
+        { property: 'og:image', vmid: 'og:image', content: thumbnailUrl },
         // mobile
-        { name: 'viewport', content: 'width=device-width, initial-scale=1'}
-      ]
-    }
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      ],
+    };
   },
   methods: {
-    goList() {
-      this.$router.push({ path: '/blog' })
-    }
+    goList () {
+      this.$router.push({ path: '/blog' });
+    },
   },
-  mounted() {
+  mounted () {
     apiArticleRead(this.article_seq)
-    .then(res => {
-      if( res.status === 200 ) {
-        this.article = res.data.article
-      } else {
-        this.$swal({
-          title: '정보 없음',
-          html: '요청한 정보가 존재하지 않습니다<br/>목록으로 돌아갑니다',
-          icon: 'error'
-        }).then(() => {
-          this.$router.push({ path: '/blog' })
-        })
-      }
-    })
+      .then(res => {
+        if (res.status === 200) {
+          this.article = res.data.article;
+        } else {
+          this.$swal({
+            title: '정보 없음',
+            html: '요청한 정보가 존재하지 않습니다<br/>목록으로 돌아갑니다',
+            icon: 'error',
+          }).then(() => {
+            this.$router.push({ path: '/blog' });
+          });
+        }
+      });
   },
-}
+};
 </script>
 <style scoped>
 div >>> .toastui-editor-contents{

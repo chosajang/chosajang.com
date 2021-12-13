@@ -19,21 +19,21 @@
 
 <script>
 export default {
-    name: 'Header',
-    data () {
-        return {
-            search: this.$route.query.search === undefined ? '' : this.$route.query.search
+  name: 'Header',
+  data () {
+    return {
+      search: this.$route.query.search === undefined ? '' : this.$route.query.search,
+    };
+  },
+  methods: {
+    blogSearch () {
+      this.$EventBus.$emit('blogSearch', this.search);
+      this.$router.replace({ path: '/blog', query: { search: this.search } }).catch(error => {
+        if (error.name !== 'NavigationDuplicated') {
+          throw error;
         }
+      });
     },
-    methods: {
-        blogSearch() {
-            this.$EventBus.$emit('blogSearch', this.search)
-            this.$router.replace({ path: '/blog', query: { search: this.search } }).catch(error => {
-                if (error.name !== "NavigationDuplicated") {
-                    throw error;
-                }
-            });
-        }
-    }
+  },
 };
 </script>
